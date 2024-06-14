@@ -1,12 +1,29 @@
-image: google/cloud-sdk
+image: google/cloud-sdk:slim
 
 stages:
+  - build
   - deploy
+
+variables:
+  PROJECT_ID: "dal-vacation-home"
+  REGION: "us-east1"
+  SERVICE_NAME: "vacation-home"
+
+before_script:
+  - echo $GOOGLE_CLOUD_KEYFILE_JSON | base64 --decode > ${HOME}/gcloud-service-key.json
+  - gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
+  - gcloud config set project $PROJECT_ID
+
+build:
+  stage: build
+  script:
+    - cd client
+    - docker build -t gcr.io/$PROJECT_ID/$SERVICE_NAME .
+    - docker push gcr.io/$PROJECT_ID/$SERVICE_NAME
 
 deploy:
   stage: deploy
   script:
-    - echo $GOOGLE_CLOUD_KEYFILE_JSON | base64 --decode > ${HOME}/gcloud-service-key.json
-    - gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
-    - gcloud config set project dal-vacation-home
-    - gcloud builds submit --config cloudbuild.yaml .
+    - gcloud run deploy $SERVICE_NAME --image gcr.io/$PROJECT_ID/$SERVICE_NAME --platform managed --region $REGION --allow-unauthenticated
+  only:
+    - main
