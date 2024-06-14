@@ -1,0 +1,12 @@
+image: google/cloud-sdk
+
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  script:
+    - echo $GOOGLE_CLOUD_KEYFILE_JSON | base64 --decode > ${HOME}/gcloud-service-key.json
+    - gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
+    - gcloud config set project dal-vacation-home
+    - gcloud builds submit --config cloudbuild.yaml .
