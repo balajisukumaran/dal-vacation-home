@@ -13,17 +13,18 @@ before_script:
   - echo $GOOGLE_CLOUD_KEYFILE_JSON | base64 --decode > ${HOME}/gcloud-service-key.json
   - gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
   - gcloud config set project $PROJECT_ID
+  - gcloud auth configure-docker us-east1-docker.pkg.dev
 
 build:
   stage: build
   script:
     - cd client
-    - docker build -t gcr.io/$PROJECT_ID/$SERVICE_NAME .
-    - docker push gcr.io/$PROJECT_ID/$SERVICE_NAME
+    - docker build -t us-east1-docker.pkg.dev/$PROJECT_ID/$SERVICE_NAME .
+    - docker push us-east1-docker.pkg.dev/$PROJECT_ID/$SERVICE_NAME
 
 deploy:
   stage: deploy
   script:
-    - gcloud run deploy $SERVICE_NAME --image gcr.io/$PROJECT_ID/$SERVICE_NAME --platform managed --region $REGION --allow-unauthenticated
+    - gcloud run deploy $SERVICE_NAME --image us-east1-docker.pkg.dev/$PROJECT_ID/$SERVICE_NAME --platform managed --region $REGION --allow-unauthenticated
   only:
     - main
