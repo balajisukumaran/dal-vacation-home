@@ -1,2 +1,6 @@
 client/node_modules
 client/dist
+.terraform.lock.hcl
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup

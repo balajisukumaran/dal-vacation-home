@@ -1,0 +1,23 @@
+resources:
+  - name: cloud-run-service
+    type: gcp-types/run-v1:projects.locations.services
+    properties:
+      parent: projects/dal-vacation-home/locations/us-east1
+      serviceAccountName: 868192113618-compute@developer.gserviceaccount.com
+      metadata:
+        name: Dal-vacation-home-service
+      spec:
+        template:
+          spec:
+            containers:
+              - image: us-east1-docker.pkg.dev/dal-vacation-home/vacation-home/vacation-home:latest
+                ports:
+                  - containerPort: 80
+            containerConcurrency: 80
+            timeoutSeconds: 300
+        traffic:
+          - percent: 100
+            latestRevision: true
+# gcloud auth login
+# gcloud config set project YOUR_PROJECT_ID
+# gcloud deployment-manager deployments create cloud-run-deployment --config cloud_run.yaml
