@@ -8,6 +8,7 @@ variables:
   PROJECT_ID: "dal-vacation-home"
   REGION: "us-east1"
   SERVICE_NAME: "vacation-home"
+  REPOSITORY: "vacation-home"
 
 before_script:
   - echo $GOOGLE_CLOUD_KEYFILE_JSON | base64 --decode > ${HOME}/gcloud-service-key.json
@@ -19,12 +20,12 @@ build:
   stage: build
   script:
     - cd client
-    - docker build -t us-east1-docker.pkg.dev/$PROJECT_ID/$SERVICE_NAME .
-    - docker push us-east1-docker.pkg.dev/$PROJECT_ID/$SERVICE_NAME
+    - docker build -t us-east1-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$SERVICE_NAME:$CI_COMMIT_SHA .
+    - docker push us-east1-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$SERVICE_NAME:$CI_COMMIT_SHA
 
 deploy:
   stage: deploy
   script:
-    - gcloud run deploy $SERVICE_NAME --image us-east1-docker.pkg.dev/$PROJECT_ID/$SERVICE_NAME --platform managed --region $REGION --allow-unauthenticated
+    - gcloud run deploy $SERVICE_NAME --image us-east1-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$SERVICE_NAME:$CI_COMMIT_SHA --platform managed --region $REGION --allow-unauthenticated
   only:
     - main
