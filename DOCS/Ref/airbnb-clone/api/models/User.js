@@ -1,47 +1,53 @@
-const mongoose = require("mongoose");
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+const dynamoose = require("dynamoose");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
-
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
+// Define the schema
+const userSchema = new dynamoose.Schema(
+  {
+    id: {
+      type: String,
+      hashKey: true, // Primary key in DynamoDB
+      default: () => dynamoose.aws.sdk.util.uuid.v4(), // Generate a UUID
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    picture: {
+      type: String,
+      required: true,
+      default:
+        "https://res.cloudinary.com/rahul4019/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1695133265/pngwing.com_zi4cre.png",
+    },
   },
-  email: {
-    type: String,
-    unique: true,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  picture: {
-    type: String,
-    required: true,
-    default: 'https://res.cloudinary.com/rahul4019/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1695133265/pngwing.com_zi4cre.png'
+  {
+    timestamps: true, // Adds createdAt and updatedAt timestamps
   }
-});
+);
 
-// encrypt password before saving it into the DB
-userSchema.pre("save", async function (next) {
-  this.password = await bcrypt.hash(this.password, 10)
-})
-
-// create and return jwt token
+// Method to create and return a JWT token
 userSchema.methods.getJwtToken = function () {
-  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+  return jwt.sign({ id: this.id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRY,
-  })
-}
+  });
+};
 
-// validate the password
+// Method to validate the password
 userSchema.methods.isValidatedPassword = async function (userSentPassword) {
-  return await bcrypt.compare(userSentPassword, this.password)
-}
+  return await bcrypt.compare(userSentPassword, this.password);
+};
 
-
-const User = mongoose.model("User", userSchema);
+// Create the model
+const User = dynamoose.model("User", userSchema);
 
 module.exports = User;

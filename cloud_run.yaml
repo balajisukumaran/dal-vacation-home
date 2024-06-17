@@ -19,5 +19,5 @@ resources:
           - percent: 100
             latestRevision: true
 # gcloud auth login
-# gcloud config set project YOUR_PROJECT_ID
+# gcloud config set project dal-vacation-home
 # gcloud deployment-manager deployments create cloud-run-deployment --config cloud_run.yaml
