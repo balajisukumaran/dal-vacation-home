@@ -11,9 +11,10 @@ exports.PutItemHandler = async (event) => {
     return {
       statusCode: 405,
       headers: {
-        "Access-Control-Allow-Origin": "http://localhost:5173",
-        "Access-Control-Allow-Headers": "*",
-        "Access-Control-Allow-Methods": "*",
+        "Access-Control-Allow-Origin": process.env.CLIENT_URL,
+        "Access-Control-Allow-Headers": process.env.ALLOWED_HEADERS,
+        "Access-Control-Allow-Methods": process.env.ALLOWED_METHODS,
+        "Access-Control-Allow-Credentials": process.env.ALLOWED_CREDENTIALS,
       },
       body: JSON.stringify({
         message: `Method not allowed. PUT method required, you tried: ${event.httpMethod}.`,
@@ -62,9 +63,10 @@ exports.PutItemHandler = async (event) => {
       response = {
         statusCode: 200,
         headers: {
-          "Access-Control-Allow-Origin": "http://localhost:5173",
-          "Access-Control-Allow-Headers": "*",
-          "Access-Control-Allow-Methods": "*",
+          "Access-Control-Allow-Origin": process.env.CLIENT_URL,
+          "Access-Control-Allow-Headers": process.env.ALLOWED_HEADERS,
+          "Access-Control-Allow-Methods": process.env.ALLOWED_METHODS,
+          "Access-Control-Allow-Credentials": process.env.ALLOWED_CREDENTIALS,
         },
         body: JSON.stringify({
           message: "Place updated!",
@@ -74,9 +76,10 @@ exports.PutItemHandler = async (event) => {
       response = {
         statusCode: 404,
         headers: {
-          "Access-Control-Allow-Origin": "http://localhost:5173",
-          "Access-Control-Allow-Headers": "*",
-          "Access-Control-Allow-Methods": "*",
+          "Access-Control-Allow-Origin": process.env.CLIENT_URL,
+          "Access-Control-Allow-Headers": process.env.ALLOWED_HEADERS,
+          "Access-Control-Allow-Methods": process.env.ALLOWED_METHODS,
+          "Access-Control-Allow-Credentials": process.env.ALLOWED_CREDENTIALS,
         },
         body: JSON.stringify({
           message: "Place not found or not authorized",
@@ -89,9 +92,10 @@ exports.PutItemHandler = async (event) => {
     return {
       statusCode: 500,
       headers: {
-        "Access-Control-Allow-Origin": "http://localhost:5173",
-        "Access-Control-Allow-Headers": "*",
-        "Access-Control-Allow-Methods": "*",
+        "Access-Control-Allow-Origin": process.env.CLIENT_URL,
+        "Access-Control-Allow-Headers": process.env.ALLOWED_HEADERS,
+        "Access-Control-Allow-Methods": process.env.ALLOWED_METHODS,
+        "Access-Control-Allow-Credentials": process.env.ALLOWED_CREDENTIALS,
       },
       body: JSON.stringify({
         message: "Internal server error",

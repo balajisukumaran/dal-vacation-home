@@ -16,11 +16,10 @@ const cookieToken = (user, token) => {
   return {
     statusCode: 200,
     headers: {
-      "Access-Control-Allow-Origin": "http://localhost:5173",
-      "Access-Control-Allow-Headers": "*",
-      "Access-Control-Allow-Methods": "*",
-    },
-    headers: {
+      "Access-Control-Allow-Origin": process.env.CLIENT_URL,
+      "Access-Control-Allow-Headers": process.env.ALLOWED_HEADERS,
+      "Access-Control-Allow-Methods": process.env.ALLOWED_METHODS,
+      "Access-Control-Allow-Credentials": process.env.ALLOWED_CREDENTIALS,
       "Set-Cookie": cookieString,
       "Content-Type": "application/json",
     },
