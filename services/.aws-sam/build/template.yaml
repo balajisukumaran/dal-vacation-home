@@ -3,7 +3,35 @@ Description: test
 Transform:
 - AWS::Serverless-2016-10-31
 Resources:
-  postUserFunction:
+  AdminRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: lambda.amazonaws.com
+          Action: sts:AssumeRole
+      Policies:
+      - PolicyName: DynamoDBAccess
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - dynamodb:*
+            Resource: '*'
+  MyApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: ExampleApi
+      StageName: Prod
+      Cors:
+        AllowMethods: '''*'''
+        AllowHeaders: '''*'''
+        AllowOrigin: '''http://localhost:5173'''
+  UserRegisterFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/user/register.PostItemHandler
@@ -14,6 +42,10 @@ Resources:
       Timeout: 100
       Description: A simple example includes a HTTP post method to add one item to
         a DynamoDB table.
+      Role:
+        Fn::GetAtt:
+        - AdminRole
+        - Arn
       Environment:
         Variables:
           PORT: '4000'
@@ -32,69 +64,15 @@ Resources:
           Properties:
             Path: /user/register/
             Method: POST
-      CodeUri: postUserFunction
+            RestApiId:
+              Ref: MyApi
+      CodeUri: UserRegisterFunction
     Metadata:
-      SamResourceId: postUserFunction
-  getAllItemsFunction:
+      SamResourceId: UserRegisterFunction
+  UserLoginFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/get-all-items.getAllItemsHandler
-      Runtime: nodejs16.x
-      Architectures:
-      - x86_64
-      MemorySize: 128
-      Timeout: 100
-      Description: A simple example includes a HTTP get method to get all items from
-        a DynamoDB table.
-      Policies:
-      - DynamoDBCrudPolicy:
-          TableName:
-            Ref: SampleTable
-      Environment:
-        Variables:
-          SAMPLE_TABLE:
-            Ref: SampleTable
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /
-            Method: GET
-      CodeUri: getAllItemsFunction
-    Metadata:
-      SamResourceId: getAllItemsFunction
-  getByIdFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/get-by-id.getByIdHandler
-      Runtime: nodejs16.x
-      Architectures:
-      - x86_64
-      MemorySize: 128
-      Timeout: 100
-      Description: A simple example includes a HTTP get method to get one item by
-        id from a DynamoDB table.
-      Policies:
-      - DynamoDBCrudPolicy:
-          TableName:
-            Ref: SampleTable
-      Environment:
-        Variables:
-          SAMPLE_TABLE:
-            Ref: SampleTable
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /{id}
-            Method: GET
-      CodeUri: getByIdFunction
-    Metadata:
-      SamResourceId: getByIdFunction
-  putItemFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/put-item.putItemHandler
+      Handler: src/user/login.PostItemHandler
       Runtime: nodejs16.x
       Architectures:
       - x86_64
@@ -102,34 +80,339 @@ Resources:
       Timeout: 100
       Description: A simple example includes a HTTP post method to add one item to
         a DynamoDB table.
-      Policies:
-      - DynamoDBCrudPolicy:
-          TableName:
-            Ref: SampleTable
+      Role:
+        Fn::GetAtt:
+        - AdminRole
+        - Arn
       Environment:
         Variables:
-          SAMPLE_TABLE:
-            Ref: SampleTable
+          PORT: '4000'
+          DB_URL: mongodb+srv://admin:admin@dalvactionhome.ghnejjw.mongodb.net/?retryWrites=true&w=majority&appName=dalvactionhome
+          JWT_SECRET: jwtsecret
+          JWT_EXPIRY: 20d
+          COOKIE_TIME: '7'
+          SESSION_SECRET: your secret session (string)
+          CLOUDINARY_NAME: your secret session
+          CLOUDINARY_API_KEY: your cloudinary key
+          CLOUDINARY_API_SECRET: your cloudinary api secret
+          CLIENT_URL: http://localhost:5173
       Events:
         Api:
           Type: Api
           Properties:
-            Path: /
+            Path: /user/login/
             Method: POST
-      CodeUri: putItemFunction
+            RestApiId:
+              Ref: MyApi
+      CodeUri: UserLoginFunction
     Metadata:
-      SamResourceId: putItemFunction
-  SampleTable:
-    Type: AWS::Serverless::SimpleTable
+      SamResourceId: UserLoginFunction
+  PlaceGetAllFunction:
+    Type: AWS::Serverless::Function
     Properties:
-      PrimaryKey:
-        Name: id
-        Type: String
-      ProvisionedThroughput:
-        ReadCapacityUnits: 2
-        WriteCapacityUnits: 2
+      Handler: src/place/getAll.GetItemHandler
+      Runtime: nodejs16.x
+      Architectures:
+      - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: A simple example includes a HTTP post method to add one item to
+        a DynamoDB table.
+      Role:
+        Fn::GetAtt:
+        - AdminRole
+        - Arn
+      Environment:
+        Variables:
+          PORT: '4000'
+          DB_URL: mongodb+srv://admin:admin@dalvactionhome.ghnejjw.mongodb.net/?retryWrites=true&w=majority&appName=dalvactionhome
+          JWT_SECRET: jwtsecret
+          JWT_EXPIRY: 20d
+          COOKIE_TIME: '7'
+          SESSION_SECRET: your secret session (string)
+          CLOUDINARY_NAME: your secret session
+          CLOUDINARY_API_KEY: your cloudinary key
+          CLOUDINARY_API_SECRET: your cloudinary api secret
+          CLIENT_URL: http://localhost:5173
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /places/
+            Method: GET
+            RestApiId:
+              Ref: MyApi
+      CodeUri: PlaceGetAllFunction
+    Metadata:
+      SamResourceId: PlaceGetAllFunction
+  PlaceAddFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/place/addPlace.PostItemHandler
+      Runtime: nodejs16.x
+      Architectures:
+      - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: A simple example includes a HTTP post method to add one item to
+        a DynamoDB table.
+      Role:
+        Fn::GetAtt:
+        - AdminRole
+        - Arn
+      Environment:
+        Variables:
+          PORT: '4000'
+          DB_URL: mongodb+srv://admin:admin@dalvactionhome.ghnejjw.mongodb.net/?retryWrites=true&w=majority&appName=dalvactionhome
+          JWT_SECRET: jwtsecret
+          JWT_EXPIRY: 20d
+          COOKIE_TIME: '7'
+          SESSION_SECRET: your secret session (string)
+          CLOUDINARY_NAME: your secret session
+          CLOUDINARY_API_KEY: your cloudinary key
+          CLOUDINARY_API_SECRET: your cloudinary api secret
+          CLIENT_URL: http://localhost:5173
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /places/add-places/
+            Method: POST
+            RestApiId:
+              Ref: MyApi
+      CodeUri: PlaceAddFunction
+    Metadata:
+      SamResourceId: PlaceAddFunction
+  UserPlacesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/place/userPlaces.GetItemHandler
+      Runtime: nodejs16.x
+      Architectures:
+      - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: A simple example includes a HTTP post method to add one item to
+        a DynamoDB table.
+      Role:
+        Fn::GetAtt:
+        - AdminRole
+        - Arn
+      Environment:
+        Variables:
+          PORT: '4000'
+          DB_URL: mongodb+srv://admin:admin@dalvactionhome.ghnejjw.mongodb.net/?retryWrites=true&w=majority&appName=dalvactionhome
+          JWT_SECRET: jwtsecret
+          JWT_EXPIRY: 20d
+          COOKIE_TIME: '7'
+          SESSION_SECRET: your secret session (string)
+          CLOUDINARY_NAME: your secret session
+          CLOUDINARY_API_KEY: your cloudinary key
+          CLOUDINARY_API_SECRET: your cloudinary api secret
+          CLIENT_URL: http://localhost:5173
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /places/user-places/
+            Method: GET
+            RestApiId:
+              Ref: MyApi
+      CodeUri: UserPlacesFunction
+    Metadata:
+      SamResourceId: UserPlacesFunction
+  UpdatePlaceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/place/updatePlace.PutItemHandler
+      Runtime: nodejs16.x
+      Architectures:
+      - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: A simple example includes a HTTP post method to add one item to
+        a DynamoDB table.
+      Role:
+        Fn::GetAtt:
+        - AdminRole
+        - Arn
+      Environment:
+        Variables:
+          PORT: '4000'
+          DB_URL: mongodb+srv://admin:admin@dalvactionhome.ghnejjw.mongodb.net/?retryWrites=true&w=majority&appName=dalvactionhome
+          JWT_SECRET: jwtsecret
+          JWT_EXPIRY: 20d
+          COOKIE_TIME: '7'
+          SESSION_SECRET: your secret session (string)
+          CLOUDINARY_NAME: your secret session
+          CLOUDINARY_API_KEY: your cloudinary key
+          CLOUDINARY_API_SECRET: your cloudinary api secret
+          CLIENT_URL: http://localhost:5173
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /places/update-place/
+            Method: PUT
+            RestApiId:
+              Ref: MyApi
+      CodeUri: UpdatePlaceFunction
+    Metadata:
+      SamResourceId: UpdatePlaceFunction
+  GetPlaceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/place/getPlace.GetItemHandler
+      Runtime: nodejs16.x
+      Architectures:
+      - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: A simple example includes a HTTP post method to add one item to
+        a DynamoDB table.
+      Role:
+        Fn::GetAtt:
+        - AdminRole
+        - Arn
+      Environment:
+        Variables:
+          PORT: '4000'
+          DB_URL: mongodb+srv://admin:admin@dalvactionhome.ghnejjw.mongodb.net/?retryWrites=true&w=majority&appName=dalvactionhome
+          JWT_SECRET: jwtsecret
+          JWT_EXPIRY: 20d
+          COOKIE_TIME: '7'
+          SESSION_SECRET: your secret session (string)
+          CLOUDINARY_NAME: your secret session
+          CLOUDINARY_API_KEY: your cloudinary key
+          CLOUDINARY_API_SECRET: your cloudinary api secret
+          CLIENT_URL: http://localhost:5173
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /places/{id}
+            Method: GET
+            RestApiId:
+              Ref: MyApi
+      CodeUri: GetPlaceFunction
+    Metadata:
+      SamResourceId: GetPlaceFunction
+  SearchPlaceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/place/searchPlace.GetItemHandler
+      Runtime: nodejs16.x
+      Architectures:
+      - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: A simple example includes a HTTP post method to add one item to
+        a DynamoDB table.
+      Role:
+        Fn::GetAtt:
+        - AdminRole
+        - Arn
+      Environment:
+        Variables:
+          PORT: '4000'
+          DB_URL: mongodb+srv://admin:admin@dalvactionhome.ghnejjw.mongodb.net/?retryWrites=true&w=majority&appName=dalvactionhome
+          JWT_SECRET: jwtsecret
+          JWT_EXPIRY: 20d
+          COOKIE_TIME: '7'
+          SESSION_SECRET: your secret session (string)
+          CLOUDINARY_NAME: your secret session
+          CLOUDINARY_API_KEY: your cloudinary key
+          CLOUDINARY_API_SECRET: your cloudinary api secret
+          CLIENT_URL: http://localhost:5173
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /places/search/{key}
+            Method: GET
+            RestApiId:
+              Ref: MyApi
+      CodeUri: SearchPlaceFunction
+    Metadata:
+      SamResourceId: SearchPlaceFunction
+  GetBookingFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/booking/getBooking.GetItemHandler
+      Runtime: nodejs16.x
+      Architectures:
+      - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: A simple example includes a HTTP post method to add one item to
+        a DynamoDB table.
+      Role:
+        Fn::GetAtt:
+        - AdminRole
+        - Arn
+      Environment:
+        Variables:
+          PORT: '4000'
+          DB_URL: mongodb+srv://admin:admin@dalvactionhome.ghnejjw.mongodb.net/?retryWrites=true&w=majority&appName=dalvactionhome
+          JWT_SECRET: jwtsecret
+          JWT_EXPIRY: 20d
+          COOKIE_TIME: '7'
+          SESSION_SECRET: your secret session (string)
+          CLOUDINARY_NAME: your secret session
+          CLOUDINARY_API_KEY: your cloudinary key
+          CLOUDINARY_API_SECRET: your cloudinary api secret
+          CLIENT_URL: http://localhost:5173
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /bookings/
+            Method: GET
+            RestApiId:
+              Ref: MyApi
+      CodeUri: GetBookingFunction
+    Metadata:
+      SamResourceId: GetBookingFunction
+  CreateBookingFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/booking/createBooking.PostItemHandler
+      Runtime: nodejs16.x
+      Architectures:
+      - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: A simple example includes a HTTP post method to add one item to
+        a DynamoDB table.
+      Role:
+        Fn::GetAtt:
+        - AdminRole
+        - Arn
+      Environment:
+        Variables:
+          PORT: '4000'
+          DB_URL: mongodb+srv://admin:admin@dalvactionhome.ghnejjw.mongodb.net/?retryWrites=true&w=majority&appName=dalvactionhome
+          JWT_SECRET: jwtsecret
+          JWT_EXPIRY: 20d
+          COOKIE_TIME: '7'
+          SESSION_SECRET: your secret session (string)
+          CLOUDINARY_NAME: your secret session
+          CLOUDINARY_API_KEY: your cloudinary key
+          CLOUDINARY_API_SECRET: your cloudinary api secret
+          CLIENT_URL: http://localhost:5173
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /bookings/
+            Method: POST
+            RestApiId:
+              Ref: MyApi
+      CodeUri: CreateBookingFunction
+    Metadata:
+      SamResourceId: CreateBookingFunction
 Outputs:
   WebEndpoint:
     Description: API Gateway endpoint URL for Prod stage
     Value:
-      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/
+      Fn::Sub: https://${MyApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/
