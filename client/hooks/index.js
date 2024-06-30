@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import jwt_decode from 'jwt-decode';
-import AWS from 'aws-sdk';
-import { Buffer } from 'buffer';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
 import { UserContext } from '@/providers/UserProvider';
 import { PlaceContext } from '@/providers/PlaceProvider';
@@ -16,48 +15,31 @@ import axiosInstance from '@/utils/axios';
 const S3_BUCKET = 'dalvacation-home-profile';
 const REGION = 'us-east-1';
 
-// Ensure global and Buffer are available in the window
-window.global = window;
-window.Buffer = Buffer;
-
-AWS.config.update({
-  accessKeyId: 'AKIAYS2NSDRXTXLYXBZ7',
-  secretAccessKey: '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',
-});
-
-const myBucket = new AWS.S3({
-  params: { Bucket: S3_BUCKET },
+const s3 = new S3Client({
   region: REGION,
+  credentials: {
+    accessKeyId: 'AKIAYS2NSDRXTXLYXBZ7',
+    secretAccessKey: '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',
+  },
 });
 
 setupInterceptors();
 
-const uploadFileS3 = (file) => {
-  return new Promise((resolve, reject) => {
-    const params = {
-      Body: file,
-      Bucket: S3_BUCKET,
-      Key: file.name,
-    };
+const uploadFileS3 = async (file) => {
+  const params = {
+    Bucket: S3_BUCKET,
+    Key: file.name,
+    Body: file,
+  };
 
-    myBucket
-      .putObject(params)
-      .on('httpUploadProgress', (evt) => {
-        console.log(
-          'Progress:',
-          Math.round((evt.loaded / evt.total) * 100) + '%',
-        );
-      })
-      .send((err, data) => {
-        if (err) {
-          console.log(err);
-          reject(err);
-        } else {
-          const fileUrl = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${file.name}`;
-          resolve(fileUrl);
-        }
-      });
-  });
+  try {
+    await s3.send(new PutObjectCommand(params));
+    const fileUrl = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${file.name}`;
+    return fileUrl;
+  } catch (err) {
+    console.log('Error', err);
+    throw err;
+  }
 };
 
 // USER

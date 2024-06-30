@@ -1,56 +1,37 @@
 import React, { useState } from 'react';
-
 import Image from './Image';
 import axiosInstance from '../../utils/axios';
 import { setupInterceptors } from '@/utils/setupInterceptors';
-import AWS from 'aws-sdk';
-//import global from 'global';
-import { Buffer } from 'buffer';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
 setupInterceptors();
+
 const S3_BUCKET = 'dalvacation-home-profile';
 const REGION = 'us-east-1';
 
-// Ensure global and Buffer are available in the window
-window.global = window;
-window.Buffer = Buffer;
-
-AWS.config.update({
-  accessKeyId: 'AKIAYS2NSDRXTXLYXBZ7',
-  secretAccessKey: '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',
-});
-
-const myBucket = new AWS.S3({
-  params: { Bucket: S3_BUCKET },
+const s3 = new S3Client({
   region: REGION,
+  credentials: {
+    accessKeyId: 'AKIAYS2NSDRXTXLYXBZ7',
+    secretAccessKey: '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',
+  },
 });
 
-const uploadFileS3 = (file) => {
-  return new Promise((resolve, reject) => {
-    const params = {
-      Body: file,
-      Bucket: S3_BUCKET,
-      Key: file.name,
-    };
+const uploadFileS3 = async (file) => {
+  const params = {
+    Bucket: S3_BUCKET,
+    Key: file.name,
+    Body: file,
+  };
 
-    myBucket
-      .putObject(params)
-      .on('httpUploadProgress', (evt) => {
-        console.log(
-          'Progress:',
-          Math.round((evt.loaded / evt.total) * 100) + '%',
-        );
-      })
-      .send((err, data) => {
-        if (err) {
-          console.log(err);
-          reject(err);
-        } else {
-          const fileUrl = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${file.name}`;
-          resolve(fileUrl);
-        }
-      });
-  });
+  try {
+    await s3.send(new PutObjectCommand(params));
+    const fileUrl = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${file.name}`;
+    return fileUrl;
+  } catch (err) {
+    console.log('Error', err);
+    throw err;
+  }
 };
 
 const PhotosUploader = ({ addedPhotos, setAddedPhotos }) => {
@@ -59,13 +40,13 @@ const PhotosUploader = ({ addedPhotos, setAddedPhotos }) => {
   const uploadPhoto = async (e) => {
     const files = e.target.files;
     const uploadedFiles = [];
+
     for (let i = 0; i < files.length; i++) {
       const fileUrl = await uploadFileS3(files[i]);
       uploadedFiles.push(fileUrl);
     }
-    setAddedPhotos((prev) => {
-      return [...prev, ...uploadedFiles];
-    });
+
+    setAddedPhotos((prev) => [...prev, ...uploadedFiles]);
   };
 
   const removePhoto = (filename) => {
@@ -74,7 +55,6 @@ const PhotosUploader = ({ addedPhotos, setAddedPhotos }) => {
 
   const selectAsMainPhoto = (e, filename) => {
     e.preventDefault();
-
     setAddedPhotos([
       filename,
       ...addedPhotos.filter((photo) => photo !== filename),
@@ -83,21 +63,7 @@ const PhotosUploader = ({ addedPhotos, setAddedPhotos }) => {
 
   return (
     <>
-      {/* <div className="flex gap-2">
-        <input
-          value={photoLink}
-          onChange={(e) => setPhotoLink(e.target.value)}
-          type="text"
-          placeholder="Add using a link ...jpg"
-        />
-        <button
-          className="rounded-2xl bg-gray-200 px-4"
-          onClick={addPhotoByLink}
-        >
-          Add&nbsp;photo
-        </button>
-      </div> */}
-      <div className="mt-2 grid grid-cols-3 gap-2 md:grid-cols-4 lg:grid-cols-6 ">
+      <div className="mt-2 grid grid-cols-3 gap-2 md:grid-cols-4 lg:grid-cols-6">
         {addedPhotos?.length > 0 &&
           addedPhotos.map((link) => (
             <div className="relative flex h-32" key={link}>
@@ -143,7 +109,6 @@ const PhotosUploader = ({ addedPhotos, setAddedPhotos }) => {
                     />
                   </svg>
                 )}
-
                 {link !== addedPhotos[0] && (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
