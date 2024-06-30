@@ -14,18 +14,20 @@ import PlacesFormPage from './pages/PlacesFormPage';
 import PlacePage from './pages/PlacePage';
 import SingleBookedPlace from './pages/SingleBookedPlace';
 import axiosInstance from './utils/axios';
+import { setupInterceptors } from '@/utils/setupInterceptors';
 import { UserProvider } from './providers/UserProvider';
 import { PlaceProvider } from './providers/PlaceProvider';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { getItemFromLocalStorage } from './utils';
 import NotFoundPage from './pages/NotFoundPage';
 
+setupInterceptors();
+
 function App() {
   useEffect(() => {
     // set the token on refreshing the website
-    axiosInstance.defaults.headers.common[
-      'Authorization'
-    ] = `Bearer ${getItemFromLocalStorage('token')}`;
+    axiosInstance.defaults.headers.common['Authorization'] =
+      `Bearer ${getItemFromLocalStorage('token')}`;
   }, []);
 
   return (

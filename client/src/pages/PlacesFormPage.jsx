@@ -3,11 +3,14 @@ import { Navigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import axiosInstance from '@/utils/axios';
+import { setupInterceptors } from '@/utils/setupInterceptors';
 
 import AccountNav from '@/components/ui/AccountNav';
 import Perks from '@/components/ui/Perks';
 import PhotosUploader from '@/components/ui/PhotosUploader';
 import Spinner from '@/components/ui/Spinner';
+
+setupInterceptors();
 
 const PlacesFormPage = () => {
   const { id } = useParams();
@@ -209,7 +212,7 @@ const PlacesFormPage = () => {
         )}
         <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-4">
           <div>
-            <h3 className="mt-2 -mb-1">Max no. of guests</h3>
+            <h3 className="-mb-1 mt-2">Max no. of guests</h3>
             <input
               type="text"
               name="maxGuests"
@@ -219,7 +222,7 @@ const PlacesFormPage = () => {
             />
           </div>
           <div>
-            <h3 className="mt-2 -mb-1">Price per night</h3>
+            <h3 className="-mb-1 mt-2">Price per night</h3>
             <input
               type="number"
               name="price"
@@ -229,7 +232,7 @@ const PlacesFormPage = () => {
             />
           </div>
         </div>
-        <button className="mx-auto my-4 flex rounded-full bg-primary py-3 px-20 text-xl font-semibold text-white">
+        <button className="mx-auto my-4 flex rounded-full bg-primary px-20 py-3 text-xl font-semibold text-white">
           Save
         </button>
       </form>

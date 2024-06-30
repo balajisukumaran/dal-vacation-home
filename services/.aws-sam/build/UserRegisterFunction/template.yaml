@@ -26,15 +26,18 @@ Resources:
                   - dynamodb:*
                 Resource: "*"
 
-  MyApi:
+  DalVacationHomeApi:
     Type: AWS::Serverless::Api
     Properties:
       Name: "ExampleApi"
       StageName: "Prod"
+      BinaryMediaTypes:
+        - "multipart/form-data"
+        - "application/json"
       Cors:
         AllowMethods: "'GET,POST,PUT,DELETE,OPTIONS'"
         AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
-        AllowOrigin: "'http://localhost:5173'"
+        AllowOrigin: "'https://dal-vacation-home-service-konfsid46q-ue.a.run.app/'"
         AllowCredentials: "'true'"
 
   UserRegisterFunction:
@@ -56,10 +59,10 @@ Resources:
           JWT_EXPIRY: 20d
           COOKIE_TIME: "7"
           SESSION_SECRET: your secret session (string)
-          CLOUDINARY_NAME: your secret session
-          CLOUDINARY_API_KEY: your cloudinary key
-          CLOUDINARY_API_SECRET: your cloudinary api secret
-          CLIENT_URL: http://localhost:5173
+          CLOUDINARY_NAME: dtyqwxumd
+          CLOUDINARY_API_KEY: 566628451461642
+          CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
           ALLOWED_CREDENTIALS: true
@@ -70,7 +73,7 @@ Resources:
           Properties:
             Path: /user/register/
             Method: POST
-            RestApiId: !Ref MyApi
+            RestApiId: !Ref DalVacationHomeApi
 
   UserLoginFunction:
     Type: AWS::Serverless::Function
@@ -91,10 +94,10 @@ Resources:
           JWT_EXPIRY: 20d
           COOKIE_TIME: "7"
           SESSION_SECRET: your secret session (string)
-          CLOUDINARY_NAME: your secret session
-          CLOUDINARY_API_KEY: your cloudinary key
-          CLOUDINARY_API_SECRET: your cloudinary api secret
-          CLIENT_URL: http://localhost:5173
+          CLOUDINARY_NAME: dtyqwxumd
+          CLOUDINARY_API_KEY: 566628451461642
+          CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
           ALLOWED_CREDENTIALS: true
@@ -104,7 +107,75 @@ Resources:
           Properties:
             Path: /user/login/
             Method: POST
-            RestApiId: !Ref MyApi
+            RestApiId: !Ref DalVacationHomeApi
+
+  UserUploadPictureFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/user/uploadPicture.PostItemHandler
+      Runtime: nodejs16.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Role: !GetAtt AdminRole.Arn
+      Environment:
+        Variables:
+          PORT: "4000"
+          DB_URL: mongodb+srv://admin:admin@dalvactionhome.ghnejjw.mongodb.net/?retryWrites=true&w=majority&appName=dalvactionhome
+          JWT_SECRET: jwtsecret
+          JWT_EXPIRY: 20d
+          COOKIE_TIME: "7"
+          SESSION_SECRET: your secret session (string)
+          CLOUDINARY_NAME: dtyqwxumd
+          CLOUDINARY_API_KEY: 566628451461642
+          CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
+          ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
+          ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
+          ALLOWED_CREDENTIALS: true
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /user/upload-picture/
+            Method: POST
+            RestApiId: !Ref DalVacationHomeApi
+
+  UserUploadFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/place/upload.PostItemHandler
+      Runtime: nodejs16.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Role: !GetAtt AdminRole.Arn
+      Environment:
+        Variables:
+          PORT: "4000"
+          DB_URL: mongodb+srv://admin:admin@dalvactionhome.ghnejjw.mongodb.net/?retryWrites=true&w=majority&appName=dalvactionhome
+          JWT_SECRET: jwtsecret
+          JWT_EXPIRY: 20d
+          COOKIE_TIME: "7"
+          SESSION_SECRET: your secret session (string)
+          CLOUDINARY_NAME: dtyqwxumd
+          CLOUDINARY_API_KEY: 566628451461642
+          CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
+          ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
+          ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
+          ALLOWED_CREDENTIALS: true
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /upload/
+            Method: POST
+            RestApiId: !Ref DalVacationHomeApi
 
   PlaceGetAllFunction:
     Type: AWS::Serverless::Function
@@ -125,10 +196,10 @@ Resources:
           JWT_EXPIRY: 20d
           COOKIE_TIME: "7"
           SESSION_SECRET: your secret session (string)
-          CLOUDINARY_NAME: your secret session
-          CLOUDINARY_API_KEY: your cloudinary key
-          CLOUDINARY_API_SECRET: your cloudinary api secret
-          CLIENT_URL: http://localhost:5173
+          CLOUDINARY_NAME: dtyqwxumd
+          CLOUDINARY_API_KEY: 566628451461642
+          CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
           ALLOWED_CREDENTIALS: true
@@ -139,7 +210,7 @@ Resources:
           Properties:
             Path: /places/
             Method: GET
-            RestApiId: !Ref MyApi
+            RestApiId: !Ref DalVacationHomeApi
 
   PlaceAddFunction:
     Type: AWS::Serverless::Function
@@ -160,10 +231,10 @@ Resources:
           JWT_EXPIRY: 20d
           COOKIE_TIME: "7"
           SESSION_SECRET: your secret session (string)
-          CLOUDINARY_NAME: your secret session
-          CLOUDINARY_API_KEY: your cloudinary key
-          CLOUDINARY_API_SECRET: your cloudinary api secret
-          CLIENT_URL: http://localhost:5173
+          CLOUDINARY_NAME: dtyqwxumd
+          CLOUDINARY_API_KEY: 566628451461642
+          CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
           ALLOWED_CREDENTIALS: true
@@ -174,7 +245,7 @@ Resources:
           Properties:
             Path: /places/add-places/
             Method: POST
-            RestApiId: !Ref MyApi
+            RestApiId: !Ref DalVacationHomeApi
 
   UserPlacesFunction:
     Type: AWS::Serverless::Function
@@ -195,10 +266,10 @@ Resources:
           JWT_EXPIRY: 20d
           COOKIE_TIME: "7"
           SESSION_SECRET: your secret session (string)
-          CLOUDINARY_NAME: your secret session
-          CLOUDINARY_API_KEY: your cloudinary key
-          CLOUDINARY_API_SECRET: your cloudinary api secret
-          CLIENT_URL: http://localhost:5173
+          CLOUDINARY_NAME: dtyqwxumd
+          CLOUDINARY_API_KEY: 566628451461642
+          CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
           ALLOWED_CREDENTIALS: true
@@ -209,7 +280,42 @@ Resources:
           Properties:
             Path: /places/user-places/
             Method: GET
-            RestApiId: !Ref MyApi
+            RestApiId: !Ref DalVacationHomeApi
+
+  UpdateUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/user/updateUser.PutItemHandler
+      Runtime: nodejs16.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Role: !GetAtt AdminRole.Arn
+      Environment:
+        Variables:
+          PORT: "4000"
+          DB_URL: mongodb+srv://admin:admin@dalvactionhome.ghnejjw.mongodb.net/?retryWrites=true&w=majority&appName=dalvactionhome
+          JWT_SECRET: jwtsecret
+          JWT_EXPIRY: 20d
+          COOKIE_TIME: "7"
+          SESSION_SECRET: your secret session (string)
+          CLOUDINARY_NAME: dtyqwxumd
+          CLOUDINARY_API_KEY: 566628451461642
+          CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
+          ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
+          ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
+          ALLOWED_CREDENTIALS: true
+
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /user/update-user/
+            Method: PUT
+            RestApiId: !Ref DalVacationHomeApi
 
   UpdatePlaceFunction:
     Type: AWS::Serverless::Function
@@ -230,10 +336,10 @@ Resources:
           JWT_EXPIRY: 20d
           COOKIE_TIME: "7"
           SESSION_SECRET: your secret session (string)
-          CLOUDINARY_NAME: your secret session
-          CLOUDINARY_API_KEY: your cloudinary key
-          CLOUDINARY_API_SECRET: your cloudinary api secret
-          CLIENT_URL: http://localhost:5173
+          CLOUDINARY_NAME: dtyqwxumd
+          CLOUDINARY_API_KEY: 566628451461642
+          CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
           ALLOWED_CREDENTIALS: true
@@ -244,7 +350,7 @@ Resources:
           Properties:
             Path: /places/update-place/
             Method: PUT
-            RestApiId: !Ref MyApi
+            RestApiId: !Ref DalVacationHomeApi
 
   GetPlaceFunction:
     Type: AWS::Serverless::Function
@@ -265,10 +371,10 @@ Resources:
           JWT_EXPIRY: 20d
           COOKIE_TIME: "7"
           SESSION_SECRET: your secret session (string)
-          CLOUDINARY_NAME: your secret session
-          CLOUDINARY_API_KEY: your cloudinary key
-          CLOUDINARY_API_SECRET: your cloudinary api secret
-          CLIENT_URL: http://localhost:5173
+          CLOUDINARY_NAME: dtyqwxumd
+          CLOUDINARY_API_KEY: 566628451461642
+          CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
           ALLOWED_CREDENTIALS: true
@@ -279,7 +385,7 @@ Resources:
           Properties:
             Path: /places/{id}
             Method: GET
-            RestApiId: !Ref MyApi
+            RestApiId: !Ref DalVacationHomeApi
 
   SearchPlaceFunction:
     Type: AWS::Serverless::Function
@@ -300,10 +406,10 @@ Resources:
           JWT_EXPIRY: 20d
           COOKIE_TIME: "7"
           SESSION_SECRET: your secret session (string)
-          CLOUDINARY_NAME: your secret session
-          CLOUDINARY_API_KEY: your cloudinary key
-          CLOUDINARY_API_SECRET: your cloudinary api secret
-          CLIENT_URL: http://localhost:5173
+          CLOUDINARY_NAME: dtyqwxumd
+          CLOUDINARY_API_KEY: 566628451461642
+          CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
           ALLOWED_CREDENTIALS: true
@@ -314,7 +420,7 @@ Resources:
           Properties:
             Path: /places/search/{key}
             Method: GET
-            RestApiId: !Ref MyApi
+            RestApiId: !Ref DalVacationHomeApi
 
   GetBookingFunction:
     Type: AWS::Serverless::Function
@@ -335,10 +441,10 @@ Resources:
           JWT_EXPIRY: 20d
           COOKIE_TIME: "7"
           SESSION_SECRET: your secret session (string)
-          CLOUDINARY_NAME: your secret session
-          CLOUDINARY_API_KEY: your cloudinary key
-          CLOUDINARY_API_SECRET: your cloudinary api secret
-          CLIENT_URL: http://localhost:5173
+          CLOUDINARY_NAME: dtyqwxumd
+          CLOUDINARY_API_KEY: 566628451461642
+          CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
           ALLOWED_CREDENTIALS: true
@@ -349,7 +455,7 @@ Resources:
           Properties:
             Path: /bookings/
             Method: GET
-            RestApiId: !Ref MyApi
+            RestApiId: !Ref DalVacationHomeApi
 
   CreateBookingFunction:
     Type: AWS::Serverless::Function
@@ -370,10 +476,10 @@ Resources:
           JWT_EXPIRY: 20d
           COOKIE_TIME: "7"
           SESSION_SECRET: your secret session (string)
-          CLOUDINARY_NAME: your secret session
-          CLOUDINARY_API_KEY: your cloudinary key
-          CLOUDINARY_API_SECRET: your cloudinary api secret
-          CLIENT_URL: http://localhost:5173
+          CLOUDINARY_NAME: dtyqwxumd
+          CLOUDINARY_API_KEY: 566628451461642
+          CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
           ALLOWED_CREDENTIALS: true
@@ -384,9 +490,9 @@ Resources:
           Properties:
             Path: /bookings/
             Method: POST
-            RestApiId: !Ref MyApi
+            RestApiId: !Ref DalVacationHomeApi
 
 Outputs:
   WebEndpoint:
     Description: "API Gateway endpoint URL for Prod stage"
-    Value: !Sub "https://${MyApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+    Value: !Sub "https://${DalVacationHomeApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"

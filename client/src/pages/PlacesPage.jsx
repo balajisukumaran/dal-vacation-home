@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import axiosInstance from '@/utils/axios';
+import { setupInterceptors } from '@/utils/setupInterceptors';
 
 import AccountNav from '@/components/ui/AccountNav';
 import InfoCard from '@/components/ui/InfoCard';
 import Spinner from '@/components/ui/Spinner';
 
+setupInterceptors();
 const PlacesPage = () => {
   const [places, setPlaces] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -33,7 +35,7 @@ const PlacesPage = () => {
       <AccountNav />
       <div className="text-center ">
         <Link
-          className="inline-flex gap-1 rounded-full bg-primary py-2 px-6 text-white"
+          className="inline-flex gap-1 rounded-full bg-primary px-6 py-2 text-white"
           to={'/account/places/new'}
         >
           <svg
@@ -55,7 +57,7 @@ const PlacesPage = () => {
       </div>
       <div className="mx-4 mt-4">
         {places.length > 0 &&
-          places.map((place) => <InfoCard place={place} key={place._id} />)}
+          places.map((place) => <InfoCard place={place} key={place.id} />)}
       </div>
     </div>
   );

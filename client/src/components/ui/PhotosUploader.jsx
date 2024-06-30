@@ -2,32 +2,69 @@ import React, { useState } from 'react';
 
 import Image from './Image';
 import axiosInstance from '../../utils/axios';
+import { setupInterceptors } from '@/utils/setupInterceptors';
+import AWS from 'aws-sdk';
+import global from 'global';
+import { Buffer } from 'buffer';
+
+setupInterceptors();
+const S3_BUCKET = 'dalvacation-home-profile';
+const REGION = 'us-east-1';
+
+// Ensure global and Buffer are available in the window
+window.global = window;
+window.Buffer = Buffer;
+
+AWS.config.update({
+  accessKeyId: 'AKIAYS2NSDRXTXLYXBZ7',
+  secretAccessKey: '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',
+});
+
+const myBucket = new AWS.S3({
+  params: { Bucket: S3_BUCKET },
+  region: REGION,
+});
+
+const uploadFileS3 = (file) => {
+  return new Promise((resolve, reject) => {
+    const params = {
+      Body: file,
+      Bucket: S3_BUCKET,
+      Key: file.name,
+    };
+
+    myBucket
+      .putObject(params)
+      .on('httpUploadProgress', (evt) => {
+        console.log(
+          'Progress:',
+          Math.round((evt.loaded / evt.total) * 100) + '%',
+        );
+      })
+      .send((err, data) => {
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else {
+          const fileUrl = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${file.name}`;
+          resolve(fileUrl);
+        }
+      });
+  });
+};
 
 const PhotosUploader = ({ addedPhotos, setAddedPhotos }) => {
-  const [photoLink, setphotoLink] = useState('');
-
-  const addPhotoByLink = async (e) => {
-    e.preventDefault();
-    const { data: filename } = await axiosInstance.post('/upload-by-link', {
-      link: photoLink,
-    });
-    setAddedPhotos((prev) => {
-      return [...prev, filename];
-    });
-    setphotoLink('');
-  };
+  const [photoLink, setPhotoLink] = useState('');
 
   const uploadPhoto = async (e) => {
     const files = e.target.files;
-    const data = new FormData(); // creating new form data
+    const uploadedFiles = [];
     for (let i = 0; i < files.length; i++) {
-      data.append('photos', files[i]); // adding all the photos to data one by one
+      const fileUrl = await uploadFileS3(files[i]);
+      uploadedFiles.push(fileUrl);
     }
-    const { data: filenames } = await axiosInstance.post('/upload', data, {
-      headers: { 'Content-type': 'multipart/form-data' },
-    });
     setAddedPhotos((prev) => {
-      return [...prev, ...filenames];
+      return [...prev, ...uploadedFiles];
     });
   };
 
@@ -46,10 +83,10 @@ const PhotosUploader = ({ addedPhotos, setAddedPhotos }) => {
 
   return (
     <>
-      <div className="flex gap-2">
+      {/* <div className="flex gap-2">
         <input
           value={photoLink}
-          onChange={(e) => setphotoLink(e.target.value)}
+          onChange={(e) => setPhotoLink(e.target.value)}
           type="text"
           placeholder="Add using a link ...jpg"
         />
@@ -59,7 +96,7 @@ const PhotosUploader = ({ addedPhotos, setAddedPhotos }) => {
         >
           Add&nbsp;photo
         </button>
-      </div>
+      </div> */}
       <div className="mt-2 grid grid-cols-3 gap-2 md:grid-cols-4 lg:grid-cols-6 ">
         {addedPhotos?.length > 0 &&
           addedPhotos.map((link) => (

@@ -64,7 +64,7 @@ const EditProfileDialog = () => {
       const userDetails = {
         name: userData.name,
         password: userData.password,
-        picture: pictureUrl,
+        picture: pictureUrl.url,
       };
 
       const res = await updateUser(userDetails);

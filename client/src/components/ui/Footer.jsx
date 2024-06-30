@@ -20,7 +20,7 @@ const Footer = () => {
             </p>
             <p>
               <span className="cursor-pointer font-normal text-gray-700 decoration-1 underline-offset-1 hover:underline">
-                Air cover
+                Dal cover
               </span>
             </p>
             <p>
@@ -48,12 +48,12 @@ const Footer = () => {
             <strong className="font-medium">Hosting</strong>
             <p>
               <span className="cursor-pointer font-normal text-gray-700 decoration-1 underline-offset-1 hover:underline">
-                Airbnb your home
+                Dal your home
               </span>
             </p>
             <p>
               <span className="cursor-pointer font-normal text-gray-700 decoration-1 underline-offset-1 hover:underline">
-                AirCover for Hosts
+                DalCover for Hosts
               </span>
             </p>
             <p>
@@ -73,7 +73,7 @@ const Footer = () => {
             </p>
           </div>
           <div className="flex flex-col gap-1">
-            <strong className="font-medium">Airbnb</strong>
+            <strong className="font-medium">Dal Vacation Home</strong>
             <p>
               <span className="cursor-pointer font-normal text-gray-700 decoration-1 underline-offset-1 hover:underline">
                 Newsroom
@@ -96,7 +96,7 @@ const Footer = () => {
             </p>
             <p>
               <span className="cursor-pointer font-normal text-gray-700 decoration-1 underline-offset-1 hover:underline">
-                Airbnb.org emergency stays
+                Dalvacationhome.org emergency stays
               </span>
             </p>
           </div>
@@ -121,7 +121,7 @@ const Footer = () => {
                   d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"
                 />
               </svg>
-              English(IN) <span className="mx-4">₹ INR</span>
+              English(IN) <span className="mx-4">$ INR</span>
             </div>
             <div className="flex gap-3">
               {/* facebook icon */}
@@ -154,7 +154,7 @@ const Footer = () => {
           </div>
 
           <div className="flex w-full flex-col gap-2 px-1 font-normal text-gray-700 md:w-auto md:flex-row md:items-center md:gap-8">
-            <p className="text-sm">&copy; 2023 Airbnb, Inc.</p>
+            <p className="text-sm">&copy; 2024 Dal Vacation Home, Inc.</p>
             <div>
               <ul className=" flex gap-6 text-sm text-gray-700">
                 <li className="cursor-pointer text-gray-700 decoration-1 underline-offset-1 hover:underline md:list-disc">

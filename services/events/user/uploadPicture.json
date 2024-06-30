@@ -1,0 +1,58 @@
+{
+  "resource": "/{proxy+}",
+  "path": "/user/upload-picture",
+  "httpMethod": "POST",
+  "headers": {
+    "accept": "application/json, text/plain, */*",
+    "accept-language": "en-US,en;q=0.9",
+    "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjMjQ5MmZlLWExZTAtNDZlOS1iNzU0LTczOGQ0ZDA2MjE4NyIsImlhdCI6MTcxOTA5OTg0MCwiZXhwIjoxNzIwODI3ODQwfQ.HYi4KI4K12u-4mhicdfLqi1oPcT_cToAkx0WsrRUbaA",
+    "content-type": "multipart/form-data; boundary=----WebKitFormBoundaryfpU92XL7xCQe29Tf",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site",
+    "Referer": "https://dal-vacation-home-service-konfsid46q-ue.a.run.app//",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "multiValueHeaders": null,
+  "queryStringParameters": null,
+  "multiValueQueryStringParameters": null,
+  "pathParameters": {
+    "proxy": "user/upload-picture"
+  },
+  "stageVariables": null,
+  "requestContext": {
+    "resourcePath": "/{proxy+}",
+    "httpMethod": "POST",
+    "extendedRequestId": "request-id",
+    "requestTime": "29/Jun/2024:12:00:00 +0000",
+    "path": "/prod/user/upload-picture",
+    "accountId": "account-id",
+    "protocol": "HTTP/1.1",
+    "stage": "prod",
+    "domainPrefix": "testPrefix",
+    "requestTimeEpoch": 1598476682568,
+    "requestId": "request-id",
+    "identity": {
+      "cognitoIdentityPoolId": null,
+      "accountId": null,
+      "cognitoIdentityId": null,
+      "caller": null,
+      "sourceIp": "IP",
+      "principalOrgId": null,
+      "accessKey": null,
+      "cognitoAuthenticationType": null,
+      "cognitoAuthenticationProvider": null,
+      "userArn": null,
+      "userAgent": "agent",
+      "user": null
+    },
+    "domainName": "testPrefix.testDomainName",
+    "apiId": "api-id"
+  },
+  "body": "----WebKitFormBoundaryfpU92XL7xCQe29Tf\r\nContent-Disposition: form-data; name=\"picture\"; filename=\"01.png\"\r\nContent-Type: image/png\r\n\r\niVBORw0KGgoAAAANSUhEUgAAAAMAAAAHCAYAAADNufepAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYSURBVBhXY5SUlPzPAAVMUBoMKOQwMAAAc5QBWH01k54AAAAASUVORK5CYII=\r\n----WebKitFormBoundaryfpU92XL7xCQe29Tf--\r\n",
+  "isBase64Encoded": true
+}

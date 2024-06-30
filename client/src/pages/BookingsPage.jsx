@@ -6,6 +6,9 @@ import PlaceImg from '@/components/ui/PlaceImg';
 import BookingDates from '@/components/ui/BookingDates';
 import Spinner from '@/components/ui/Spinner';
 import axiosInstance from '@/utils/axios';
+import { setupInterceptors } from '@/utils/setupInterceptors';
+
+setupInterceptors();
 
 const BookingsPage = () => {
   const [bookings, setBookings] = useState([]);
@@ -15,7 +18,7 @@ const BookingsPage = () => {
     const getBookings = async () => {
       try {
         const { data } = await axiosInstance.get('/bookings');
-        setBookings(data.booking);
+        setBookings(data.bookings);
         setLoading(false);
       } catch (error) {
         console.log('Error: ', error);
@@ -34,9 +37,9 @@ const BookingsPage = () => {
         {bookings?.length > 0 ? (
           bookings.map((booking) => (
             <Link
-              to={`/account/bookings/${booking._id}`}
+              to={`/account/bookings/${booking.id}`}
               className="mx-4 my-8 flex h-28 gap-4 overflow-hidden rounded-2xl bg-gray-200 md:h-40 lg:mx-0"
-              key={booking._id}
+              key={booking.id}
             >
               <div className="w-2/6 md:w-1/6">
                 {booking?.place?.photos[0] && (
@@ -72,7 +75,7 @@ const BookingsPage = () => {
                         />
                       </svg>
                       <span className="text-xl md:text-2xl">
-                        Total price: ₹{booking.price}
+                        Total price: ${booking.price}
                       </span>
                     </div>
                   </div>

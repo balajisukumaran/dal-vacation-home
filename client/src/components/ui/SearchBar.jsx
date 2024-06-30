@@ -3,6 +3,10 @@ import React, { useState } from 'react';
 import axiosInstance from '@/utils/axios';
 import { usePlaces } from '../../../hooks';
 
+import { setupInterceptors } from '@/utils/setupInterceptors';
+
+setupInterceptors();
+
 const SearchBar = () => {
   const Places = usePlaces();
   const { setPlaces, setLoading } = Places;
@@ -35,14 +39,14 @@ const SearchBar = () => {
           <input
             type="search"
             placeholder="Where you want to go?"
-            className="h-full w-full border-none py-2 px-4 text-sm  focus:outline-none md:text-lg"
+            className="h-full w-full border-none px-4 py-2 text-sm  focus:outline-none md:text-lg"
             onChange={(e) => handleSearch(e)}
             value={searchText}
           />
         </div>
         <div className="bg-blue flex cursor-pointer  items-center bg-primary text-white">
           <button
-            className="flex rounded-r-full bg-primary py-2 px-4 md:p-2"
+            className="flex rounded-r-full bg-primary px-4 py-2 md:p-2"
             onClick={handleSearch}
           >
             <svg

@@ -1,6 +1,8 @@
 const Booking = require("../../layers/nodejs/models/Booking");
 const setUp = require("../../layers/nodejs/index");
 const middlewares = require("../../layers/nodejs/middlewares/user");
+const { v4: uuidv4 } = require("uuid");
+
 setUp();
 
 exports.PostItemHandler = async (event) => {
@@ -32,20 +34,20 @@ exports.PostItemHandler = async (event) => {
 
   try {
     const userData = loggedInUser;
-    const { place, checkIn, checkOut, numOfGuests, name, phone, price } =
+    const { place, checkIn, checkOut, noOfGuests, name, phone, price } =
       JSON.parse(event.body);
 
     const booking = new Booking({
+      id: uuidv4(), // Explicitly set the ID
       user: userData.id,
       place: place,
-      checkIn: checkIn,
-      checkOut: checkOut,
-      numOfGuests: numOfGuests,
+      checkIn: new Date(checkIn),
+      checkOut: new Date(checkOut),
+      numOfGuests: noOfGuests,
       name: name,
       phone: phone,
       price: price,
     });
-
     await booking.save();
 
     response = {
@@ -56,7 +58,7 @@ exports.PostItemHandler = async (event) => {
         "Access-Control-Allow-Methods": process.env.ALLOWED_METHODS,
         "Access-Control-Allow-Credentials": process.env.ALLOWED_CREDENTIALS,
       },
-      body: JSON.stringify(booking),
+      body: JSON.stringify({ booking }), // Returning booking ID
     };
   } catch (err) {
     console.error("Error:", err);

@@ -5,8 +5,10 @@ import { toast } from 'react-toastify';
 
 import { useAuth } from '../../../hooks';
 import axiosInstance from '@/utils/axios';
+import { setupInterceptors } from '@/utils/setupInterceptors';
 import DatePickerWithRange from './DatePickerWithRange';
 
+setupInterceptors();
 const BookingWidget = ({ place }) => {
   const [dateRange, setDateRange] = useState({ from: null, to: null });
   const [bookingData, setBookingData] = useState({
@@ -18,7 +20,7 @@ const BookingWidget = ({ place }) => {
   const { user } = useAuth();
 
   const { noOfGuests, name, phone } = bookingData;
-  const { _id: id, price } = place;
+  const { id: id, price } = place;
 
   useEffect(() => {
     if (user) {
@@ -62,9 +64,12 @@ const BookingWidget = ({ place }) => {
     }
 
     try {
+      const checkInDate = new Date(dateRange.from);
+      const checkOutDate = new Date(dateRange.to);
+
       const response = await axiosInstance.post('/bookings', {
-        checkIn: dateRange.from,
-        checkOut: dateRange.to,
+        checkIn: checkInDate,
+        checkOut: checkOutDate,
         noOfGuests,
         name,
         phone,
@@ -72,7 +77,7 @@ const BookingWidget = ({ place }) => {
         price: numberOfNights * price,
       });
 
-      const bookingId = response.data.booking._id;
+      const bookingId = response.data.booking.id;
 
       setRedirect(`/account/bookings/${bookingId}`);
       toast('Congratulations! Enjoy your trip.');
@@ -89,13 +94,13 @@ const BookingWidget = ({ place }) => {
   return (
     <div className="rounded-2xl bg-white p-4 shadow-xl">
       <div className="text-center text-xl">
-        Price: <span className="font-semibold">₹{place.price}</span> / per night
+        Price: <span className="font-semibold">${place.price}</span> / per night
       </div>
       <div className="mt-4 rounded-2xl border">
         <div className="flex w-full ">
           <DatePickerWithRange setDateRange={setDateRange} />
         </div>
-        <div className="border-t py-3 px-4">
+        <div className="border-t px-4 py-3">
           <label>Number of guests: </label>
           <input
             type="number"
@@ -107,7 +112,7 @@ const BookingWidget = ({ place }) => {
             onChange={handleBookingData}
           />
         </div>
-        <div className="border-t py-3 px-4">
+        <div className="border-t px-4 py-3">
           <label>Your full name: </label>
           <input
             type="text"
@@ -126,7 +131,7 @@ const BookingWidget = ({ place }) => {
       </div>
       <button onClick={handleBooking} className="primary mt-4">
         Book this place
-        {numberOfNights > 0 && <span> ₹{numberOfNights * place.price}</span>}
+        {numberOfNights > 0 && <span> ${numberOfNights * place.price}</span>}
       </button>
     </div>
   );

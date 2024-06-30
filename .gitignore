@@ -4,3 +4,4 @@ client/dist
 .terraform/
 terraform.tfstate
 terraform.tfstate.backup
+services/.aws-sam

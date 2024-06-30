@@ -47,21 +47,17 @@ export const Header = () => {
       >
         <a href="/" className="flex items-center gap-1">
           <img
-            className="h-8 w-8 md:h-10 md:w-10"
-            src="https://cdn-icons-png.flaticon.com/512/2111/2111320.png"
-            alt=""
+            style={{ height: '120px', position: 'absolute' }}
+            src="https://dalvacation-home-profile.s3.amazonaws.com/Home.png"
+            alt="Home"
           />
-
-          <span className="hidden text-2xl font-bold text-red-500 md:block">
-            airbnb
-          </span>
         </a>
 
         {showSearchBar && <SearchBar />}
 
         <Link
           to={user ? '/account' : '/login'}
-          className="w-50 flex h-full items-center gap-2 rounded-full border-gray-300 py-1 px-2 md:border"
+          className="w-50 flex h-full items-center gap-2 rounded-full border-gray-300 px-2 py-1 md:border"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

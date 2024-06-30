@@ -14,7 +14,7 @@ const bookingSchema = new dynamoose.Schema({
     required: true,
     index: {
       global: true,
-      name: "OwnerIndex",
+      name: "UserIndex",
     },
   },
   place: {
