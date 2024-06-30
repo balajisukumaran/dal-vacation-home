@@ -13,7 +13,6 @@ export default defineConfig({
   },
   define: {
     'process.env': {},
-    global: 'globalThis',
   },
   optimizeDeps: {
     include: ['buffer', 'global'],

@@ -4,7 +4,7 @@ import Image from './Image';
 import axiosInstance from '../../utils/axios';
 import { setupInterceptors } from '@/utils/setupInterceptors';
 import AWS from 'aws-sdk';
-import global from 'global';
+//import global from 'global';
 import { Buffer } from 'buffer';
 
 setupInterceptors();

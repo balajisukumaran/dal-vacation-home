@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import jwt_decode from 'jwt-decode';
 import AWS from 'aws-sdk';
-import global from 'global';
 import { Buffer } from 'buffer';
 
 import { UserContext } from '@/providers/UserProvider';
