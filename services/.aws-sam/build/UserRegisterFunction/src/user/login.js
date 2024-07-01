@@ -11,7 +11,7 @@ exports.PostItemHandler = async (event) => {
     return {
       statusCode: 405,
       headers: {
-        "Access-Control-Allow-Origin": process.env.CLIENT_URL,
+        "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers": process.env.ALLOWED_HEADERS,
         "Access-Control-Allow-Methods": process.env.ALLOWED_METHODS,
         "Access-Control-Allow-Credentials": process.env.ALLOWED_CREDENTIALS,
@@ -32,7 +32,7 @@ exports.PostItemHandler = async (event) => {
       return {
         statusCode: 400,
         headers: {
-          "Access-Control-Allow-Origin": process.env.CLIENT_URL,
+          "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Headers": process.env.ALLOWED_HEADERS,
           "Access-Control-Allow-Methods": process.env.ALLOWED_METHODS,
           "Access-Control-Allow-Credentials": process.env.ALLOWED_CREDENTIALS,
@@ -50,7 +50,7 @@ exports.PostItemHandler = async (event) => {
       return {
         statusCode: 400,
         headers: {
-          "Access-Control-Allow-Origin": process.env.CLIENT_URL,
+          "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Headers": process.env.ALLOWED_HEADERS,
           "Access-Control-Allow-Methods": process.env.ALLOWED_METHODS,
           "Access-Control-Allow-Credentials": process.env.ALLOWED_CREDENTIALS,
@@ -70,7 +70,7 @@ exports.PostItemHandler = async (event) => {
       return {
         statusCode: 401,
         headers: {
-          "Access-Control-Allow-Origin": process.env.CLIENT_URL,
+          "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Headers": process.env.ALLOWED_HEADERS,
           "Access-Control-Allow-Methods": process.env.ALLOWED_METHODS,
           "Access-Control-Allow-Credentials": process.env.ALLOWED_CREDENTIALS,
@@ -91,7 +91,7 @@ exports.PostItemHandler = async (event) => {
     return {
       statusCode: 500,
       headers: {
-        "Access-Control-Allow-Origin": process.env.CLIENT_URL,
+        "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers": process.env.ALLOWED_HEADERS,
         "Access-Control-Allow-Methods": process.env.ALLOWED_METHODS,
         "Access-Control-Allow-Credentials": process.env.ALLOWED_CREDENTIALS,

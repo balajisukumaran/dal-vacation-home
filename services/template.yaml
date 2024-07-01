@@ -29,15 +29,12 @@ Resources:
   DalVacationHomeApi:
     Type: AWS::Serverless::Api
     Properties:
-      Name: "ExampleApi"
+      Name: "DalVacationHomeApi"
       StageName: "Prod"
-      BinaryMediaTypes:
-        - "multipart/form-data"
-        - "application/json"
       Cors:
         AllowMethods: "'GET,POST,PUT,DELETE,OPTIONS'"
         AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
-        AllowOrigin: "'https://dal-vacation-home-service-konfsid46q-ue.a.run.app/'"
+        AllowOrigin: "'*'"
         AllowCredentials: "'true'"
 
   UserRegisterFunction:
@@ -62,7 +59,7 @@ Resources:
           CLOUDINARY_NAME: dtyqwxumd
           CLOUDINARY_API_KEY: 566628451461642
           CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
-          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
           ALLOWED_CREDENTIALS: true
@@ -97,7 +94,7 @@ Resources:
           CLOUDINARY_NAME: dtyqwxumd
           CLOUDINARY_API_KEY: 566628451461642
           CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
-          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
           ALLOWED_CREDENTIALS: true
@@ -131,7 +128,7 @@ Resources:
           CLOUDINARY_NAME: dtyqwxumd
           CLOUDINARY_API_KEY: 566628451461642
           CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
-          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
           ALLOWED_CREDENTIALS: true
@@ -165,7 +162,7 @@ Resources:
           CLOUDINARY_NAME: dtyqwxumd
           CLOUDINARY_API_KEY: 566628451461642
           CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
-          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
           ALLOWED_CREDENTIALS: true
@@ -199,7 +196,7 @@ Resources:
           CLOUDINARY_NAME: dtyqwxumd
           CLOUDINARY_API_KEY: 566628451461642
           CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
-          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
           ALLOWED_CREDENTIALS: true
@@ -234,7 +231,7 @@ Resources:
           CLOUDINARY_NAME: dtyqwxumd
           CLOUDINARY_API_KEY: 566628451461642
           CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
-          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
           ALLOWED_CREDENTIALS: true
@@ -269,7 +266,7 @@ Resources:
           CLOUDINARY_NAME: dtyqwxumd
           CLOUDINARY_API_KEY: 566628451461642
           CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
-          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
           ALLOWED_CREDENTIALS: true
@@ -304,7 +301,7 @@ Resources:
           CLOUDINARY_NAME: dtyqwxumd
           CLOUDINARY_API_KEY: 566628451461642
           CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
-          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
           ALLOWED_CREDENTIALS: true
@@ -339,7 +336,7 @@ Resources:
           CLOUDINARY_NAME: dtyqwxumd
           CLOUDINARY_API_KEY: 566628451461642
           CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
-          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
           ALLOWED_CREDENTIALS: true
@@ -374,7 +371,7 @@ Resources:
           CLOUDINARY_NAME: dtyqwxumd
           CLOUDINARY_API_KEY: 566628451461642
           CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
-          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
           ALLOWED_CREDENTIALS: true
@@ -409,7 +406,7 @@ Resources:
           CLOUDINARY_NAME: dtyqwxumd
           CLOUDINARY_API_KEY: 566628451461642
           CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
-          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
           ALLOWED_CREDENTIALS: true
@@ -444,7 +441,7 @@ Resources:
           CLOUDINARY_NAME: dtyqwxumd
           CLOUDINARY_API_KEY: 566628451461642
           CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
-          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
           ALLOWED_CREDENTIALS: true
@@ -479,7 +476,7 @@ Resources:
           CLOUDINARY_NAME: dtyqwxumd
           CLOUDINARY_API_KEY: 566628451461642
           CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
-          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app/
+          CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
           ALLOWED_CREDENTIALS: true

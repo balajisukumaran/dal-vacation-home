@@ -95,7 +95,7 @@ const PlacesFormPage = () => {
     }
     setLoading(true);
     axiosInstance.get(`/places/${id}`).then((response) => {
-      const { place } = response.data;
+      const place = response.data;
       // update the state of formData
       for (let key in formData) {
         if (place.hasOwnProperty(key)) {
