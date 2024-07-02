@@ -38,15 +38,16 @@ exports.PostItemHandler = async (event) => {
       JSON.parse(event.body);
 
     const booking = new Booking({
-      id: uuidv4(), // Explicitly set the ID
-      user: userData.id,
-      place: place,
+      bookingId: uuidv4(), // Explicitly set the ID
+      userId: userData.id,
+      placeId: place,
       checkIn: new Date(checkIn),
       checkOut: new Date(checkOut),
       numOfGuests: noOfGuests,
       name: name,
       phone: phone,
       price: price,
+      status: "pending",
     });
     await booking.save();
 

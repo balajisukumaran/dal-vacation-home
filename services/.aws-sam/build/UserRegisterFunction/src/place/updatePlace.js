@@ -32,9 +32,9 @@ exports.PutItemHandler = async (event) => {
   const loggedInUser = loggedIn[1];
 
   try {
-    const userId = loggedInUser.id;
+    const userId = loggedInUser.userId;
     const {
-      id,
+      placeId,
       title,
       address,
       addedPhotos,
@@ -45,10 +45,10 @@ exports.PutItemHandler = async (event) => {
       price,
     } = JSON.parse(event.body);
 
-    const places = await Place.query("id").eq(id).exec();
+    const places = await Place.query("placeId").eq(placeId).exec();
     const place = places[0];
 
-    if (place && userId === place.owner.toString()) {
+    if (place && userId === place.ownerId.toString()) {
       place.title = title;
       place.address = address;
       place.photos = addedPhotos;

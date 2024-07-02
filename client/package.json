@@ -18,6 +18,7 @@
     "@react-oauth/google": "^0.11.1",
     "@tailwindcss/line-clamp": "^0.4.4",
     "autoprefixer": "^10.4.13",
+    "aws-amplify": "^4.3.8",
     "axios": "^1.2.5",
     "buffer": "^6.0.3",
     "class-variance-authority": "^0.7.0",

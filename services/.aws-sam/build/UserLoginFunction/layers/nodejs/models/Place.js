@@ -3,12 +3,12 @@ const { v4: uuidv4 } = require("uuid");
 
 const placeSchema = new dynamoose.Schema(
   {
-    id: {
+    placeId: {
       type: String,
       hashKey: true,
       default: uuidv4,
     },
-    owner: {
+    ownerId: {
       type: String,
       required: true,
       index: {

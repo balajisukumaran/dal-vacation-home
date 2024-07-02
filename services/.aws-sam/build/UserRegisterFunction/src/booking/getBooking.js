@@ -49,7 +49,9 @@ exports.GetItemHandler = async (event) => {
     }
 
     // Fetch bookings for the user
-    const bookings = await Booking.query("user").eq(loggedInUser.id).exec();
+    const bookings = await Booking.query("userId")
+      .eq(loggedInUser.userId)
+      .exec();
 
     // Fetch related place data for each booking
     const bookingsWithPlaces = await Promise.all(

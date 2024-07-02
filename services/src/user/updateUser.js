@@ -34,22 +34,21 @@ exports.PutItemHandler = async (event) => {
 
   try {
     const userId = loggedInUser.id;
-    const { name, password, email, picture } = JSON.parse(event.body);
+    const { firstName, lastName, email, picture } = JSON.parse(event.body);
 
     const users = await User.query("email").eq(email).exec();
     const user = users[0];
 
     if (user) {
-      user.name = name;
-      if (picture && !password) {
+      if (picture) {
         user.picture = picture;
-      } else if (password && !picture) {
-        user.password = password;
-      } else {
-        user.picture = picture;
-        user.password = password;
       }
-
+      if (firstName && firstName !== "") {
+        user.firstName = firstName;
+      }
+      if (lastName && lastName !== "") {
+        user.lastName = lastName;
+      }
       await user.save();
 
       const token = await user.getJwtToken(); // Generate JWT token after saving

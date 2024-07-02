@@ -20,6 +20,10 @@ import { PlaceProvider } from './providers/PlaceProvider';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { getItemFromLocalStorage } from './utils';
 import NotFoundPage from './pages/NotFoundPage';
+import { Amplify } from 'aws-amplify';
+import awsExports from './aws-exports';
+
+Amplify.configure(awsExports);
 
 setupInterceptors();
 

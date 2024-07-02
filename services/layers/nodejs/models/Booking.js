@@ -1,15 +1,13 @@
 const dynamoose = require("dynamoose");
-const User = require("./User");
-const Place = require("./Place");
 const { v4: uuidv4 } = require("uuid");
 
 const bookingSchema = new dynamoose.Schema({
-  id: {
+  bookingId: {
     type: String,
     hashKey: true,
     default: uuidv4,
   },
-  user: {
+  userId: {
     type: String,
     required: true,
     index: {
@@ -17,7 +15,7 @@ const bookingSchema = new dynamoose.Schema({
       name: "UserIndex",
     },
   },
-  place: {
+  placeId: {
     type: String,
     required: true,
     index: {
@@ -43,6 +41,14 @@ const bookingSchema = new dynamoose.Schema({
   },
   price: {
     type: Number,
+    required: true,
+  },
+  numOfGuests: {
+    type: Number,
+    required: true,
+  },
+  status: {
+    type: String,
     required: true,
   },
 });

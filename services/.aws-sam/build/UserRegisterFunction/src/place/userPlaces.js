@@ -32,10 +32,10 @@ exports.GetItemHandler = async (event) => {
   const loggedInUser = loggedIn[1];
 
   try {
-    const userId = loggedInUser.id;
+    const userId = loggedInUser.userId;
 
     // Check if user is already registered
-    const userPlaces = await Place.query("owner").eq(userId).exec();
+    const userPlaces = await Place.query("ownerId").eq(userId).exec();
 
     response = {
       statusCode: 200,

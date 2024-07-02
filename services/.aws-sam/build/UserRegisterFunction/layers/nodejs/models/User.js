@@ -6,10 +6,18 @@ const { v4: uuidv4 } = require("uuid");
 // Define the schema
 const userSchema = new dynamoose.Schema(
   {
-    id: {
+    userId: {
       type: String,
       hashKey: true,
       default: uuidv4,
+    },
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
     },
     name: {
       type: String,
@@ -23,7 +31,7 @@ const userSchema = new dynamoose.Schema(
         name: "EmailIndex",
       },
     },
-    password: {
+    passwordHash: {
       type: String,
       required: true,
     },
@@ -31,6 +39,20 @@ const userSchema = new dynamoose.Schema(
       type: String,
       default:
         "https://res.cloudinary.com/rahul14019/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1695133265/pngwing.com_zi4cre.png",
+    },
+    questionId: {
+      type: String,
+      index: {
+        global: true,
+        name: "QuestionIndex",
+      },
+    },
+    answerHash: {
+      type: String,
+    },
+    isAgent: {
+      type: String,
+      required: true,
     },
   },
   {
@@ -43,19 +65,19 @@ const User = dynamoose.model("User", userSchema);
 
 // Manual pre-save hook to hash the password
 User.prototype.hashPassword = async function () {
-  this.password = await bcrypt.hash(this.password, 10);
+  this.passwordHash = await bcrypt.hash(this.passwordHash, 10);
 };
 
 // Method to generate JWT token
 User.prototype.getJwtToken = async function () {
-  return jwt.sign({ id: this.id }, process.env.JWT_SECRET, {
+  return jwt.sign({ userId: this.userId }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRY,
   });
 };
 
 // validate the password
 User.prototype.isValidatedPassword = async function (userSentPassword) {
-  return await bcrypt.compare(userSentPassword, this.password);
+  return await bcrypt.compare(userSentPassword, this.passwordHash);
 };
 
 module.exports = User;

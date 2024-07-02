@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import jwt_decode from 'jwt-decode';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
-
 import { UserContext } from '@/providers/UserProvider';
 import { PlaceContext } from '@/providers/PlaceProvider';
 import { setupInterceptors } from '@/utils/setupInterceptors';
@@ -11,6 +10,7 @@ import {
   removeItemFromLocalStorage,
 } from '@/utils';
 import axiosInstance from '@/utils/axios';
+import { Auth } from 'aws-amplify';
 
 const S3_BUCKET = 'dalvacation-home-profile';
 const REGION = 'us-east-1';
@@ -63,11 +63,22 @@ export const useProvideAuth = () => {
     const { name, email, password } = formData;
 
     try {
+      const { user } = await Auth.signUp({
+        username: email,
+        password,
+        attributes: {
+          email,
+          name,
+        },
+      });
+      console.log('User signed up successfully:', user);
+
       const { data } = await axiosInstance.post('user/register', {
         name,
         email,
         password,
       });
+
       if (data.user && data.token) {
         setUser(data.user);
         setItemsInLocalStorage('user', data.user);

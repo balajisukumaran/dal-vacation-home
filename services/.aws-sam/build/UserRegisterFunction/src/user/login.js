@@ -1,7 +1,7 @@
 const User = require("../../layers/nodejs/models/User");
 const cookieToken = require("../../layers/nodejs/utils/cookieToken");
 const setUp = require("../../layers/nodejs/index");
-
+const middleware = require("../../layers/nodejs/middlewares/user");
 setUp();
 
 exports.PostItemHandler = async (event) => {
@@ -62,6 +62,8 @@ exports.PostItemHandler = async (event) => {
     }
 
     const user = userExists[0];
+
+    authUser = await middleware.login(email, password);
 
     // match the password
     const isPasswordCorrect = await user.isValidatedPassword(password);

@@ -1,6 +1,7 @@
 const User = require("../../layers/nodejs/models/User");
 const cookieToken = require("../../layers/nodejs/utils/cookieToken");
 const setUp = require("../../layers/nodejs/index");
+const middleware = require("../../layers/nodejs/middlewares/user");
 
 setUp();
 
@@ -25,9 +26,11 @@ exports.PostItemHandler = async (event) => {
   console.info("Received event:", event);
 
   try {
-    const { name, email, password } = JSON.parse(event.body);
+    const { firstName, lastName, email, password, isAgent } = JSON.parse(
+      event.body
+    );
 
-    if (!name || !email || !password) {
+    if (!firstName || !lastName || !email || !password) {
       return {
         statusCode: 400,
         headers: {
@@ -44,6 +47,8 @@ exports.PostItemHandler = async (event) => {
 
     // Check if user is already registered
     const userExists = await User.query("email").eq(email).exec();
+
+    middleware.register(firstName, lastName, email, password, isAgent);
 
     if (userExists.length !== 0) {
       return {
@@ -62,9 +67,12 @@ exports.PostItemHandler = async (event) => {
 
     // Create and save new user
     const user = new User({
-      name,
-      email,
-      password,
+      firstName: firstName,
+      lastName: lastName,
+      name: firstName + " " + lastName,
+      email: email,
+      passwordHash: password,
+      isAgent: isAgent,
     });
 
     await user.hashPassword();

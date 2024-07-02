@@ -44,14 +44,14 @@ exports.PostItemHandler = async (event) => {
     } = JSON.parse(event.body);
 
     const place = new Place({
-      owner: userData.id,
+      ownerId: userData.id,
       title: title,
       address: address,
       photos: addedPhotos,
       description: description,
       perks: perks,
       extraInfo: extraInfo,
-      maxGuests: maxGuests,
+      maxGuests: parseInt(maxGuests),
       price: price,
     });
 
