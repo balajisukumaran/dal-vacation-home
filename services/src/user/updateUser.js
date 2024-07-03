@@ -52,7 +52,7 @@ exports.PutItemHandler = async (event) => {
         },
         body: JSON.stringify({
           success: true,
-          user,
+          loggedInUser,
         }),
       };
     } else {

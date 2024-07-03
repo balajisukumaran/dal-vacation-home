@@ -1,5 +1,5 @@
 {
-  "body": "{\n  \"name\": \"Balaji Sukumaran\",\n  \"password\": \"\",\n  \"email\": \"sbalaji@gmail.com\",\n  \"picture\": \"https://dalvacation-home-profile.s3.amazonaws.com/profile/effa3407-2080-466d-bbd5-b593312d8a00-test.jpg\"\n}",
+  "body": "{\n \"picture\": \"https://dalvacation-home-profile.s3.amazonaws.com/profile/effa3407-2080-466d-bbd5-b593312d8a00-test.jpg\"\n}",
   "resource": "/{proxy+}",
   "path": "/path/to/resource",
   "httpMethod": "PUT",
@@ -14,7 +14,7 @@
     "baz": "qux"
   },
   "headers": {
-    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQzZTJiNWNlLWRhMjQtNGNmMS1iZTk2LTdjZGFmMzE5ZTMxOCIsImlhdCI6MTcxODY2NTE4NiwiZXhwIjoxNzIwMzkzMTg2fQ.7O7CoiYAH7UQGfq4Nbgt8W6hZZaol7usTWjCXEBQ_i4",
+    "Authorization": "Bearer eyJraWQiOiI0N0h4ZjY4d0VNcXlOM3o2Y1lXR0JuYzJ3VjNPMW0rY2MyN2lEd3FoOEtnPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI5NDQ4MTQxOC00MDQxLTcwMzAtY2EzOC1kZjA0MDE5NzNjZjciLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfZnhxZEdQbm5aIiwiY29nbml0bzp1c2VybmFtZSI6Ijk0NDgxNDE4LTQwNDEtNzAzMC1jYTM4LWRmMDQwMTk3M2NmNyIsIm9yaWdpbl9qdGkiOiI3ZDY5OWM4Ny1lNWM0LTQwOTktYTIwMi1mZDRkZGUyNWY2YWYiLCJhdWQiOiI0OWdmMTRzbnQyaGdyMHA0Z3JmOXNsa2N1cSIsImV2ZW50X2lkIjoiMjdjNjRjNmYtOWUwOC00ZDMyLWIxNWQtODhkZTY4ZjA1MDMyIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE3MjAwMjk0MDUsIm5hbWUiOiJ0ZXN0NiIsImV4cCI6MTcyMDAzMzAwNSwiaWF0IjoxNzIwMDI5NDA1LCJqdGkiOiIxYzIyYjdhZS1mNzdhLTQxMGMtOTgxZi1jOGQxMTIxZTY5OGMiLCJlbWFpbCI6InRlc3Q2QGdtYWlsLmNvbSJ9.JYrGUtXG0DKnDWvtDvpOQh9hNYAdEaXxe9ZxAbau6ivuK8NzcmioD4B0LgG1El1Nid8vnT54hHDedspHSNm-qkzJb8yQGehdXkP1E_Smg_h6wK5jYQPdRrLG-KSUN_owAsNssSWtcjA5TSQXAK_N_uHRYwYhss6Imhx-NJFBac4Y0mQGbZdY_dYaBQ-xKZoJmomMu2uXzuGlHFvYiezaGHlbb4Ks5btH_f4Ied8vcW9ISAkWaP4TvXMTeprWlDq4AGbUctWEu2UJOCo4g8dk-mzn0oZM8ncmlsr84cOXWC_zwRWHNiizMPbadeHAYdV7KLikMty7NDRd3YYhQCl1BQ",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
     "Accept-Encoding": "gzip, deflate, sdch",
     "Accept-Language": "en-US,en;q=0.8",

@@ -75,18 +75,10 @@ export const useProvideAuth = () => {
       });
 
       const { data } = await axiosInstance.post('user/register', {
-        firstName,
-        lastName,
+        name,
         email,
         isAgent,
-        jwtToken,
       });
-
-      if (data.user) {
-        setUser(data.user);
-        setItemsInLocalStorage('user', data.user);
-        setItemsInLocalStorage('token', jwtToken);
-      }
 
       return { success: true, message: 'Registration successful' };
     } catch (error) {
@@ -163,7 +155,7 @@ export const useProvideAuth = () => {
   };
 
   const updateUser = async (userDetails) => {
-    const { name, password, picture } = userDetails;
+    const { picture } = userDetails;
     const email = JSON.parse(getItemFromLocalStorage('user')).email;
     try {
       const { data } = await axiosInstance.put('/user/update-user', {

@@ -42,16 +42,16 @@ const EditProfileDialog = () => {
 
   const handleSaveChanges = async () => {
     setLoading(true);
-    const { name, password, confirm_password } = userData;
+    // const { name, password, confirm_password } = userData;
 
-    // Validation
-    if (name.trim() === '') {
-      setLoading(false);
-      return toast.error("Name Can't be empty");
-    } else if (password !== confirm_password) {
-      setLoading(false);
-      return toast.error("Passwords don't match");
-    }
+    // // Validation
+    // if (name.trim() === '') {
+    //   setLoading(false);
+    //   return toast.error("Name Can't be empty");
+    // } else if (password !== confirm_password) {
+    //   setLoading(false);
+    //   return toast.error("Passwords don't match");
+    // }
 
     try {
       // first check if picture has been updated or not
@@ -62,8 +62,6 @@ const EditProfileDialog = () => {
       }
 
       const userDetails = {
-        name: userData.name,
-        password: userData.password,
         picture: pictureUrl.url,
       };
 
@@ -119,7 +117,7 @@ const EditProfileDialog = () => {
         </div>
 
         {/* Update form */}
-        <div className="grid gap-4 py-4">
+        {/* <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
               Name
@@ -158,7 +156,7 @@ const EditProfileDialog = () => {
               onChange={handleUserData}
             />
           </div>
-        </div>
+        </div> */}
         <DialogFooter>
           <Button
             disabled={loading}
