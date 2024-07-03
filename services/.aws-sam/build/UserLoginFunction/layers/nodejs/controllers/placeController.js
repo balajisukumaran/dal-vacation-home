@@ -1,4 +1,4 @@
-const Place = require('../models/Place');
+const Place = require("../models/Place");
 
 // Adds a place in the DB
 exports.addPlace = async (req, res) => {
@@ -15,7 +15,7 @@ exports.addPlace = async (req, res) => {
       price,
     } = req.body;
     const place = await Place.create({
-      owner: userData.id,
+      owner: userData.userId,
       title,
       address,
       photos: addedPhotos,
@@ -30,7 +30,7 @@ exports.addPlace = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({
-      message: 'Internal server error',
+      message: "Internal server error",
       error: err,
     });
   }
@@ -40,11 +40,11 @@ exports.addPlace = async (req, res) => {
 exports.userPlaces = async (req, res) => {
   try {
     const userData = req.user;
-    const id = userData.id;
+    const id = userData.userId;
     res.status(200).json(await Place.find({ owner: id }));
   } catch (err) {
     res.status(500).json({
-      message: 'Internal serever error',
+      message: "Internal serever error",
     });
   }
 };
@@ -53,7 +53,7 @@ exports.userPlaces = async (req, res) => {
 exports.updatePlace = async (req, res) => {
   try {
     const userData = req.user;
-    const userId = userData.id;
+    const userId = userData.userId;
     const {
       id,
       title,
@@ -80,12 +80,12 @@ exports.updatePlace = async (req, res) => {
       });
       await place.save();
       res.status(200).json({
-        message: 'place updated!',
+        message: "place updated!",
       });
     }
   } catch (err) {
     res.status(500).json({
-      message: 'Internal server error',
+      message: "Internal server error",
       error: err,
     });
   }
@@ -100,7 +100,7 @@ exports.getPlaces = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({
-      message: 'Internal server error',
+      message: "Internal server error",
     });
   }
 };
@@ -112,7 +112,7 @@ exports.singlePlace = async (req, res) => {
     const place = await Place.findById(id);
     if (!place) {
       return res.status(400).json({
-        message: 'Place not found',
+        message: "Place not found",
       });
     }
     res.status(200).json({
@@ -120,7 +120,7 @@ exports.singlePlace = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({
-      message: 'Internal serever error',
+      message: "Internal serever error",
     });
   }
 };
@@ -130,15 +130,17 @@ exports.searchPlaces = async (req, res) => {
   try {
     const searchword = req.params.key;
 
-    if (searchword === '') return res.status(200).json(await Place.find())
+    if (searchword === "") return res.status(200).json(await Place.find());
 
-    const searchMatches = await Place.find({ address: { $regex: searchword, $options: "i" } })
+    const searchMatches = await Place.find({
+      address: { $regex: searchword, $options: "i" },
+    });
 
     res.status(200).json(searchMatches);
   } catch (err) {
-    console.log(err)
+    console.log(err);
     res.status(500).json({
-      message: 'Internal serever error 1',
+      message: "Internal serever error 1",
     });
   }
-}
+};

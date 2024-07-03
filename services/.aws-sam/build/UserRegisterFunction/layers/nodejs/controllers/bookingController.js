@@ -1,4 +1,4 @@
-const Booking = require('../models/Booking');
+const Booking = require("../models/Booking");
 
 // Books a place
 exports.createBookings = async (req, res) => {
@@ -8,7 +8,7 @@ exports.createBookings = async (req, res) => {
       req.body;
 
     const booking = await Booking.create({
-      user: userData.id,
+      user: userData.userId,
       place,
       checkIn,
       checkOut,
@@ -23,7 +23,7 @@ exports.createBookings = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({
-      message: 'Internal server error',
+      message: "Internal server error",
       error: err,
     });
   }
@@ -36,19 +36,18 @@ exports.getBookings = async (req, res) => {
     if (!userData) {
       return res
         .status(401)
-        .json({ error: 'You are not authorized to access this page!' });
+        .json({ error: "You are not authorized to access this page!" });
     }
 
-    const booking = await Booking.find({ user: userData.id }).populate('place')
+    const booking = await Booking.find({ user: userData.userId }).populate(
+      "place"
+    );
 
-    res
-      .status(200).json({ booking, success: true })
-
-
+    res.status(200).json({ booking, success: true });
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: 'Internal server error',
+      message: "Internal server error",
       error: err,
     });
   }

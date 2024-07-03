@@ -39,15 +39,16 @@ exports.PostItemHandler = async (event) => {
 
     const booking = new Booking({
       bookingId: uuidv4(), // Explicitly set the ID
-      userId: userData.id,
+      userId: userData.userId,
       placeId: place,
       checkIn: new Date(checkIn),
       checkOut: new Date(checkOut),
-      numOfGuests: noOfGuests,
+      numOfGuests: parseInt(noOfGuests),
       name: name,
       phone: phone,
       price: price,
       status: "pending",
+      email: userData.email,
     });
     await booking.save();
 

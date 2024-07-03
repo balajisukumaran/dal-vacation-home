@@ -63,6 +63,8 @@ export const useProvideAuth = () => {
     const { name, email, password } = formData;
 
     try {
+      let isAgent = 'y';
+
       const { user } = await Auth.signUp({
         username: email,
         password,
@@ -71,42 +73,24 @@ export const useProvideAuth = () => {
           name,
         },
       });
-      console.log('User signed up successfully:', user);
 
       const { data } = await axiosInstance.post('user/register', {
-        name,
+        firstName,
+        lastName,
         email,
-        password,
+        isAgent,
+        jwtToken,
       });
 
-      if (data.user && data.token) {
+      if (data.user) {
         setUser(data.user);
         setItemsInLocalStorage('user', data.user);
-        setItemsInLocalStorage('token', data.token);
+        setItemsInLocalStorage('token', jwtToken);
       }
+
       return { success: true, message: 'Registration successful' };
     } catch (error) {
-      const { message } = error.response.data;
-      return { success: false, message };
-    }
-  };
-
-  const login = async (formData) => {
-    const { email, password } = formData;
-
-    try {
-      const { data } = await axiosInstance.post('user/login', {
-        email,
-        password,
-      });
-      if (data.user && data.token) {
-        setUser(data.user);
-        setItemsInLocalStorage('user', data.user);
-        setItemsInLocalStorage('token', data.token);
-      }
-      return { success: true, message: 'Login successful' };
-    } catch (error) {
-      const { message } = error.response.data;
+      const { message } = error.code;
       return { success: false, message };
     }
   };
@@ -126,6 +110,30 @@ export const useProvideAuth = () => {
       return { success: true, message: 'Login successful' };
     } catch (error) {
       return { success: false, message: error.message };
+    }
+  };
+
+  const login = async (formData) => {
+    const { email, password } = formData;
+
+    try {
+      const user = await Auth.signIn(email, password);
+      const token = user.signInUserSession.idToken.jwtToken; // Get the JWT token
+
+      const { data } = await axiosInstance.post('user/login', {
+        email,
+        token,
+      });
+
+      if (data.user && data.token) {
+        setUser(data.user);
+        setItemsInLocalStorage('user', data.user);
+        setItemsInLocalStorage('token', data.token);
+      }
+      return { success: true, message: 'Login successful' };
+    } catch (error) {
+      const { message } = error.response.data;
+      return { success: false, message };
     }
   };
 
@@ -159,9 +167,6 @@ export const useProvideAuth = () => {
     const email = JSON.parse(getItemFromLocalStorage('user')).email;
     try {
       const { data } = await axiosInstance.put('/user/update-user', {
-        name,
-        password,
-        email,
         picture,
       });
       return data;

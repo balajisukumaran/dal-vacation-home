@@ -1,44 +1,5 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
-const AWS = require("aws-sdk");
-const Amplify = require("aws-amplify");
-
-Amplify.configure({
-  Auth: {
-    userPoolId: "us-east-1_fxqdGPnnZ",
-    userPoolWebClientId: "49gf14snt2hgr0p4grf9slkcuq",
-    region: "us-east-1",
-  },
-});
-
-exports.register = async (firstName, lastName, email, password, isAgent) => {
-  const { user } = await Amplify.Auth.signUp({
-    username: email,
-    password,
-    attributes: {
-      email,
-      firstName,
-      lastName,
-    },
-  });
-};
-
-exports.login = async (email, password) => {
-  const user = await Amplify.Auth.signIn(email, password);
-  const tokens = user.signInUserSession;
-
-  return user;
-
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: "User signed in successfully",
-      idToken: tokens.idToken.jwtToken,
-      accessToken: tokens.accessToken.jwtToken,
-      refreshToken: tokens.refreshToken.token,
-    }),
-  };
-};
 
 // Checks user is logged in based on passed token and set the user in request
 exports.checkLoggedIn = async (event) => {
@@ -63,8 +24,9 @@ exports.checkLoggedIn = async (event) => {
       ];
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const users = await User.query("userId").eq(decoded.userId).exec();
+    // Decode the JWT without verifying its signature
+    const decoded = jwt.decode(token, { complete: true });
+    const users = await User.query("email").eq(decoded.payload.email).exec();
 
     return [null, users[0]];
   } catch (error) {
@@ -87,27 +49,27 @@ exports.checkLoggedIn = async (event) => {
   }
 };
 
-// // Checks user is logged in based on passed token and set the user in request
-// exports.isLoggedIn = async (req, res, next) => {
-//   const token =
-//     req.cookies.token || req.header("Authorization").replace("Bearer ", "");
+// Checks user is logged in based on passed token and set the user in request
+exports.isLoggedIn = async (req, res, next) => {
+  const token =
+    req.cookies.token || req.header("Authorization").replace("Bearer ", "");
 
-//   if (!token) {
-//     return res.status(401).json({
-//       success: false,
-//       message: "Login first to access this page",
-//     });
-//   }
+  if (!token) {
+    return res.status(401).json({
+      success: false,
+      message: "Login first to access this page",
+    });
+  }
 
-//   try {
-//     const decoded = await jwt.verify(token, process.env.JWT_SECRET);
-//     req.user = await User.findById(decoded.userId);
-//     next();
-//   } catch (error) {
-//     console.error("JWT verification error:", error);
-//     return res.status(401).json({
-//       success: false,
-//       message: "Invalid token",
-//     });
-//   }
-// };
+  try {
+    const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+    req.user = await User.findById(decoded.userId);
+    next();
+  } catch (error) {
+    console.error("JWT verification error:", error);
+    return res.status(401).json({
+      success: false,
+      message: "Invalid token",
+    });
+  }
+};

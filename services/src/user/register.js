@@ -1,7 +1,7 @@
 const User = require("../../layers/nodejs/models/User");
 const cookieToken = require("../../layers/nodejs/utils/cookieToken");
 const setUp = require("../../layers/nodejs/index");
-const middleware = require("../../layers/nodejs/middlewares/user");
+const { v4: uuidv4 } = require("uuid");
 
 setUp();
 
@@ -26,11 +26,9 @@ exports.PostItemHandler = async (event) => {
   console.info("Received event:", event);
 
   try {
-    const { firstName, lastName, email, password, isAgent } = JSON.parse(
-      event.body
-    );
+    const { name, email, isAgent } = JSON.parse(event.body);
 
-    if (!firstName || !lastName || !email || !password) {
+    if (!name || !email || !isAgent) {
       return {
         statusCode: 400,
         headers: {
@@ -47,8 +45,6 @@ exports.PostItemHandler = async (event) => {
 
     // Check if user is already registered
     const userExists = await User.query("email").eq(email).exec();
-
-    middleware.register(firstName, lastName, email, password, isAgent);
 
     if (userExists.length !== 0) {
       return {
@@ -67,21 +63,28 @@ exports.PostItemHandler = async (event) => {
 
     // Create and save new user
     const user = new User({
-      firstName: firstName,
-      lastName: lastName,
-      name: firstName + " " + lastName,
+      userId: uuidv4(),
+      name: name,
       email: email,
-      passwordHash: password,
       isAgent: isAgent,
     });
 
-    await user.hashPassword();
     await user.save(); // Save the user instance to DynamoDB
 
-    const token = await user.getJwtToken(); // Generate JWT token after saving
-
-    // Generate JWT token and set it in the response
-    response = cookieToken(user, token);
+    return {
+      statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": process.env.ALLOWED_HEADERS,
+        "Access-Control-Allow-Methods": process.env.ALLOWED_METHODS,
+        "Access-Control-Allow-Credentials": process.env.ALLOWED_CREDENTIALS,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        success: true,
+        user,
+      }),
+    };
   } catch (err) {
     console.error("Error:", err);
 
@@ -99,11 +102,4 @@ exports.PostItemHandler = async (event) => {
       }),
     };
   }
-
-  // Log response for CloudWatch
-  console.info(
-    `Response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`
-  );
-
-  return response;
 };

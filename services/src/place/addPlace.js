@@ -1,6 +1,8 @@
 const Place = require("../../layers/nodejs/models/Place");
 const setUp = require("../../layers/nodejs/index");
 const middlewares = require("../../layers/nodejs/middlewares/user");
+const { v4: uuidv4 } = require("uuid");
+
 setUp();
 
 exports.PostItemHandler = async (event) => {
@@ -44,7 +46,8 @@ exports.PostItemHandler = async (event) => {
     } = JSON.parse(event.body);
 
     const place = new Place({
-      ownerId: userData.id,
+      placeId: uuidv4(),
+      ownerId: userData.userId,
       title: title,
       address: address,
       photos: addedPhotos,

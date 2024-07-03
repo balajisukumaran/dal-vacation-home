@@ -6,7 +6,7 @@ const placeSchema = new dynamoose.Schema(
     placeId: {
       type: String,
       hashKey: true,
-      default: uuidv4,
+      default: () => uuidv4(), // Ensure the function is called to generate UUID
     },
     ownerId: {
       type: String,

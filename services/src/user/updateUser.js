@@ -1,6 +1,4 @@
-const User = require("../../layers/nodejs/models/User");
 const middlewares = require("../../layers/nodejs/middlewares/user");
-const cookieToken = require("../../layers/nodejs/utils/cookieToken");
 const setUp = require("../../layers/nodejs/index");
 
 setUp();
@@ -33,28 +31,30 @@ exports.PutItemHandler = async (event) => {
   const loggedInUser = loggedIn[1];
 
   try {
-    const userId = loggedInUser.id;
-    const { firstName, lastName, email, picture } = JSON.parse(event.body);
+    const { picture } = JSON.parse(event.body);
 
-    const users = await User.query("email").eq(email).exec();
-    const user = users[0];
-
-    if (user) {
+    if (loggedInUser) {
       if (picture) {
-        user.picture = picture;
+        loggedInUser.picture = picture;
       }
-      if (firstName && firstName !== "") {
-        user.firstName = firstName;
-      }
-      if (lastName && lastName !== "") {
-        user.lastName = lastName;
-      }
-      await user.save();
 
-      const token = await user.getJwtToken(); // Generate JWT token after saving
+      await loggedInUser.save();
 
       // if everything is fine we will send the token
-      response = cookieToken(user, token);
+      response = {
+        statusCode: 200,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": process.env.ALLOWED_HEADERS,
+          "Access-Control-Allow-Methods": process.env.ALLOWED_METHODS,
+          "Access-Control-Allow-Credentials": process.env.ALLOWED_CREDENTIALS,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          success: true,
+          user,
+        }),
+      };
     } else {
       response = {
         statusCode: 404,

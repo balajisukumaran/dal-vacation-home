@@ -28,16 +28,6 @@ const LoginPage = () => {
     }
   };
 
-  const handleGoogleLogin = async (credential) => {
-    const response = await auth.googleLogin(credential);
-    if (response.success) {
-      toast.success(response.message);
-      setRedirect(true);
-    } else {
-      toast.error(response.message);
-    }
-  };
-
   if (redirect) {
     return <Navigate to={'/'} />;
   }
@@ -72,20 +62,6 @@ const LoginPage = () => {
           <div className="h-0 w-1/2 border-[1px]"></div>
           <p className="small -mt-1">or</p>
           <div className="h-0 w-1/2 border-[1px]"></div>
-        </div>
-
-        {/* Google login button */}
-        <div className="flex h-[50px] justify-center">
-          <GoogleLogin
-            onSuccess={(credentialResponse) => {
-              handleGoogleLogin(credentialResponse.credential);
-            }}
-            onError={() => {
-              console.log('Login Failed');
-            }}
-            text="continue_with"
-            width="350"
-          />
         </div>
 
         <div className="py-2 text-center text-gray-500">

@@ -25,10 +25,10 @@ exports.PostItemHandler = async (event) => {
   console.info("Received event:", event);
 
   try {
-    const { email, password } = JSON.parse(event.body);
+    const { email, token } = JSON.parse(event.body);
 
     // check for presence of email and password
-    if (!email || !password) {
+    if (!email || !token) {
       return {
         statusCode: 400,
         headers: {
@@ -62,28 +62,6 @@ exports.PostItemHandler = async (event) => {
     }
 
     const user = userExists[0];
-
-    authUser = await middleware.login(email, password);
-
-    // match the password
-    const isPasswordCorrect = await user.isValidatedPassword(password);
-
-    if (!isPasswordCorrect) {
-      return {
-        statusCode: 401,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": process.env.ALLOWED_HEADERS,
-          "Access-Control-Allow-Methods": process.env.ALLOWED_METHODS,
-          "Access-Control-Allow-Credentials": process.env.ALLOWED_CREDENTIALS,
-        },
-        body: JSON.stringify({
-          message: "Email or password is incorrect!",
-        }),
-      };
-    }
-
-    const token = await user.getJwtToken(); // Generate JWT token after saving
 
     // if everything is fine we will send the token
     response = cookieToken(user, token);

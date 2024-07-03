@@ -9,15 +9,7 @@ const userSchema = new dynamoose.Schema(
     userId: {
       type: String,
       hashKey: true,
-      default: uuidv4,
-    },
-    firstName: {
-      type: String,
-      required: true,
-    },
-    lastName: {
-      type: String,
-      required: true,
+      default: () => uuidv4(),
     },
     name: {
       type: String,
@@ -31,10 +23,6 @@ const userSchema = new dynamoose.Schema(
         name: "EmailIndex",
       },
     },
-    passwordHash: {
-      type: String,
-      required: true,
-    },
     picture: {
       type: String,
       default:
@@ -42,10 +30,6 @@ const userSchema = new dynamoose.Schema(
     },
     questionId: {
       type: String,
-      index: {
-        global: true,
-        name: "QuestionIndex",
-      },
     },
     answerHash: {
       type: String,
