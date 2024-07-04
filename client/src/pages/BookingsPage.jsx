@@ -37,9 +37,9 @@ const BookingsPage = () => {
         {bookings?.length > 0 ? (
           bookings.map((booking) => (
             <Link
-              to={`/account/bookings/${booking.id}`}
+              to={`/account/bookings/${booking.bookingId}`}
               className="mx-4 my-8 flex h-28 gap-4 overflow-hidden rounded-2xl bg-gray-200 md:h-40 lg:mx-0"
-              key={booking.id}
+              key={booking.bookingId}
             >
               <div className="w-2/6 md:w-1/6">
                 {booking?.place?.photos[0] && (

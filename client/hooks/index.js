@@ -124,19 +124,16 @@ export const useProvideAuth = () => {
       }
       return { success: true, message: 'Login successful' };
     } catch (error) {
-      const { message } = error.response.data;
-      return { success: false, message };
+      //      let message = error.message;
+      return { success: false, message: error.message };
     }
   };
 
   const logout = async () => {
     try {
-      const { data } = await axiosInstance.get('/user/logout');
-      if (data.success) {
-        setUser(null);
-        removeItemFromLocalStorage('user');
-        removeItemFromLocalStorage('token');
-      }
+      setUser(null);
+      removeItemFromLocalStorage('user');
+      removeItemFromLocalStorage('token');
       return { success: true, message: 'Logout successful' };
     } catch (error) {
       console.log(error);

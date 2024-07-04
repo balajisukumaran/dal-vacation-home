@@ -23,7 +23,7 @@ const SingleBookedPlace = () => {
 
       // filter the data to get current booking
       const filteredBooking = data.bookings.filter(
-        (booking) => booking.id === id,
+        (booking) => booking.bookingId === id,
       );
 
       setBooking(filteredBooking[0]);

@@ -13,7 +13,7 @@ const IndexPage = () => {
   return (
     <div className="grid grid-cols-1 justify-items-center px-4 py-32 md:grid-cols-2 md:gap-0 lg:grid-cols-3 lg:gap-2 xl:grid-cols-4 xl:gap-10">
       {places.length > 0 ? (
-        places.map((place) => <PlaceCard place={place} key={place.id} />)
+        places.map((place) => <PlaceCard place={place} key={place.placeId} />)
       ) : (
         <div className="absolute left-1/2 right-1/2 top-40 flex  w-full -translate-x-1/2 transform flex-col p-10  md:w-1/2">
           <h1 className="text-3xl font-semibold">Result not found!</h1>

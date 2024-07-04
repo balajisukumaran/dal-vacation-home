@@ -77,7 +77,7 @@ const BookingWidget = ({ place }) => {
         price: numberOfNights * price,
       });
 
-      const bookingId = response.data.booking.id;
+      const bookingId = response.data.booking.bookingId;
 
       setRedirect(`/account/bookings/${bookingId}`);
       toast('Congratulations! Enjoy your trip.');

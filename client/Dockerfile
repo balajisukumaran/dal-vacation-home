@@ -10,9 +10,6 @@ COPY package.json yarn.lock ./
 # Install dependencies
 RUN yarn install
 
-# Set the environment variable for Node.js memory limit
-ENV NODE_OPTIONS=--max_old_space_size=4096
-
 # Copy the rest of the application code
 COPY . .
 

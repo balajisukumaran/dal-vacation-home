@@ -24,7 +24,7 @@ exports.GetItemHandler = async (event) => {
   console.info("Received event:", event);
 
   try {
-    const placeId = event.pathParameters.placeId;
+    const placeId = event.pathParameters.id;
     const place = await Place.query("placeId").eq(placeId).exec();
 
     if (place.length === 0) {
