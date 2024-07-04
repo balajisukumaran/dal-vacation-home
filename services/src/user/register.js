@@ -26,9 +26,11 @@ exports.PostItemHandler = async (event) => {
   console.info("Received event:", event);
 
   try {
-    const { name, email, isAgent } = JSON.parse(event.body);
+    const { name, email, isAgent, questionId, answerHash } = JSON.parse(
+      event.body
+    );
 
-    if (!name || !email || !isAgent) {
+    if (!name || !email || !isAgent || !questionId || !answerHash) {
       return {
         statusCode: 400,
         headers: {
@@ -67,6 +69,8 @@ exports.PostItemHandler = async (event) => {
       name: name,
       email: email,
       isAgent: isAgent,
+      questionId: questionId,
+      answerHash: answerHash,
     });
 
     await user.save(); // Save the user instance to DynamoDB
