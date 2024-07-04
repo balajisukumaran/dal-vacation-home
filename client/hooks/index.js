@@ -60,11 +60,20 @@ export const useProvideAuth = () => {
   }, []);
 
   const register = async (formData) => {
-    const { name, email, password } = formData;
+    const {
+      answerHash,
+      email,
+      firstName,
+      lastName,
+      password,
+      passwordHash,
+      questionId,
+      agent,
+    } = formData;
 
     try {
-      let isAgent = 'y';
-
+      let isAgent = agent;
+      let name = firstName + ' ' + lastName;
       const { user } = await Auth.signUp({
         username: email,
         password,
@@ -78,6 +87,8 @@ export const useProvideAuth = () => {
         name,
         email,
         isAgent,
+        questionId,
+        answerHash,
       });
 
       return { success: true, message: 'Registration successful' };
@@ -104,6 +115,26 @@ export const useProvideAuth = () => {
       return { success: false, message: error.message };
     }
   };
+  const sampleData = {
+    success: true,
+    token: 'your_token_here',
+    user: {
+      answerHash: 'Z2O+',
+      questionId: '1',
+      updatedAt: '2024-07-04T17:41:10.529Z',
+      userId: '5ff290d4-0a6e-4924-9473-6ec52f50080e',
+      email: 'test1@gmail.com',
+      picture:
+        'https://res.cloudinary.com/rahul141019/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1695133265/pnwging.com_zid4cre.png',
+      name: 'test test',
+    },
+    allQuestions: [
+      { questionId: '1', question: 'What was the name of your first school?' },
+      { questionId: '2', question: "What is your mother's maiden name?" },
+      { questionId: '3', question: 'What is your favorite color?' },
+      { questionId: '4', question: "What was the name of your pet's name?" },
+    ],
+  };
 
   const login = async (formData) => {
     const { email, password } = formData;
@@ -112,14 +143,17 @@ export const useProvideAuth = () => {
       const user = await Auth.signIn(email, password);
       const token = user.signInUserSession.idToken.jwtToken; // Get the JWT token
 
-      const { data } = await axiosInstance.post('user/login', {
-        email,
-        token,
-      });
+      // const { data } = await axiosInstance.post('user/login', {
+      //   email,
+      //   token,
+      // });
+
+      const data = sampleData;
 
       if (data.user && data.token) {
         setUser(data.user);
         setItemsInLocalStorage('user', data.user);
+        setItemsInLocalStorage('allQuestions', data.allQuestions);
         setItemsInLocalStorage('token', data.token);
       }
       return { success: true, message: 'Login successful' };

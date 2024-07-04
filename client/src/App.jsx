@@ -20,6 +20,7 @@ import { PlaceProvider } from './providers/PlaceProvider';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { getItemFromLocalStorage } from './utils';
 import NotFoundPage from './pages/NotFoundPage';
+import LoginSecurityQuestions from './pages/LoginSecurityQuestions';
 import { Amplify } from 'aws-amplify';
 import awsExports from './aws-exports';
 
@@ -27,6 +28,7 @@ Amplify.configure(awsExports);
 
 setupInterceptors();
 
+import SecurityQuestions from './pages/SecurityQuestions';
 function App() {
   useEffect(() => {
     // set the token on refreshing the website
@@ -42,7 +44,17 @@ function App() {
             <Route path="/" element={<Layout />}>
               <Route index element={<IndexPage />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route
+                path="/login/security-questions"
+                element={<LoginSecurityQuestions />}
+              />
+
               <Route path="/register" element={<RegisterPage />} />
+              <Route
+                path="/security-questions"
+                element={<SecurityQuestions />}
+              />
+
               <Route path="/account" element={<ProfilePage />} />
               <Route path="/account/places" element={<PlacesPage />} />
               <Route path="/account/places/new" element={<PlacesFormPage />} />

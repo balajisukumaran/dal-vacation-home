@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { GoogleLogin } from '@react-oauth/google';
-
-import ProfilePage from './ProfilePage';
 import { useAuth } from '../../hooks';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [redirect, setRedirect] = useState(false);
-  const auth = useAuth();
 
+  const auth = useAuth();
+  const { register, login } = useAuth();
   const handleFormData = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -20,8 +18,14 @@ const LoginPage = () => {
     e.preventDefault();
 
     const response = await auth.login(formData);
+    // const response = await fetch('/api/login', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify(formData),
+    // }).then((res) => res.json());
+
     if (response.success) {
-      toast.success(response.message);
+      //toast.success(response.message);
       setRedirect(true);
     } else {
       toast.error(response.message);
@@ -29,11 +33,7 @@ const LoginPage = () => {
   };
 
   if (redirect) {
-    return <Navigate to={'/'} />;
-  }
-
-  if (auth.user) {
-    return <ProfilePage />;
+    return <Navigate to={'security-questions'} />;
   }
 
   return (
@@ -42,6 +42,7 @@ const LoginPage = () => {
         <h1 className="mb-4 text-center text-4xl">Login</h1>
         <form className="mx-auto max-w-md" onSubmit={handleFormSubmit}>
           <input
+            id="email"
             name="email"
             type="email"
             placeholder="your@email.com"
@@ -49,6 +50,7 @@ const LoginPage = () => {
             onChange={handleFormData}
           />
           <input
+            id="password"
             name="password"
             type="password"
             placeholder="password"
