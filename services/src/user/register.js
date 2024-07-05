@@ -76,7 +76,7 @@ exports.PostItemHandler = async (event) => {
 
     await user.save(); // Save the user instance to DynamoDB
 
-    await axios.post('https://aymnjk1za7.execute-api.us-east-1.amazonaws.com/Prod/user/registration-SNS', {
+    await axios.post('https://aymnjk1za7.execute-api.us-east-1.amazonaws.com/Prod/registration-SNS', {
       email: user.email
     }, {
         headers: {
