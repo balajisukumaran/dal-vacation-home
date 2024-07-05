@@ -76,13 +76,23 @@ exports.PostItemHandler = async (event) => {
 
     await user.save(); // Save the user instance to DynamoDB
 
-    await axios.post('https://aymnjk1za7.execute-api.us-east-1.amazonaws.com/Prod/registration-SNS', {
-      email: user.email
-    }, {
+    try {
+      // await user.save(); // Save the user instance to DynamoDB
+      console.log('User saved successfully.');
+  
+      const response = await axios.post('https://aymnjk1za7.execute-api.us-east-1.amazonaws.com/Prod/registration-SNS', {
+        email: user.email
+      }, {
         headers: {
             'Content-Type': 'application/json'
         }
-    });
+      });
+  
+      console.log('POST request successful:', response.data);
+  
+  } catch (error) {
+      console.error('Error during user save or POST request:', error);
+  }
 
     return {
       statusCode: 200,
