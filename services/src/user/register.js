@@ -2,6 +2,7 @@ const User = require("../../layers/nodejs/models/User");
 const cookieToken = require("../../layers/nodejs/utils/cookieToken");
 const setUp = require("../../layers/nodejs/index");
 const { v4: uuidv4 } = require("uuid");
+const axios = require('axios');
 
 setUp();
 
@@ -74,6 +75,14 @@ exports.PostItemHandler = async (event) => {
     });
 
     await user.save(); // Save the user instance to DynamoDB
+
+    await axios.post('https://aymnjk1za7.execute-api.us-east-1.amazonaws.com/Prod/user/registration-SNS', {
+      email: user.email
+    }, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
 
     return {
       statusCode: 200,
