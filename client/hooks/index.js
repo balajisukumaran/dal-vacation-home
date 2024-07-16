@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
 import jwt_decode from 'jwt-decode';
-//import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { UserContext } from '@/providers/UserProvider';
 import { PlaceContext } from '@/providers/PlaceProvider';
 import { setupInterceptors } from '@/utils/setupInterceptors';
@@ -10,33 +9,12 @@ import {
   removeItemFromLocalStorage,
 } from '@/utils';
 import axiosInstance from '@/utils/axios';
-import { Auth } from 'aws-amplify';
-
-//const S3_BUCKET = 'dalvacation-home-profile';
-//const REGION = 'us-east-1';
-
-// const s3 = new S3Client({
-//   region: REGION,
-//   credentials: {
-//     accessKeyId: 'AKIAYS2NSDRXTXLYXBZ7',
-//     secretAccessKey: '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',
-//   },
-// });
+import { signIn, signUp, signOut, fetchAuthSession } from "aws-amplify/auth"
 
 setupInterceptors();
 
 const uploadFileS3 = async (file) => {
-  // const params = {
-  //   Bucket: S3_BUCKET,
-  //   Key: file.name,
-  //   Body: file,
-  // };
-
   try {
-    // await s3.send(new PutObjectCommand(params));
-    // const fileUrl = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${file.name}`;
-    // return fileUrl;
-
     const res = await axios.post(
       `https://api.cloudinary.com/v1_1/${process.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`,
       data,
@@ -82,13 +60,24 @@ export const useProvideAuth = () => {
     try {
       let isAgent = agent;
       let name = firstName + ' ' + lastName;
-      const { user } = await Auth.signUp({
+      // const { user } = await Auth.signUp({
+      //   username: email,
+      //   password,
+      //   attributes: {
+      //     email,
+      //     name,
+      //   },
+      // });
+
+      const { isSignUpComplete, userId, nextStep } = await signUp({
         username: email,
-        password,
-        attributes: {
-          email,
-          name,
-        },
+        password: password,
+        options: {
+          userAttributes: {
+            email,
+            name,
+          },
+        }
       });
 
       const { data } = await axiosInstance.post('user/register', {
@@ -123,6 +112,7 @@ export const useProvideAuth = () => {
       return { success: false, message: error.message };
     }
   };
+
   const sampleData = {
     success: true,
     token: 'your_token_here',
@@ -148,13 +138,21 @@ export const useProvideAuth = () => {
     const { email, password } = formData;
 
     try {
-      const user = await Auth.signIn(email, password);
-      const token = user.signInUserSession.idToken.jwtToken; // Get the JWT token
+      //const user = await Auth.signIn(email, password);
 
-      // const { data } = await axiosInstance.post('user/login', {
-      //   email,
-      //   token,
-      // });
+
+      await signIn({
+        username: email,
+        password: password,
+      })
+      // const { username, userId, signInDetails } = await getCurrentUser();
+
+      const session = await fetchAuthSession();
+
+      console.log("id token", session.tokens.idToken);
+      console.log("access token", session.tokens.accessToken);
+
+      const token = user.signInUserSession.idToken.jwtToken; // Get the JWT token
 
       const data = sampleData;
 
@@ -166,13 +164,13 @@ export const useProvideAuth = () => {
       }
       return { success: true, message: 'Login successful' };
     } catch (error) {
-      //      let message = error.message;
       return { success: false, message: error.message };
     }
   };
 
   const logout = async () => {
     try {
+      await signOut();
       setUser(null);
       removeItemFromLocalStorage('user');
       removeItemFromLocalStorage('token');

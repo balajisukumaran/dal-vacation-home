@@ -22,9 +22,15 @@ import { getItemFromLocalStorage } from './utils';
 import NotFoundPage from './pages/NotFoundPage';
 import LoginSecurityQuestions from './pages/LoginSecurityQuestions';
 import { Amplify } from 'aws-amplify';
-import awsExports from './aws-exports';
 
-Amplify.configure(awsExports);
+Amplify.configure({
+  Auth: {
+    Cognito: {
+      userPoolClientId: '49gf14snt2hgr0p4grf9slkcuq',
+      userPoolId: 'us-east-1_fxqdGPnnZ',
+    }
+  }
+});
 
 setupInterceptors();
 

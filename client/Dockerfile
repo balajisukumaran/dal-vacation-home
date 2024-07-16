@@ -5,7 +5,7 @@ FROM node:16-alpine as build
 WORKDIR /app
 
 # Copy the package.json and yarn.lock files
-COPY package.json yarn.lock ./
+COPY package.json package-lock.json ./
 
 # Install dependencies
 RUN yarn install
