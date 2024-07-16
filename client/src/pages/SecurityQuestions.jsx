@@ -36,8 +36,8 @@ const SecurityQuestions = () => {
     const response = await auth.register(formData);
     if (response.success) {
       toast.success(response.message);
-      setRedirect(true);
-      navigate('/');
+      //setRedirect(true);
+      navigate('/login');
     } else {
       toast.error(response.message);
     }

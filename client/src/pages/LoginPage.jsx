@@ -33,7 +33,7 @@ const LoginPage = () => {
   };
 
   if (redirect) {
-    return <Navigate to={'security-questions'} />;
+    return <Navigate to={'/login/security-questions'} />;
   }
 
   return (

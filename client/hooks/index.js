@@ -156,30 +156,47 @@ export const useProvideAuth = () => {
     const { email, password } = formData;
 
     try {
-      //const user = await Auth.signIn(email, password);
-
-
-      await signIn({
-        username: email,
-        password: password,
-      })
-      // const { username, userId, signInDetails } = await getCurrentUser();
-
+    
+      try{
+        
+        await signIn({
+          username: email,
+          password: password,
+        });
+      
+      }
+      catch(error){
+        if(error.name === 'UserAlreadyAuthenticatedException'){
+          
+      await signOut();
+      setUser(null);
+      removeItemFromLocalStorage('user');
+      removeItemFromLocalStorage('token');
+          await signIn({
+            username: email,
+            password: password,
+          });
+        }
+      }
       const session = await fetchAuthSession();
 
       console.log("id token", session.tokens.idToken);
       console.log("access token", session.tokens.accessToken);
 
-      const token = user.signInUserSession.idToken.jwtToken; // Get the JWT token
+      const token = session.tokens.idToken.toString(); 
 
-      const data = sampleData;
+      const { data } = await axiosInstance.post('user/login', {
+        email,
+        token
+      });
 
       if (data.user && data.token) {
         setUser(data.user);
         setItemsInLocalStorage('user', data.user);
-        setItemsInLocalStorage('allQuestions', data.allQuestions);
+        setItemsInLocalStorage('allQuestions', data.allQuestion);
         setItemsInLocalStorage('token', data.token);
       }
+
       return { success: true, message: 'Login successful' };
     } catch (error) {
       return { success: false, message: error.message };
