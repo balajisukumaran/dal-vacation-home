@@ -10,18 +10,36 @@ import {
 } from '@/utils';
 import axiosInstance from '@/utils/axios';
 import { signIn, signUp, signOut, fetchAuthSession } from "aws-amplify/auth"
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
 setupInterceptors();
 
+const S3_BUCKET = 'dalvacation-home-profile';
+const REGION = 'us-east-1';
+
+const s3 = new S3Client({
+  region: REGION,
+  credentials: {
+    accessKeyId: 'AKIAYS2NSDRXTXLYXBZ7',
+    secretAccessKey: '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',
+  },
+});
+
 const uploadFileS3 = async (file) => {
   try {
-    const res = await axios.post(
-      `https://api.cloudinary.com/v1_1/${process.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`,
-      data,
-    );
 
-    const fileUrl = res.data.secure_url;
+    
+    await s3.send(new PutObjectCommand(params));
+    const fileUrl = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${file.name}`;
     return fileUrl;
+
+    // const res = await axios.post(
+    //   `https://api.cloudinary.com/v1_1/${process.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`,
+    //   data,
+    // );
+
+    // const fileUrl = res.data.secure_url;
+    // return fileUrl;
   } catch (err) {
     console.log('Error', err);
     throw err;

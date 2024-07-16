@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import Image from './Image';
 import { setupInterceptors } from '@/utils/setupInterceptors';
-// import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
 setupInterceptors();
 
-// const S3_BUCKET = 'dalvacation-home-profile';
-// const REGION = 'us-east-1';
+const S3_BUCKET = 'dalvacation-home-profile';
+const REGION = 'us-east-1';
 
-// const s3 = new S3Client({
-//   region: REGION,
-//   credentials: {
-//     accessKeyId: 'AKIAYS2NSDRXTXLYXBZ7',
-//     secretAccessKey: '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',
-//   },
-// });
+const s3 = new S3Client({
+  region: REGION,
+  credentials: {
+    accessKeyId: 'AKIAYS2NSDRXTXLYXBZ7',
+    secretAccessKey: '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',
+  },
+});
 
 const uploadFileS3 = async (file) => {
   const params = {
