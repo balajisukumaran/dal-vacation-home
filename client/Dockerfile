@@ -4,17 +4,17 @@ FROM node:16-alpine as build
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the package.json and yarn.lock files
+# Copy the package.json and package-lock.json files
 COPY package.json package-lock.json ./
 
-# Install dependencies
-RUN yarn install
+# Install dependencies using npm
+RUN npm install
 
 # Copy the rest of the application code
 COPY . .
 
-# Build the Vite application
-RUN yarn run build
+# Build the Vite application using npm
+RUN npm run build
 
 # Use a lightweight web server to serve the static files
 FROM nginx:alpine
