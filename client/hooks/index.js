@@ -26,9 +26,13 @@ const s3 = new S3Client({
 });
 
 const uploadFileS3 = async (file) => {
+  const params = {
+    Bucket: S3_BUCKET,
+    Key: file.name,
+    Body: file,
+  };
+  
   try {
-
-    
     await s3.send(new PutObjectCommand(params));
     const fileUrl = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${file.name}`;
     return fileUrl;

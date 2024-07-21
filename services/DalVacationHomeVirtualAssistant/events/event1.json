@@ -1,0 +1,91 @@
+{
+  "inputMode": "Text",
+  "sessionId": "590183799919314",
+  "inputTranscript": "hi asdasd sadasdasd",
+  "interpretations": [
+    {
+      "interpretationSource": "Lex",
+      "nluConfidence": 1,
+      "intent": {
+        "name": "RaiseConcern",
+        "slots": {
+          "booking": {
+            "shape": "Scalar",
+            "value": {
+              "originalValue": "7b532b49-e3a4-4fe5-b08f-7e4c4f7b1e23",
+              "resolvedValues": [],
+              "interpretedValue": "7b532b49-e3a4-4fe5-b08f-7e4c4f7b1e23"
+            }
+          },
+          "concern": {
+            "shape": "Scalar",
+            "value": {
+              "originalValue": "hi asdasd sadasdasd",
+              "resolvedValues": [],
+              "interpretedValue": "hi asdasd sadasdasd"
+            }
+          }
+        },
+        "state": "ReadyForFulfillment",
+        "confirmationState": "None"
+      }
+    }
+  ],
+  "bot": {
+    "name": "DalVacationHomeAssistant",
+    "version": "DRAFT",
+    "localeId": "en_US",
+    "id": "UKW4L1MMSM",
+    "aliasId": "TSTALIASID",
+    "aliasName": "TestBotAlias"
+  },
+  "responseContentType": "text/plain; charset=utf-8",
+  "sessionState": {
+    "originatingRequestId": "d50cbe08-5fbc-4259-9983-a72951615db6",
+    "sessionAttributes": {},
+    "activeContexts": [],
+    "intent": {
+      "name": "RaiseConcern",
+      "slots": {
+        "booking": {
+          "shape": "Scalar",
+          "value": {
+            "originalValue": "7b532b49-e3a4-4fe5-b08f-7e4c4f7b1e23",
+            "resolvedValues": [],
+            "interpretedValue": "7b532b49-e3a4-4fe5-b08f-7e4c4f7b1e23"
+          }
+        },
+        "concern": {
+          "shape": "Scalar",
+          "value": {
+            "originalValue": "hi asdasd sadasdasd",
+            "resolvedValues": [],
+            "interpretedValue": "hi asdasd sadasdasd"
+          }
+        }
+      },
+      "state": "ReadyForFulfillment",
+      "confirmationState": "None"
+    }
+  },
+  "transcriptions": [
+    {
+      "resolvedContext": {
+        "intent": "RaiseConcern"
+      },
+      "resolvedSlots": {
+        "concern": {
+          "shape": "Scalar",
+          "value": {
+            "originalValue": "hi asdasd sadasdasd",
+            "resolvedValues": []
+          }
+        }
+      },
+      "transcriptionConfidence": 1,
+      "transcription": "hi asdasd sadasdasd"
+    }
+  ],
+  "messageVersion": "1.0",
+  "invocationSource": "FulfillmentCodeHook"
+}

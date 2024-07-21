@@ -5,3 +5,4 @@ client/dist
 terraform.tfstate
 terraform.tfstate.backup
 services/.aws-sam
+services/dal-vacation-bot/.aws-sam

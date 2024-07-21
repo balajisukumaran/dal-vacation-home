@@ -1,0 +1,52 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  DalVacationHomeVirtualAssistant
+
+  Sample SAM Template for DalVacationHomeVirtualAssistant
+
+Globals:
+  Function:
+    Timeout: 3
+    MemorySize: 128
+
+    Tracing: Active
+    LoggingConfig:
+      LogFormat: JSON
+  Api:
+    TracingEnabled: true
+Resources:
+  LexAdminRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: DynamoDBAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:*
+                Resource: "*"
+
+  DalVacationHomeVirtualAssistantFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: DalVacationHomeVirtualAssistant/
+      Handler: app.lambdaHandler
+      Runtime: nodejs16.x
+      Role: !GetAtt LexAdminRole.Arn
+      Architectures:
+        - x86_64
+
+Outputs:
+  DalVacationHomeVirtualAssistantFunction:
+    Description: Hello World DalVacationHomeVirtualAssistant ARN
+    Value: !GetAtt DalVacationHomeVirtualAssistantFunction.Arn

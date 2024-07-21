@@ -11,10 +11,10 @@ const SecurityQuestions = () => {
   const [answer, setAnswer] = useState('');
 
   useEffect(() => {
-    fetch('https://pt9oejf1r8.execute-api.us-east-1.amazonaws.com/dev/')
+    fetch('https://aymnjk1za7.execute-api.us-east-1.amazonaws.com/Prod/dal-vacation-home-fetch-all-questions')
       .then((response) => response.json())
       .then((data) => {
-        const parsedData = JSON.parse(data.body);
+        const parsedData = data;
         setQuestions(parsedData);
       })
       .catch((error) => {
@@ -78,8 +78,8 @@ const SecurityQuestions = () => {
             >
               <option value="">Select a question</option>
               {questions.map((q) => (
-                <option key={q.QuestionId} value={q.QuestionId}>
-                  {q.Question}
+                <option key={q.questionId} value={q.questionId}>
+                  {q.question}
                 </option>
               ))}
             </select>

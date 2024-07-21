@@ -1,0 +1,91 @@
+{
+  "inputMode": "Text",
+  "sessionId": "590183799919822",
+  "inputTranscript": "booking details",
+  "interpretations": [
+    {
+      "interpretationSource": "Lex",
+      "nluConfidence": 1.0,
+      "intent": {
+        "name": "BookingDetails",
+        "slots": {
+          "BookingID": null
+        },
+        "state": "InProgress",
+        "confirmationState": "None"
+      }
+    },
+    {
+      "interpretationSource": "Lex",
+      "intent": {
+        "name": "FallbackIntent",
+        "slots": {},
+        "state": "InProgress",
+        "confirmationState": "None"
+      }
+    },
+    {
+      "interpretationSource": "Lex",
+      "nluConfidence": 0.23,
+      "intent": {
+        "name": "RaiseConcern",
+        "slots": {
+          "booking": null,
+          "concern": null
+        },
+        "state": "InProgress",
+        "confirmationState": "None"
+      }
+    }
+  ],
+  "bot": {
+    "name": "DalVacationHomeAssistant",
+    "version": "DRAFT",
+    "localeId": "en_US",
+    "id": "UKW4L1MMSM",
+    "aliasId": "TSTALIASID",
+    "aliasName": "TestBotAlias"
+  },
+  "responseContentType": "text/plain; charset=utf-8",
+  "proposedNextState": {
+    "prompt": {
+      "attempt": "Initial"
+    },
+    "intent": {
+      "name": "BookingDetails",
+      "slots": {
+        "BookingID": null
+      },
+      "state": "InProgress",
+      "confirmationState": "None"
+    },
+    "dialogAction": {
+      "type": "ElicitSlot",
+      "slotToElicit": "BookingID"
+    }
+  },
+  "sessionState": {
+    "originatingRequestId": "bccbb0c1-91ff-4125-97b7-3027786a5bc0",
+    "sessionAttributes": {},
+    "intent": {
+      "name": "BookingDetails",
+      "slots": {
+        "BookingID": null
+      },
+      "state": "InProgress",
+      "confirmationState": "None"
+    }
+  },
+  "messageVersion": "1.0",
+  "invocationSource": "DialogCodeHook",
+  "transcriptions": [
+    {
+      "resolvedContext": {
+        "intent": "BookingDetails"
+      },
+      "resolvedSlots": {},
+      "transcriptionConfidence": 1.0,
+      "transcription": "booking details"
+    }
+  ]
+}
