@@ -1,50 +1,62 @@
 {
   "inputMode": "Text",
-  "sessionId": "590183799919822",
-  "inputTranscript": "booking details",
+  "sessionId": "590183799919151",
+  "inputTranscript": "1",
   "interpretations": [
     {
       "interpretationSource": "Lex",
-      "nluConfidence": 1.0,
+      "nluConfidence": 1,
       "intent": {
-        "name": "BookingDetails",
+        "confirmationState": "None",
+        "name": "Navigation",
         "slots": {
-          "BookingID": null
+          "Page": null
         },
-        "state": "InProgress",
-        "confirmationState": "None"
+        "state": "InProgress"
       }
     },
     {
       "interpretationSource": "Lex",
+      "nluConfidence": 0.49,
       "intent": {
-        "name": "FallbackIntent",
-        "slots": {},
-        "state": "InProgress",
-        "confirmationState": "None"
-      }
-    },
-    {
-      "interpretationSource": "Lex",
-      "nluConfidence": 0.23,
-      "intent": {
+        "confirmationState": "None",
         "name": "RaiseConcern",
         "slots": {
           "booking": null,
           "concern": null
         },
-        "state": "InProgress",
-        "confirmationState": "None"
+        "state": "InProgress"
+      }
+    },
+    {
+      "interpretationSource": "Lex",
+      "nluConfidence": 0.44,
+      "intent": {
+        "confirmationState": "None",
+        "name": "BookingDetails",
+        "slots": {
+          "BookingID": null
+        },
+        "state": "InProgress"
+      }
+    },
+    {
+      "interpretationSource": "Lex",
+      "intent": {
+        "confirmationState": "None",
+        "name": "FallbackIntent",
+        "slots": {},
+        "state": "InProgress"
       }
     }
   ],
   "bot": {
+    "aliasId": "TSTALIASID",
+    "aliasName": "TestBotAlias",
     "name": "DalVacationHomeAssistant",
     "version": "DRAFT",
     "localeId": "en_US",
-    "id": "UKW4L1MMSM",
-    "aliasId": "TSTALIASID",
-    "aliasName": "TestBotAlias"
+    "id": "UKW4L1MMSM"
   },
   "responseContentType": "text/plain; charset=utf-8",
   "proposedNextState": {
@@ -52,28 +64,29 @@
       "attempt": "Initial"
     },
     "intent": {
-      "name": "BookingDetails",
+      "confirmationState": "None",
+      "name": "Navigation",
       "slots": {
-        "BookingID": null
+        "Page": null
       },
-      "state": "InProgress",
-      "confirmationState": "None"
+      "state": "InProgress"
     },
     "dialogAction": {
-      "type": "ElicitSlot",
-      "slotToElicit": "BookingID"
+      "slotToElicit": "Page",
+      "type": "ElicitSlot"
     }
   },
   "sessionState": {
-    "originatingRequestId": "bccbb0c1-91ff-4125-97b7-3027786a5bc0",
+    "originatingRequestId": "45a374b2-e45d-4a1a-aa9b-e22b7c37cca8",
     "sessionAttributes": {},
+    "activeContexts": [],
     "intent": {
-      "name": "BookingDetails",
+      "confirmationState": "None",
+      "name": "Navigation",
       "slots": {
-        "BookingID": null
+        "Page": null
       },
-      "state": "InProgress",
-      "confirmationState": "None"
+      "state": "InProgress"
     }
   },
   "messageVersion": "1.0",
@@ -81,11 +94,11 @@
   "transcriptions": [
     {
       "resolvedContext": {
-        "intent": "BookingDetails"
+        "intent": "Navigation"
       },
       "resolvedSlots": {},
-      "transcriptionConfidence": 1.0,
-      "transcription": "booking details"
+      "transcriptionConfidence": 1,
+      "transcription": "1"
     }
   ]
 }

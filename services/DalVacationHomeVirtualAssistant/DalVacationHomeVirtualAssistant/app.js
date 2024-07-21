@@ -5,15 +5,102 @@ const dynamodb = new AWS.DynamoDB.DocumentClient();
 exports.lambdaHandler = async (event, context) => {
   console.log(event);
   const intent = event.sessionState.intent.name;
+  const slots = event.sessionState.intent.slots;
   let response = {};
 
-  if (intent === "BookingDetails") {
-    response = await BookingDetails(event);
-  } else if (intent === "RaiseConcern") {
-    response = await RaiseConcern(event);
-  }
+  if (intent === "BookingDetails") response = await BookingDetails(event);
+  else if (intent === "RaiseConcern") response = await RaiseConcern(event);
+  else if (intent === "Navigation") response = await Navigation(event);
+  else
+    response = {
+      sessionState: {
+        dialogAction: {
+          type: "Close",
+        },
+        intent: {
+          name: event.sessionState.intent.name,
+          slots: slots,
+          state: "Fulfilled",
+        },
+      },
+      messages: [
+        {
+          contentType: "ImageResponseCard",
+          imageResponseCard: {
+            title: "Hello, how may I assist you today?",
+            buttons: [
+              {
+                text: "Help navigating the site",
+                value: "Navigation",
+              },
+              {
+                text: "View booking details",
+                value: "View booking details",
+              },
+              {
+                text: "Raise a concern",
+                value: "Raise a concern",
+              },
+            ],
+          },
+        },
+      ],
+    };
   return response;
 };
+
+async function Navigation(event) {
+  const slots = event.sessionState.intent.slots;
+  const invocationSource = event.invocationSource;
+
+  if (
+    slots.Page !== null &&
+    slots.Page.value.originalValue !== null &&
+    slots.Page.value.originalValue !== ""
+  ) {
+    const page = slots.Page.value.originalValue;
+    let url = "https://dal-vacation-home-service-konfsid46q-ue.a.run.app";
+    if (page === "Profile") url = url + "/account";
+    else if (page === "Bookings") url = url + "/account/bookings";
+    else if (page === "Accomodations") url = url + "/account/places";
+    else url = url + "/";
+
+    try {
+      return {
+        sessionState: {
+          dialogAction: {
+            type: "Close",
+          },
+          intent: {
+            name: event.sessionState.intent.name,
+            slots: slots,
+            state: "Fulfilled",
+          },
+        },
+        messages: [
+          {
+            contentType: "PlainText",
+            content: "Click here to navigate. " + url,
+          },
+        ],
+      };
+    } catch (err) {
+      console.error(err);
+      throw new Error("Error occurred.");
+    }
+  } else
+    return {
+      sessionState: {
+        dialogAction: {
+          type: "Delegate",
+        },
+        intent: {
+          name: event.sessionState.intent.name,
+          slots: slots,
+        },
+      },
+    };
+}
 
 async function RaiseConcern(event) {
   const slots = event.sessionState.intent.slots;
@@ -100,8 +187,12 @@ async function RaiseConcern(event) {
           messages: [
             {
               contentType: "PlainText",
+              content: "An agent has been assigned.",
+            },
+            {
+              contentType: "PlainText",
               content:
-                "An agent has been assigned. Click here to view the status. https://dal-vacation-home-service-konfsid46q-ue.a.run.app/account",
+                "Click here to view the status. https://dal-vacation-home-service-konfsid46q-ue.a.run.app/account",
             },
           ],
         };
