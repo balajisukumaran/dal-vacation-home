@@ -1,0 +1,91 @@
+{
+  "inputTranscript": "Testing",
+  "interpretations": [
+    {
+      "interpretationSource": "Lex",
+      "nluConfidence": 1,
+      "intent": {
+        "name": "RaiseConcern",
+        "slots": {
+          "booking": {
+            "shape": "Scalar",
+            "value": {
+              "originalValue": "1f046220-29c6-411d-a1c5-e9586a5cad15",
+              "resolvedValues": [],
+              "interpretedValue": "1f046220-29c6-411d-a1c5-e9586a5cad15"
+            }
+          },
+          "concern": {
+            "shape": "Scalar",
+            "value": {
+              "originalValue": "Testing",
+              "resolvedValues": [],
+              "interpretedValue": "Testing"
+            }
+          }
+        },
+        "state": "ReadyForFulfillment",
+        "confirmationState": "None"
+      }
+    }
+  ],
+  "bot": {
+    "aliasId": "TSTALIASID",
+    "aliasName": "TestBotAlias",
+    "name": "DalVacationHomeAssistant",
+    "version": "DRAFT",
+    "localeId": "en_US",
+    "id": "UKW4L1MMSM"
+  },
+  "responseContentType": "text/plain; charset=utf-8",
+  "sessionState": {
+    "originatingRequestId": "46e0cbbe-8772-46c3-9627-05340124e970",
+    "sessionAttributes": {},
+    "activeContexts": [],
+    "intent": {
+      "name": "RaiseConcern",
+      "slots": {
+        "booking": {
+          "shape": "Scalar",
+          "value": {
+            "originalValue": "1f046220-29c6-411d-a1c5-e9586a5cad15",
+            "resolvedValues": [],
+            "interpretedValue": "1f046220-29c6-411d-a1c5-e9586a5cad15"
+          }
+        },
+        "concern": {
+          "shape": "Scalar",
+          "value": {
+            "originalValue": "Testing",
+            "resolvedValues": [],
+            "interpretedValue": "Testing"
+          }
+        }
+      },
+      "state": "ReadyForFulfillment",
+      "confirmationState": "None"
+    }
+  },
+  "messageVersion": "1.0",
+  "invocationSource": "FulfillmentCodeHook",
+  "transcriptions": [
+    {
+      "resolvedContext": {
+        "intent": "RaiseConcern"
+      },
+      "transcription": "Testing",
+      "resolvedSlots": {
+        "concern": {
+          "shape": "Scalar",
+          "value": {
+            "originalValue": "Testing",
+            "resolvedValues": []
+          }
+        }
+      },
+      "transcriptionConfidence": 1
+    }
+  ],
+  "inputMode": "Text",
+  "sessionId": "590183799919225"
+}
