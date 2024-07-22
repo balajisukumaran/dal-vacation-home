@@ -1,15 +1,21 @@
 const AWS = require("aws-sdk");
 const uuid = require("./layers/nodejs/node_modules/uuid/dist/index");
-const { PubSub } = require('@google-cloud/pubsub');
-const path = require('path');
+const {
+  PubSub,
+} = require("./layers/nodejs/node_modules/@google-cloud/pubsub/build/src/index");
+const path = require("path");
 
 // service account key
-const serviceAccountKeyPath = path.join(__dirname, 'serverless-housing-message.json');
+const serviceAccountKeyPath = path.join(
+  __dirname,
+  "serverless-housing-message.json"
+);
+
 // Initializing the PubSub client with the service account key
 const pubsub = new PubSub({
   keyFilename: serviceAccountKeyPath,
 });
-const topicName = 'dal-housing-messaging';
+const topicName = "dal-housing-messaging";
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
 exports.lambdaHandler = async (event, context) => {
@@ -152,83 +158,56 @@ async function RaiseConcern(event) {
     const bookingId = slots.booking.value.originalValue;
     const concern = slots.concern.value.originalValue;
 
-    const getItemParams = {
-      TableName: "Booking",
-      Key: { bookingId: bookingId },
-    };
-
     try {
-      const data = await dynamodb.get(getItemParams).promise();
-      if (data.Item) {
-        const item = data.Item;
-        let userId = item.userId;
-        let status = "open";
+      // if (data.Item) {
+      // const item = data.Item;
+      // let userId = item.userId;
+      // let status = "open";
 
-        const ticketId = uuid.v4(); // Generate a unique ticketId using UUID
+      // const ticketId = uuid.v4(); // Generate a unique ticketId using UUID
 
-        const params = {
-          TableName: "Ticket",
-          Item: {
-            ticketId: ticketId,
-            //agentId: null,
-            bookingId: bookingId,
-            //comments: null,
-            concern: concern,
-            status: status,
-            userId: userId,
-          },
+      // const params = {
+      //   TableName: "Ticket",
+      //   Item: {
+      //     ticketId: ticketId,
+      //     //agentId: null,
+      //     bookingId: bookingId,
+      //     //comments: null,
+      //     concern: concern,
+      //     status: status,
+      //     userId: userId,
+      //   },
+      // };
+
+      // await dynamodb.put(params).promise();
+
+      //code to call pub sub.
+
+      try {
+        // Create the data object
+        const data = {
+          bookingId,
+          concern,
         };
 
-        await dynamodb.put(params).promise();
+        // Convert the message to a Buffer
+        const dataBuffer = Buffer.from(JSON.stringify(data));
 
-        //code to call pub sub.
+        // Publish the message to the Pub/Sub topic
+        const messageId = await pubsub.topic(topicName).publish(dataBuffer);
+        console.log(`Message ${messageId} published to topic ${topicName}`);
 
-        exports.handler = async (event) => {
-          try {
-            // Extract the bookingId and concern from the Lex input event
-            const bookingId = event.currentIntent.slots.bookingId;
-            const concern = event.currentIntent.slots.concern;
-
-            // Create the data object
-            const data = {
-              bookingId,
-              concern,
-            };
-
-            // Convert the message to a Buffer
-            const dataBuffer = Buffer.from(JSON.stringify(data));
-
-            // Publish the message to the Pub/Sub topic
-            const messageId = await pubsub.topic(topicName).publish(dataBuffer);
-            console.log(`Message ${messageId} published to topic ${topicName}`);
-
-            // Return a successful response to Lex
-            return {
-              dialogAction: {
-                type: 'Close',
-                fulfillmentState: 'Fulfilled',
-                message: {
-                  contentType: 'PlainText',
-                  content: `Your concern has been recorded with booking ID: ${bookingId}. Thank you!`,
-                },
-              },
-            };
-          } catch (error) {
-            // Handle errors and return an error response to Lex
-            console.error(`Error publishing message to topic ${topicName}:`, error);
-            return {
-              dialogAction: {
-                type: 'Close',
-                fulfillmentState: 'Failed',
-                message: {
-                  contentType: 'PlainText',
-                  content: `There was an error recording your concern. Please try again later.`,
-                },
-              },
-            };
-          }
-        };
-
+        // Return a successful response to Lex
+        // return {
+        //   dialogAction: {
+        //     type: "Close",
+        //     fulfillmentState: "Fulfilled",
+        //     message: {
+        //       contentType: "PlainText",
+        //       content: `Your concern has been recorded with booking ID: ${bookingId}. Thank you!`,
+        //     },
+        //   },
+        // };
 
         return {
           sessionState: {
@@ -253,27 +232,41 @@ async function RaiseConcern(event) {
             },
           ],
         };
-      } else {
+      } catch (error) {
+        // Handle errors and return an error response to Lex
+        console.error(`Error publishing message to topic ${topicName}:`, error);
         return {
-          sessionState: {
-            dialogAction: {
-              type: "Close",
-            },
-            intent: {
-              name: event.sessionState.intent.name,
-              slots: slots,
-              state: "Failed",
+          dialogAction: {
+            type: "Close",
+            fulfillmentState: "Failed",
+            message: {
+              contentType: "PlainText",
+              content: `There was an error recording your concern. Please try again later.`,
             },
           },
-          messages: [
-            {
-              contentType: "PlainText",
-              content:
-                "Sorry, I could not find the booking ID. Please check and try again.",
-            },
-          ],
         };
       }
+      // } else {
+      //   return {
+      //     sessionState: {
+      //       dialogAction: {
+      //         type: "Close",
+      //       },
+      //       intent: {
+      //         name: event.sessionState.intent.name,
+      //         slots: slots,
+      //         state: "Failed",
+      //       },
+      //     },
+      //     messages: [
+      //       {
+      //         contentType: "PlainText",
+      //         content:
+      //           "Sorry, I could not find the booking ID. Please check and try again.",
+      //       },
+      //     ],
+      //   };
+      // }
     } catch (err) {
       console.error(err);
       throw new Error("Error fetching booking details from DynamoDB");

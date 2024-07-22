@@ -1,52 +1,31 @@
 {
-  "inputMode": "Text",
-  "sessionId": "590183799919151",
-  "inputTranscript": "1",
+  "inputTranscript": "Testing",
   "interpretations": [
     {
       "interpretationSource": "Lex",
       "nluConfidence": 1,
       "intent": {
-        "confirmationState": "None",
-        "name": "Navigation",
-        "slots": {
-          "Page": null
-        },
-        "state": "InProgress"
-      }
-    },
-    {
-      "interpretationSource": "Lex",
-      "nluConfidence": 0.49,
-      "intent": {
-        "confirmationState": "None",
         "name": "RaiseConcern",
         "slots": {
-          "booking": null,
-          "concern": null
+          "booking": {
+            "shape": "Scalar",
+            "value": {
+              "originalValue": "1f046220-29c6-411d-a1c5-e9586a5cad15",
+              "resolvedValues": [],
+              "interpretedValue": "1f046220-29c6-411d-a1c5-e9586a5cad15"
+            }
+          },
+          "concern": {
+            "shape": "Scalar",
+            "value": {
+              "originalValue": "Testing",
+              "resolvedValues": [],
+              "interpretedValue": "Testing"
+            }
+          }
         },
-        "state": "InProgress"
-      }
-    },
-    {
-      "interpretationSource": "Lex",
-      "nluConfidence": 0.44,
-      "intent": {
-        "confirmationState": "None",
-        "name": "BookingDetails",
-        "slots": {
-          "BookingID": null
-        },
-        "state": "InProgress"
-      }
-    },
-    {
-      "interpretationSource": "Lex",
-      "intent": {
-        "confirmationState": "None",
-        "name": "FallbackIntent",
-        "slots": {},
-        "state": "InProgress"
+        "state": "ReadyForFulfillment",
+        "confirmationState": "None"
       }
     }
   ],
@@ -59,46 +38,54 @@
     "id": "UKW4L1MMSM"
   },
   "responseContentType": "text/plain; charset=utf-8",
-  "proposedNextState": {
-    "prompt": {
-      "attempt": "Initial"
-    },
-    "intent": {
-      "confirmationState": "None",
-      "name": "Navigation",
-      "slots": {
-        "Page": null
-      },
-      "state": "InProgress"
-    },
-    "dialogAction": {
-      "slotToElicit": "Page",
-      "type": "ElicitSlot"
-    }
-  },
   "sessionState": {
-    "originatingRequestId": "45a374b2-e45d-4a1a-aa9b-e22b7c37cca8",
+    "originatingRequestId": "46e0cbbe-8772-46c3-9627-05340124e970",
     "sessionAttributes": {},
     "activeContexts": [],
     "intent": {
-      "confirmationState": "None",
-      "name": "Navigation",
+      "name": "RaiseConcern",
       "slots": {
-        "Page": null
+        "booking": {
+          "shape": "Scalar",
+          "value": {
+            "originalValue": "1f046220-29c6-411d-a1c5-e9586a5cad15",
+            "resolvedValues": [],
+            "interpretedValue": "1f046220-29c6-411d-a1c5-e9586a5cad15"
+          }
+        },
+        "concern": {
+          "shape": "Scalar",
+          "value": {
+            "originalValue": "Testing",
+            "resolvedValues": [],
+            "interpretedValue": "Testing"
+          }
+        }
       },
-      "state": "InProgress"
+      "state": "ReadyForFulfillment",
+      "confirmationState": "None"
     }
   },
   "messageVersion": "1.0",
-  "invocationSource": "DialogCodeHook",
+  "invocationSource": "FulfillmentCodeHook",
   "transcriptions": [
     {
       "resolvedContext": {
-        "intent": "Navigation"
+        "intent": "RaiseConcern"
       },
-      "resolvedSlots": {},
-      "transcriptionConfidence": 1,
-      "transcription": "1"
+      "transcription": "Testing",
+      "resolvedSlots": {
+        "concern": {
+          "shape": "Scalar",
+          "value": {
+            "originalValue": "Testing",
+            "resolvedValues": []
+          }
+        }
+      },
+      "transcriptionConfidence": 1
     }
-  ]
+  ],
+  "inputMode": "Text",
+  "sessionId": "590183799919225"
 }
