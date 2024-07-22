@@ -1,5 +1,15 @@
 const AWS = require("aws-sdk");
 const uuid = require("./layers/nodejs/node_modules/uuid/dist/index");
+const { PubSub } = require('@google-cloud/pubsub');
+const path = require('path');
+
+// service account key
+const serviceAccountKeyPath = path.join(__dirname, 'serverless-housing-message.json');
+// Initializing the PubSub client with the service account key
+const pubsub = new PubSub({
+  keyFilename: serviceAccountKeyPath,
+});
+const topicName = 'dal-housing-messaging';
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
 exports.lambdaHandler = async (event, context) => {
@@ -172,6 +182,53 @@ async function RaiseConcern(event) {
         await dynamodb.put(params).promise();
 
         //code to call pub sub.
+
+        exports.handler = async (event) => {
+          try {
+            // Extract the bookingId and concern from the Lex input event
+            const bookingId = event.currentIntent.slots.bookingId;
+            const concern = event.currentIntent.slots.concern;
+
+            // Create the data object
+            const data = {
+              bookingId,
+              concern,
+            };
+
+            // Convert the message to a Buffer
+            const dataBuffer = Buffer.from(JSON.stringify(data));
+
+            // Publish the message to the Pub/Sub topic
+            const messageId = await pubsub.topic(topicName).publish(dataBuffer);
+            console.log(`Message ${messageId} published to topic ${topicName}`);
+
+            // Return a successful response to Lex
+            return {
+              dialogAction: {
+                type: 'Close',
+                fulfillmentState: 'Fulfilled',
+                message: {
+                  contentType: 'PlainText',
+                  content: `Your concern has been recorded with booking ID: ${bookingId}. Thank you!`,
+                },
+              },
+            };
+          } catch (error) {
+            // Handle errors and return an error response to Lex
+            console.error(`Error publishing message to topic ${topicName}:`, error);
+            return {
+              dialogAction: {
+                type: 'Close',
+                fulfillmentState: 'Failed',
+                message: {
+                  contentType: 'PlainText',
+                  content: `There was an error recording your concern. Please try again later.`,
+                },
+              },
+            };
+          }
+        };
+
 
         return {
           sessionState: {

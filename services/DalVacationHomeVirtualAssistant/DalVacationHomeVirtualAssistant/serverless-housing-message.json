@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "dal-vacation-home",
+  "private_key_id": "5f7088a414c0a17229e7d7ca841abce0fbcbaa69",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCx1+W5N3D5+VLr\nalG2lcrnnEJ63O+42kSd8N80MSzxEeDJaofC/wmwUxVqqzKWcUROgP0Vaa2eS1RO\nljKPugQQh6/Z+GNRKnrXyQKjxLaVfLWGr93FSgWpunwDsBqPyrAYmSnH1+bCLULR\nCdflwlh1mJ4ef5ZrBv3AGF7Du1eiL+VLM1tTy5aq2tGYiqJ3mAJd5lh2auKAVkfn\nocShHBr3GQeCtkm9U5pxKK62UOsVdD12/a2zxYEpeDhtsJHyRDMahfaPoPWAAJ6y\noU6y28FDz1eB8gLTixH/DGBaHPh1WrEkdPkoe+K/e+AXeNtwCt+sSZLrRz2yddhK\nV1rDzuNzAgMBAAECggEAAjGoJ1tMPQE66SWUIX0Clk3ishJUsMKckxg8ILA0njq6\nu7FhQGIWFANKYdj/1ERMc+16cc+ucSP7w8ZtlEFWuH98B2PdkcxE3LGhozSTjg+O\nS72SrlLl8/yVeBQtl7WH653EGq+KrL2TM/H7pF176uN5m+W2DNb2vW5viNmgUKNi\nUWPzhWGYBAbYAxG20Wn98FrhJNLgRqbgdkQfKayRkdVo9YbIAv6RAZ/+U8Cr+hvT\nG9O4ovIuSxKjFpGpwH8bTuj41gC9tU7k2QPth/nOdzd4hmIk5T8UDTjbuvRW+JHP\nPOU5x97uOmnZWDFxiJZ4p3oEiCjarsd2gbSpYGhUpQKBgQDyniSO34wFhFgFccGx\n26e7f33PX+0uG2DP2Lll2+sSqWQro5UGikNxStk4tVCFLibdnsK/Sgk4uVaw1EmB\nBN36jGQthanq6S/jL8sa1FoQUXQhzB3q2xaEqVm2qvhFhJ8Cy3VkWKG+H+CEnd6w\nf1Cq4VVRxnB2I277sU3zKP9D7wKBgQC7px1kVX+PXuqkSG9eH+CmYgcrnbAtLpuC\nJTQ6Gu0x+NrDMbIce4xIHo2JZirBKgRSLmiyW4tx/swlN/UiSrF71cLgAMIYqfCB\nR2FZa8cNjilDXyzSWGd5xDt27GPkNLiTXmSIRjT8dclYnKhYNZgXXLXf4W5/e1lp\nw5IqUFYEvQKBgED4VHXmK0r269NZaTNFzR8KvxgfahZkwoImWU+LmuG+dtKw1aGQ\nuQrHrm/fLhbcCxBiCWjMXLfR+gMUdjKUqRUFL3Z5Ss1bcLV4AP3IS+3+wgii7ogL\n73XLG/ksw5tqLmLDNUaP7ZBKXQdmd1HwZhu8h+qEJ22bg4bnLialneYFAoGAKnRN\nfwSk3l/gABjvMUFPBvWIn8KGOEKiJhiar0amQTcG70BQBoehHjPjW6GErLz/y0P6\npdd2Pe0ibI0zZXW2n8il1R32y7Ou2OC4Uo3Cs/tktHxU3KXpiy/tMCOdGeUfmR+y\n6O3RUQio6+ZNY9+EMEzmTOdoo2jZusbnS7FvNJUCgYEA45xfgPl+rrAW2XVNhmj0\n348IzRdkRrJzJOSrDvT8j+rmIjwUcjOdOGTcz+bcWWpaaO/cooil6u1kLQkwX8RO\nRQLR9DidcewxJCJP7IuKIZi2l8ePH8HMH9SH3C6KqnoZ2fmMInqDZXK+P4vw12De\nrEVxMDcx7nkrsM24ZuA4Ow8=\n-----END PRIVATE KEY-----\n",
+  "client_email": "serverless-housing-message@dal-vacation-home.iam.gserviceaccount.com",
+  "client_id": "104657733678982731608",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/serverless-housing-message%40dal-vacation-home.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
