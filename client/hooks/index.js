@@ -9,7 +9,7 @@ import {
   removeItemFromLocalStorage,
 } from '@/utils';
 import axiosInstance from '@/utils/axios';
-import { signIn, signUp, signOut, fetchAuthSession } from "aws-amplify/auth"
+import { signIn, signUp, signOut, fetchAuthSession } from 'aws-amplify/auth';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
 setupInterceptors();
@@ -27,8 +27,6 @@ const s3 = new S3Client({
 
 const uploadFileS3 = async (file) => {
   try {
-
-    
     await s3.send(new PutObjectCommand(params));
     const fileUrl = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${file.name}`;
     return fileUrl;
@@ -73,6 +71,7 @@ export const useProvideAuth = () => {
       passwordHash,
       questionId,
       agent,
+      cipherCode,
     } = formData;
 
     try {
@@ -95,7 +94,7 @@ export const useProvideAuth = () => {
             email,
             name,
           },
-        }
+        },
       });
 
       const { data } = await axiosInstance.post('user/register', {
@@ -104,6 +103,7 @@ export const useProvideAuth = () => {
         isAgent,
         questionId,
         answerHash,
+        cipherCode,
       });
 
       return { success: true, message: 'Registration successful' };
@@ -156,22 +156,17 @@ export const useProvideAuth = () => {
     const { email, password } = formData;
 
     try {
-    
-      try{
-        
+      try {
         await signIn({
           username: email,
           password: password,
         });
-      
-      }
-      catch(error){
-        if(error.name === 'UserAlreadyAuthenticatedException'){
-          
-      await signOut();
-      setUser(null);
-      removeItemFromLocalStorage('user');
-      removeItemFromLocalStorage('token');
+      } catch (error) {
+        if (error.name === 'UserAlreadyAuthenticatedException') {
+          await signOut();
+          setUser(null);
+          removeItemFromLocalStorage('user');
+          removeItemFromLocalStorage('token');
           await signIn({
             username: email,
             password: password,
@@ -180,14 +175,14 @@ export const useProvideAuth = () => {
       }
       const session = await fetchAuthSession();
 
-      console.log("id token", session.tokens.idToken);
-      console.log("access token", session.tokens.accessToken);
+      console.log('id token', session.tokens.idToken);
+      console.log('access token', session.tokens.accessToken);
 
-      const token = session.tokens.idToken.toString(); 
+      const token = session.tokens.idToken.toString();
 
       const { data } = await axiosInstance.post('user/login', {
         email,
-        token
+        token,
       });
 
       if (data.user && data.token) {
