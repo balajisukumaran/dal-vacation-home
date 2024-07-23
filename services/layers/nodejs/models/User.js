@@ -1,6 +1,4 @@
 const dynamoose = require("dynamoose");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
 
 // Define the schema
@@ -38,6 +36,10 @@ const userSchema = new dynamoose.Schema(
       type: String,
       required: true,
     },
+    cipherCode: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,
@@ -46,22 +48,5 @@ const userSchema = new dynamoose.Schema(
 
 // Create the model
 const User = dynamoose.model("User", userSchema);
-
-// Manual pre-save hook to hash the password
-User.prototype.hashPassword = async function () {
-  this.passwordHash = await bcrypt.hash(this.passwordHash, 10);
-};
-
-// Method to generate JWT token
-User.prototype.getJwtToken = async function () {
-  return jwt.sign({ userId: this.userId }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRY,
-  });
-};
-
-// validate the password
-User.prototype.isValidatedPassword = async function (userSentPassword) {
-  return await bcrypt.compare(userSentPassword, this.passwordHash);
-};
 
 module.exports = User;

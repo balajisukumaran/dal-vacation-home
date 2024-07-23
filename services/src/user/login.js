@@ -1,8 +1,9 @@
 const User = require("../../layers/nodejs/models/User");
 const Question = require("../../layers/nodejs/models/Question");
 const cookieToken = require("../../layers/nodejs/utils/cookieToken");
-const setUp = require("../../layers/nodejs/index");
-setUp();
+const connectWithDB = require("../../layers/nodejs/config/db");
+
+connectWithDB();
 
 exports.PostItemHandler = async (event) => {
   let response = {};

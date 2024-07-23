@@ -1,5 +1,5 @@
 // cookieToken.js
-const cookieToken = (user, token) => {
+const cookieToken = (user, token, allQuestion) => {
   const options = {
     expires: new Date(Date.now() + 60 * 60 * 1000), // Set expiry to 59 minutes from now
     httpOnly: true, // makes the token available only to backend
@@ -23,6 +23,7 @@ const cookieToken = (user, token) => {
       success: true,
       token,
       user,
+      allQuestion: allQuestion,
     }),
   };
 };

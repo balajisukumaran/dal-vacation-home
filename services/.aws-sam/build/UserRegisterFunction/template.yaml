@@ -36,6 +36,7 @@ Resources:
         AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
         AllowOrigin: "'*'"
         AllowCredentials: "'true'"
+    DeletionPolicy: Retain
 
   UserRegisterFunction:
     Type: AWS::Serverless::Function
@@ -50,15 +51,6 @@ Resources:
       Role: !GetAtt AdminRole.Arn
       Environment:
         Variables:
-          PORT: "4000"
-          DB_URL: mongodb+srv://admin:admin@dalvactionhome.ghnejjw.mongodb.net/?retryWrites=true&w=majority&appName=dalvactionhome
-          JWT_SECRET: jwtsecret
-          JWT_EXPIRY: 20d
-          COOKIE_TIME: "7"
-          SESSION_SECRET: your secret session (string)
-          CLOUDINARY_NAME: dtyqwxumd
-          CLOUDINARY_API_KEY: 566628451461642
-          CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
           CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
@@ -85,15 +77,6 @@ Resources:
       Role: !GetAtt AdminRole.Arn
       Environment:
         Variables:
-          PORT: "4000"
-          DB_URL: mongodb+srv://admin:admin@dalvactionhome.ghnejjw.mongodb.net/?retryWrites=true&w=majority&appName=dalvactionhome
-          JWT_SECRET: jwtsecret
-          JWT_EXPIRY: 20d
-          COOKIE_TIME: "7"
-          SESSION_SECRET: your secret session (string)
-          CLOUDINARY_NAME: dtyqwxumd
-          CLOUDINARY_API_KEY: 566628451461642
-          CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
           CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
@@ -119,15 +102,6 @@ Resources:
       Role: !GetAtt AdminRole.Arn
       Environment:
         Variables:
-          PORT: "4000"
-          DB_URL: mongodb+srv://admin:admin@dalvactionhome.ghnejjw.mongodb.net/?retryWrites=true&w=majority&appName=dalvactionhome
-          JWT_SECRET: jwtsecret
-          JWT_EXPIRY: 20d
-          COOKIE_TIME: "7"
-          SESSION_SECRET: your secret session (string)
-          CLOUDINARY_NAME: dtyqwxumd
-          CLOUDINARY_API_KEY: 566628451461642
-          CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
           CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
@@ -154,15 +128,6 @@ Resources:
       Role: !GetAtt AdminRole.Arn
       Environment:
         Variables:
-          PORT: "4000"
-          DB_URL: mongodb+srv://admin:admin@dalvactionhome.ghnejjw.mongodb.net/?retryWrites=true&w=majority&appName=dalvactionhome
-          JWT_SECRET: jwtsecret
-          JWT_EXPIRY: 20d
-          COOKIE_TIME: "7"
-          SESSION_SECRET: your secret session (string)
-          CLOUDINARY_NAME: dtyqwxumd
-          CLOUDINARY_API_KEY: 566628451461642
-          CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
           CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
@@ -189,15 +154,6 @@ Resources:
       Role: !GetAtt AdminRole.Arn
       Environment:
         Variables:
-          PORT: "4000"
-          DB_URL: mongodb+srv://admin:admin@dalvactionhome.ghnejjw.mongodb.net/?retryWrites=true&w=majority&appName=dalvactionhome
-          JWT_SECRET: jwtsecret
-          JWT_EXPIRY: 20d
-          COOKIE_TIME: "7"
-          SESSION_SECRET: your secret session (string)
-          CLOUDINARY_NAME: dtyqwxumd
-          CLOUDINARY_API_KEY: 566628451461642
-          CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
           CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
@@ -224,15 +180,6 @@ Resources:
       Role: !GetAtt AdminRole.Arn
       Environment:
         Variables:
-          PORT: "4000"
-          DB_URL: mongodb+srv://admin:admin@dalvactionhome.ghnejjw.mongodb.net/?retryWrites=true&w=majority&appName=dalvactionhome
-          JWT_SECRET: jwtsecret
-          JWT_EXPIRY: 20d
-          COOKIE_TIME: "7"
-          SESSION_SECRET: your secret session (string)
-          CLOUDINARY_NAME: dtyqwxumd
-          CLOUDINARY_API_KEY: 566628451461642
-          CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
           CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
@@ -259,15 +206,6 @@ Resources:
       Role: !GetAtt AdminRole.Arn
       Environment:
         Variables:
-          PORT: "4000"
-          DB_URL: mongodb+srv://admin:admin@dalvactionhome.ghnejjw.mongodb.net/?retryWrites=true&w=majority&appName=dalvactionhome
-          JWT_SECRET: jwtsecret
-          JWT_EXPIRY: 20d
-          COOKIE_TIME: "7"
-          SESSION_SECRET: your secret session (string)
-          CLOUDINARY_NAME: dtyqwxumd
-          CLOUDINARY_API_KEY: 566628451461642
-          CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
           CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
@@ -294,15 +232,6 @@ Resources:
       Role: !GetAtt AdminRole.Arn
       Environment:
         Variables:
-          PORT: "4000"
-          DB_URL: mongodb+srv://admin:admin@dalvactionhome.ghnejjw.mongodb.net/?retryWrites=true&w=majority&appName=dalvactionhome
-          JWT_SECRET: jwtsecret
-          JWT_EXPIRY: 20d
-          COOKIE_TIME: "7"
-          SESSION_SECRET: your secret session (string)
-          CLOUDINARY_NAME: dtyqwxumd
-          CLOUDINARY_API_KEY: 566628451461642
-          CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
           CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
@@ -329,15 +258,6 @@ Resources:
       Role: !GetAtt AdminRole.Arn
       Environment:
         Variables:
-          PORT: "4000"
-          DB_URL: mongodb+srv://admin:admin@dalvactionhome.ghnejjw.mongodb.net/?retryWrites=true&w=majority&appName=dalvactionhome
-          JWT_SECRET: jwtsecret
-          JWT_EXPIRY: 20d
-          COOKIE_TIME: "7"
-          SESSION_SECRET: your secret session (string)
-          CLOUDINARY_NAME: dtyqwxumd
-          CLOUDINARY_API_KEY: 566628451461642
-          CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
           CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
@@ -364,15 +284,6 @@ Resources:
       Role: !GetAtt AdminRole.Arn
       Environment:
         Variables:
-          PORT: "4000"
-          DB_URL: mongodb+srv://admin:admin@dalvactionhome.ghnejjw.mongodb.net/?retryWrites=true&w=majority&appName=dalvactionhome
-          JWT_SECRET: jwtsecret
-          JWT_EXPIRY: 20d
-          COOKIE_TIME: "7"
-          SESSION_SECRET: your secret session (string)
-          CLOUDINARY_NAME: dtyqwxumd
-          CLOUDINARY_API_KEY: 566628451461642
-          CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
           CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token
@@ -399,15 +310,6 @@ Resources:
       Role: !GetAtt AdminRole.Arn
       Environment:
         Variables:
-          PORT: "4000"
-          DB_URL: mongodb+srv://admin:admin@dalvactionhome.ghnejjw.mongodb.net/?retryWrites=true&w=majority&appName=dalvactionhome
-          JWT_SECRET: jwtsecret
-          JWT_EXPIRY: 20d
-          COOKIE_TIME: "7"
-          SESSION_SECRET: your secret session (string)
-          CLOUDINARY_NAME: dtyqwxumd
-          CLOUDINARY_API_KEY: 566628451461642
-          CLOUDINARY_API_SECRET: XbVEHdG34b7bTYZLgdcfegqaK_M
           CLIENT_URL: https://dal-vacation-home-service-konfsid46q-ue.a.run.app
           ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
           ALLOWED_HEADERS: Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token

@@ -1,9 +1,10 @@
 const Place = require("../../layers/nodejs/models/Place");
-const setUp = require("../../layers/nodejs/index");
 const middlewares = require("../../layers/nodejs/middlewares/user");
 const { v4: uuidv4 } = require("uuid");
 
-setUp();
+const connectWithDB = require("../../layers/nodejs/config/db");
+
+connectWithDB();
 
 exports.PostItemHandler = async (event) => {
   let response;

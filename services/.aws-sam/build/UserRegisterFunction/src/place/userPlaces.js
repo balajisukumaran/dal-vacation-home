@@ -1,8 +1,8 @@
 const Place = require("../../layers/nodejs/models/Place");
 const middlewares = require("../../layers/nodejs/middlewares/user");
-const setUp = require("../../layers/nodejs/index");
+const connectWithDB = require("../../layers/nodejs/config/db");
 
-setUp();
+connectWithDB();
 
 exports.GetItemHandler = async (event) => {
   let response = {};
