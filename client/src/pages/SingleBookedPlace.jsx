@@ -8,6 +8,7 @@ import PlaceGallery from '../components/ui/PlaceGallery';
 import Spinner from '../components/ui/Spinner';
 import axiosInstance from '../utils/axios';
 import { setupInterceptors } from '@/utils/setupInterceptors';
+import CopyLink from '@/components/ui/CopyToClipboard';
 
 setupInterceptors();
 
@@ -19,6 +20,7 @@ const SingleBookedPlace = () => {
   const getBookings = async () => {
     try {
       setLoading(true);
+
       const { data } = await axiosInstance.get('/bookings');
 
       // filter the data to get current booking
@@ -53,6 +55,7 @@ const SingleBookedPlace = () => {
             className="my-2 block"
             placeAddress={booking.place?.address}
           />
+          <CopyLink id={id} text={'Copy booking id'} />
           <div className="my-6 flex flex-col items-center justify-between rounded-2xl bg-gray-200 p-6 sm:flex-row">
             <div className=" ">
               <h2 className="mb-4 text-2xl md:text-2xl">

@@ -9,6 +9,7 @@ import AccountNav from '@/components/ui/AccountNav';
 import Perks from '@/components/ui/Perks';
 import PhotosUploader from '@/components/ui/PhotosUploader';
 import Spinner from '@/components/ui/Spinner';
+import RoomTypes from '@/components/ui/AccomodationType';
 
 setupInterceptors();
 
@@ -23,6 +24,7 @@ const PlacesFormPage = () => {
     address: '',
     description: '',
     perks: [],
+    roomType: '',
     extraInfo: '',
     checkIn: '',
     checkOut: '',
@@ -35,6 +37,7 @@ const PlacesFormPage = () => {
     address,
     description,
     perks,
+    roomType,
     extraInfo,
     checkIn,
     checkOut,
@@ -180,6 +183,9 @@ const PlacesFormPage = () => {
           onChange={handleFormData}
           placeholder="address"
         />
+
+        {preInput('Room Type', ' Choose the Room Type')}
+        <RoomTypes selected={roomType} handleFormData={handleFormData} />
 
         {preInput('Photos', 'more = better')}
 

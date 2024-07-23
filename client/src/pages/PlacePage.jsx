@@ -9,13 +9,14 @@ import AddressLink from '@/components/ui/AddressLink';
 import BookingWidget from '@/components/ui/BookingWidget';
 import PlaceGallery from '@/components/ui/PlaceGallery';
 import PerksWidget from '@/components/ui/PerksWidget';
+import CopyLink from '@/components/ui/CopyToClipboard';
+import RoomTypeWidget from '@/components/ui/RoomTypeWidget';
 
 setupInterceptors();
 const PlacePage = () => {
   const { id } = useParams();
   const [place, setPlace] = useState(null);
   const [loading, setLoading] = useState(false);
-
   useEffect(() => {
     if (!id) {
       return '';
@@ -44,8 +45,8 @@ const PlacePage = () => {
       <h1 className="text-3xl">{place.title}</h1>
 
       <AddressLink placeAddress={place.address} />
+      <CopyLink id={id} text={'Copy place id'} />
       <PlaceGallery place={place} />
-
       <div className="mb-8 mt-8 grid grid-cols-1 gap-8 md:grid-cols-[2fr_1fr]">
         <div className="">
           <div className="my-4 ">
@@ -53,6 +54,7 @@ const PlacePage = () => {
             {place.description}
           </div>
           Max number of guests: {place.maxGuests}
+          <RoomTypeWidget roomType={place?.roomType} />
           <PerksWidget perks={place?.perks} />
         </div>
         <div>

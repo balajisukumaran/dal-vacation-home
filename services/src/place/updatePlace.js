@@ -40,6 +40,7 @@ exports.PutItemHandler = async (event) => {
       addedPhotos,
       description,
       perks,
+      roomType,
       extraInfo,
       maxGuests,
       price,
@@ -54,6 +55,7 @@ exports.PutItemHandler = async (event) => {
       place.photos = addedPhotos;
       place.description = description;
       place.perks = perks;
+      place.roomType = roomType;
       place.extraInfo = extraInfo;
       place.maxGuests = maxGuests;
       place.price = price;

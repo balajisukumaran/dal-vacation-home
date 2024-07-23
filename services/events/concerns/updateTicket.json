@@ -1,0 +1,4 @@
+{
+  "httpMethod": "POST",
+  "body": "{\"ticketId\": \"1720120177424\", \"updatedFields\": {\"status\": \"In Progress\", \"comments\": \"Updated comment123\"}}"
+}
