@@ -23,6 +23,8 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { getItemFromLocalStorage } from './utils';
 import NotFoundPage from './pages/NotFoundPage';
 import LoginSecurityQuestions from './pages/LoginSecurityQuestions';
+import CipherCode from './pages/CipherCode';
+
 import { Amplify } from 'aws-amplify';
 
 Amplify.configure({
@@ -30,8 +32,8 @@ Amplify.configure({
     Cognito: {
       userPoolClientId: '49gf14snt2hgr0p4grf9slkcuq',
       userPoolId: 'us-east-1_fxqdGPnnZ',
-    }
-  }
+    },
+  },
 });
 
 setupInterceptors();
@@ -62,7 +64,7 @@ function App() {
                 path="/security-questions"
                 element={<SecurityQuestions />}
               />
-
+              <Route path="/cipher-code" element={<CipherCode />} />
               <Route path="/account" element={<ProfilePage />} />
               <Route path="/account/places" element={<PlacesPage />} />
               <Route path="/account/places/new" element={<PlacesFormPage />} />

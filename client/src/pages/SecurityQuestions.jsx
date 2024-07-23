@@ -24,7 +24,6 @@ const SecurityQuestions = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     const storedData = JSON.parse(localStorage.getItem('formData'));
     const formData = {
       ...storedData,
@@ -32,32 +31,45 @@ const SecurityQuestions = () => {
       questionId: question,
       answerHash: btoa(answer),
     };
-
-    const response = await auth.register(formData);
-    if (response.success) {
-      toast.success(response.message);
-      //setRedirect(true);
-      navigate('/login');
-    } else {
-      toast.error(response.message);
-    }
-
-    // fetch('https://vsrax959bg.execute-api.us-east-1.amazonaws.com/dev/', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(formData),
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log('Success:', data);
-    //     navigate('/profile');
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error:', error);
-    //   });
+    localStorage.setItem('formData', JSON.stringify(formData));
+    navigate('/cipher-code');
   };
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+
+  //   const storedData = JSON.parse(localStorage.getItem('formData'));
+  //   const formData = {
+  //     ...storedData,
+  //     passwordHash: btoa(storedData.password),
+  //     questionId: question,
+  //     answerHash: btoa(answer),
+  //   };
+
+  //   const response = await auth.register(formData);
+  //   if (response.success) {
+  //     toast.success(response.message);
+  //     //setRedirect(true);
+  //     navigate('/login');
+  //   } else {
+  //     toast.error(response.message);
+  //   }
+
+  //   // fetch('https://vsrax959bg.execute-api.us-east-1.amazonaws.com/dev/', {
+  //   //   method: 'POST',
+  //   //   headers: {
+  //   //     'Content-Type': 'application/json',
+  //   //   },
+  //   //   body: JSON.stringify(formData),
+  //   // })
+  //   //   .then((response) => response.json())
+  //   //   .then((data) => {
+  //   //     console.log('Success:', data);
+  //   //     navigate('/profile');
+  //   //   })
+  //   //   .catch((error) => {
+  //   //     console.error('Error:', error);
+  //   //   });
+  // };
 
   return (
     <div className="mt-4 flex grow items-center justify-around p-4 md:p-0">
