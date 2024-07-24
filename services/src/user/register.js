@@ -1,10 +1,9 @@
 const User = require("../../layers/nodejs/models/User");
-const cookieToken = require("../../layers/nodejs/utils/cookieToken");
-const setUp = require("../../layers/nodejs/index");
 const { v4: uuidv4 } = require("uuid");
 const axios = require("axios");
+const connectWithDB = require("../../layers/nodejs/config/db");
 
-setUp();
+connectWithDB();
 
 exports.PostItemHandler = async (event) => {
   let response = {};

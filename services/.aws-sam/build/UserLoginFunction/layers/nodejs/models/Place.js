@@ -35,6 +35,9 @@ const placeSchema = new dynamoose.Schema(
       type: Array,
       schema: [String],
     },
+    roomType: {
+      type: String,
+    },
     extraInfo: {
       type: String,
     },

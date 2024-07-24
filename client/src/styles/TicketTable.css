@@ -1,0 +1,43 @@
+.ticket-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+  }
+  
+  .ticket-table th,
+  .ticket-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    border-radius: 5px;
+    font-family: "Merriweather", serif;
+  }
+  
+  .ticket-table th {
+    background-color: #8c5d9a;
+    color: #ffffff;
+  }
+  
+  .ticket-table tr:nth-child(even) {
+    background-color: #f3f3f3;
+  }
+  
+  .ticket-table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .actions button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .actions button:hover {
+    background-color: #62939a;
+  }
+  

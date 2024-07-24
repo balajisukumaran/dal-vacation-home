@@ -1,8 +1,9 @@
 const User = require("../../layers/nodejs/models/User");
+const Question = require("../../layers/nodejs/models/Question");
 const cookieToken = require("../../layers/nodejs/utils/cookieToken");
-const setUp = require("../../layers/nodejs/index");
-const middleware = require("../../layers/nodejs/middlewares/user");
-setUp();
+const connectWithDB = require("../../layers/nodejs/config/db");
+
+connectWithDB();
 
 exports.PostItemHandler = async (event) => {
   let response = {};
@@ -45,6 +46,7 @@ exports.PostItemHandler = async (event) => {
 
     // Check if user is already registered
     const userExists = await User.query("email").eq(email).exec();
+    const allQuestion = await Question.scan().exec();
 
     if (userExists.length === 0) {
       return {
@@ -64,7 +66,7 @@ exports.PostItemHandler = async (event) => {
     const user = userExists[0];
 
     // if everything is fine we will send the token
-    response = cookieToken(user, token);
+    response = cookieToken(user, token, allQuestion);
   } catch (err) {
     console.error("Error:", err);
 

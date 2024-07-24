@@ -13,6 +13,8 @@ import BookingsPage from './pages/BookingsPage';
 import PlacesFormPage from './pages/PlacesFormPage';
 import PlacePage from './pages/PlacePage';
 import SingleBookedPlace from './pages/SingleBookedPlace';
+import AdminTicket from './pages/AdminTicket';
+import UserTicket from './pages/UserTicket';
 import axiosInstance from './utils/axios';
 import { setupInterceptors } from '@/utils/setupInterceptors';
 import { UserProvider } from './providers/UserProvider';
@@ -71,6 +73,7 @@ function App() {
               <Route path="/account/places/:id" element={<PlacesFormPage />} />
               <Route path="/place/:id" element={<PlacePage />} />
               <Route path="/account/bookings" element={<BookingsPage />} />
+              <Route path="/account/concern" element={<AdminTicket />} />
               <Route
                 path="/account/bookings/:id"
                 element={<SingleBookedPlace />}

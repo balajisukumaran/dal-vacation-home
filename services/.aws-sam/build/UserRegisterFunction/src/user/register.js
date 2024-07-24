@@ -1,9 +1,9 @@
 const User = require("../../layers/nodejs/models/User");
-const cookieToken = require("../../layers/nodejs/utils/cookieToken");
-const setUp = require("../../layers/nodejs/index");
 const { v4: uuidv4 } = require("uuid");
+const axios = require("axios");
+const connectWithDB = require("../../layers/nodejs/config/db");
 
-setUp();
+connectWithDB();
 
 exports.PostItemHandler = async (event) => {
   let response = {};
@@ -26,9 +26,17 @@ exports.PostItemHandler = async (event) => {
   console.info("Received event:", event);
 
   try {
-    const { name, email, isAgent } = JSON.parse(event.body);
+    const { name, email, isAgent, questionId, answerHash, cipherCode } =
+      JSON.parse(event.body);
 
-    if (!name || !email || !isAgent) {
+    if (
+      !name ||
+      !email ||
+      !isAgent ||
+      !questionId ||
+      !answerHash ||
+      !cipherCode
+    ) {
       return {
         statusCode: 400,
         headers: {
@@ -67,9 +75,33 @@ exports.PostItemHandler = async (event) => {
       name: name,
       email: email,
       isAgent: isAgent,
+      questionId: questionId,
+      answerHash: answerHash,
+      cipherCode: cipherCode,
     });
 
     await user.save(); // Save the user instance to DynamoDB
+
+    try {
+      // await user.save(); // Save the user instance to DynamoDB
+      console.log("User saved successfully.");
+
+      const response = await axios.post(
+        "https://aymnjk1za7.execute-api.us-east-1.amazonaws.com/Prod/registration-SNS",
+        {
+          email: user.email,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log("POST request successful:", response.data);
+    } catch (error) {
+      console.error("Error during user save or POST request:", error);
+    }
 
     return {
       statusCode: 200,

@@ -1,9 +1,9 @@
 const Booking = require("../../layers/nodejs/models/Booking");
-const setUp = require("../../layers/nodejs/index");
 const middlewares = require("../../layers/nodejs/middlewares/user");
 const { v4: uuidv4 } = require("uuid");
+const connectWithDB = require("../../layers/nodejs/config/db");
 
-setUp();
+connectWithDB();
 
 exports.PostItemHandler = async (event) => {
   let response;

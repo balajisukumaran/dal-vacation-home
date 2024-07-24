@@ -18,7 +18,7 @@ exports.checkLoggedIn = async (event) => {
           },
           body: JSON.stringify({
             success: false,
-            message: "Login first to access this page",
+            message: "Login first to access this page.",
           }),
         },
       ];
