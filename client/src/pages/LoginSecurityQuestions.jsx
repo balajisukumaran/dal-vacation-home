@@ -32,7 +32,7 @@ const LoginSecurityQuestions = () => {
 
     if (answerHash === storedAnswerHash) {
       toast.success('Answer correct. Redirecting to profile...');
-      navigate('/');
+      navigate('/verify-cipher');
     } else {
       toast.error('Incorrect answer. Please try again.');
       localStorage.user = null;

@@ -22,7 +22,6 @@ import { getItemFromLocalStorage } from './utils';
 import NotFoundPage from './pages/NotFoundPage';
 import LoginSecurityQuestions from './pages/LoginSecurityQuestions';
 import CipherCode from './pages/CipherCode';
-
 import { Amplify } from 'aws-amplify';
 
 Amplify.configure({
@@ -37,6 +36,7 @@ Amplify.configure({
 setupInterceptors();
 
 import SecurityQuestions from './pages/SecurityQuestions';
+import VerifyCipher from './pages/VerifyCipher';
 function App() {
   useEffect(() => {
     // set the token on refreshing the website
@@ -63,6 +63,8 @@ function App() {
                 element={<SecurityQuestions />}
               />
               <Route path="/cipher-code" element={<CipherCode />} />
+              <Route path="/verify-cipher" element={<VerifyCipher />} />
+
               <Route path="/account" element={<ProfilePage />} />
               <Route path="/account/places" element={<PlacesPage />} />
               <Route path="/account/places/new" element={<PlacesFormPage />} />
