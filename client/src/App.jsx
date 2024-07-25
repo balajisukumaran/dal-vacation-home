@@ -24,6 +24,7 @@ import { getItemFromLocalStorage } from './utils';
 import NotFoundPage from './pages/NotFoundPage';
 import LoginSecurityQuestions from './pages/LoginSecurityQuestions';
 import CipherCode from './pages/CipherCode';
+
 import { Amplify } from 'aws-amplify';
 
 Amplify.configure({
@@ -38,6 +39,7 @@ Amplify.configure({
 setupInterceptors();
 
 import SecurityQuestions from './pages/SecurityQuestions';
+import ConcernsPage from './pages/ConcernPage';
 import VerifyCipher from './pages/VerifyCipher';
 function App() {
   useEffect(() => {
@@ -66,14 +68,13 @@ function App() {
               />
               <Route path="/cipher-code" element={<CipherCode />} />
               <Route path="/verify-cipher" element={<VerifyCipher />} />
-
               <Route path="/account" element={<ProfilePage />} />
               <Route path="/account/places" element={<PlacesPage />} />
               <Route path="/account/places/new" element={<PlacesFormPage />} />
               <Route path="/account/places/:id" element={<PlacesFormPage />} />
               <Route path="/place/:id" element={<PlacePage />} />
               <Route path="/account/bookings" element={<BookingsPage />} />
-              <Route path="/account/concern" element={<AdminTicket />} />
+              <Route path="/account/concerns" element={<ConcernsPage />} />
               <Route
                 path="/account/bookings/:id"
                 element={<SingleBookedPlace />}

@@ -31,7 +31,7 @@ const LoginSecurityQuestions = () => {
     const answerHash = btoa(answer);
 
     if (answerHash === storedAnswerHash) {
-      toast.success('Answer correct. Redirecting to profile...');
+      toast.success('Answer correct. Redirecting to CipherCode...');
       navigate('/verify-cipher');
     } else {
       toast.error('Incorrect answer. Please try again.');

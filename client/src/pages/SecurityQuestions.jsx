@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { useAuth } from '../../hooks';
+import axiosInstance from '@/utils/axios';
 
 const SecurityQuestions = () => {
   const navigate = useNavigate();
@@ -9,17 +9,26 @@ const SecurityQuestions = () => {
   const [questions, setQuestions] = useState([]);
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
+  const fetchAllQuestions = async () => {
+    try {
+      const { data } = await axiosInstance.get('/fetchAllQuestions');
+      setQuestions(data);
+    } catch (err) {
+      console.error('Error fetching questions:', error);
+    }
+  };
 
   useEffect(() => {
-    fetch('https://aymnjk1za7.execute-api.us-east-1.amazonaws.com/Prod/dal-vacation-home-fetch-all-questions')
-      .then((response) => response.json())
-      .then((data) => {
-        const parsedData = data;
-        setQuestions(parsedData);
-      })
-      .catch((error) => {
-        console.error('Error fetching questions:', error);
-      });
+    fetchAllQuestions();
+    // fetch(
+    //   'https://aymnjk1za7.execute-api.us-east-1.amazonaws.com/Prod/dal-vacation-home-fetch-all-questions',
+    // )
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     const parsedData = data;
+    //     setQuestions(parsedData);
+    //   })
+    //   .catch((error) => {});
   }, []);
 
   const handleSubmit = async (event) => {

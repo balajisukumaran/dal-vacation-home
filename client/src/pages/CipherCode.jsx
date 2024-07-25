@@ -14,7 +14,7 @@ const CipherCode = () => {
     const storedData = JSON.parse(localStorage.getItem('formData'));
     const formData = {
       ...storedData,
-      cipherCode: parseInt(cipherCode, 10),
+      cipherCode: parseInt(cipherCode, 10).toString(),
     };
 
     const response = await auth.register(formData);
@@ -24,23 +24,6 @@ const CipherCode = () => {
     } else {
       toast.error(response.message);
     }
-
-    // Example for direct submission without using `auth.register`
-    // fetch('https://vsrax959bg.execute-api.us-east-1.amazonaws.com/dev/', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(formData),
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log('Success:', data);
-    //     navigate('/profile');
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error:', error);
-    //   });
   };
 
   return (

@@ -24,11 +24,11 @@ const bookingSchema = new dynamoose.Schema({
     },
   },
   checkIn: {
-    type: Date,
+    type: String,
     required: true,
   },
   checkOut: {
-    type: Date,
+    type: String,
     required: true,
   },
   name: {

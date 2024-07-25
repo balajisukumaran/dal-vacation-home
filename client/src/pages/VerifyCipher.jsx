@@ -40,7 +40,7 @@ const VerifyCipher = () => {
 
     try {
       const response = await fetch(
-        'https://aymnjk1za7.execute-api.us-east-1.amazonaws.com/Prod/checkCipher',
+        'https://aymnjk1za7.execute-api.us-east-1.amazonaws.com/Prod/user/verifycipher',
         {
           method: 'POST',
           headers: {
