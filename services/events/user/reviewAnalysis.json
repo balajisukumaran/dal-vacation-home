@@ -1,0 +1,4 @@
+{
+  "httpMethod": "POST",
+  "body": "{\"userId\": \"value1\", \"placeId\": \"1234\", \"review\": \"Did not like the service\"}"
+}

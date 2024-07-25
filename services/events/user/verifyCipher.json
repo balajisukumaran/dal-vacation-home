@@ -1,0 +1,4 @@
+{
+  "httpMethod": "POST",
+  "body": "{\"email\": \"gunjan@gmail.com\",\"randomText\":\"ABCD\",\"cipher\":\"BCDE\"}"
+}

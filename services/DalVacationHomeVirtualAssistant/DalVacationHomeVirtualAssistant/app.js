@@ -75,11 +75,26 @@ async function Navigation(event) {
     slots.Page.value.originalValue !== ""
   ) {
     const page = slots.Page.value.originalValue;
-    let url = "https://dal-vacation-home-service-konfsid46q-ue.a.run.app";
-    if (page === "Profile") url = url + "/account";
-    else if (page === "Bookings") url = url + "/account/bookings";
-    else if (page === "Accomodations") url = url + "/account/places";
-    else url = url + "/";
+    let comment = "";
+    if (page === "Profile") {
+      comment =
+        "To access your profile, Click the profile icon located in the top right corner of the page.";
+    } else if (page === "Bookings") {
+      comment =
+        "Please note that the Bookings page is accessible only to customers.\nFollow these steps to view your bookings:\n1. Click the profile icon located in the top right corner of the page.\n2. Select the 'My Bookings' option to view all your bookings.\n3. Click on a specific booking to view its details or to provide feedback.";
+    } else if (page === "Accommodations") {
+      comment =
+        "Please note that the Accommodations page is accessible only to property agents.\nFollow these steps to view accommodations:\n1. Click the profile icon located in the top right corner of the page.\n2. Select the 'My Accommodations' option to view all your properties.\n3. Click on a specific accommodation to view its details.";
+    } else if (page === "Analysis") {
+      comment =
+        "To access analysis, Click the profile icon located in the top right corner of the page and scroll down. Please note that the analysis is accessible only to property agents.";
+    } else if (page === "Concerns") {
+      comment =
+        "Follow these steps to view concerns status:\n1. Click the profile icon located in the top right corner of the page.\n2. Select the 'Concerns' option to view all your concerns.\n3. If you're a property agent you will be able to view comment on the concerns assigned to you.";
+    } else {
+      comment =
+        "To return to the homepage, click the Dal vacation home icon located in the top left corner of the page.";
+    }
 
     try {
       return {
@@ -96,7 +111,7 @@ async function Navigation(event) {
         messages: [
           {
             contentType: "PlainText",
-            content: "Click here to navigate. " + url,
+            content: comment,
           },
         ],
       };

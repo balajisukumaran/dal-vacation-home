@@ -1,0 +1,41 @@
+{
+  "version": "2.0",
+  "routeKey": "GET /place/{id}",
+  "rawPath": "/place/d3eaf590-74d3-43d2-9865-380c9fce8eb6",
+  "rawQueryString": "",
+  "httpMethod": "GET",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer eyJraWQiOiI0N0h4ZjY4d0VNcXlOM3o2Y1lXR0JuYzJ3VjNPMW0rY2MyN2lEd3FoOEtnPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI5NDQ4MTQxOC00MDQxLTcwMzAtY2EzOC1kZjA0MDE5NzNjZjciLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfZnhxZEdQbm5aIiwiY29nbml0bzp1c2VybmFtZSI6Ijk0NDgxNDE4LTQwNDEtNzAzMC1jYTM4LWRmMDQwMTk3M2NmNyIsIm9yaWdpbl9qdGkiOiJlOWY3ZjU5NS1kY2UwLTRmNjYtODAzZS1jZDU1NzA4NzI5NDYiLCJhdWQiOiI0OWdmMTRzbnQyaGdyMHA0Z3JmOXNsa2N1cSIsImV2ZW50X2lkIjoiMTEyNTJiMTEtZTIyZC00OTgwLTljZTEtMDIwN2M0NmI3MTJmIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE3MjAwNDUyODgsIm5hbWUiOiJ0ZXN0NiIsImV4cCI6MTcyMDA0ODg4OCwiaWF0IjoxNzIwMDQ1Mjg4LCJqdGkiOiJiZGZiMWRlOC03MTMzLTQ1NmItYTVmNS1hZmM3ZTJjYzhmMzgiLCJlbWFpbCI6InRlc3Q2QGdtYWlsLmNvbSJ9.pAehw08QbWDtEq2CC4O7MdJWxelUpgIKyS9WnHs6IpyNr5ukB4caTKT82ugsH8OgjOw7lukwmUlYElb9Bimw9HPlWNqgSXAvU1Z4A9nxoJja7I8YaHq7z35jKlvgNTEoZZdA-12809TLpPQjeFY37rnQsjCekckypt9xixnLFuh-N1rSHLSDPViFxkBA_hBji4fy-tJ0AkC2WvlULH5vNZhtmDwXUnSnVIQp5kmlMYEDEk_X3RMdjl3MjLznAFi6CgyVVJyM3ECMB_M_-rfLc_pGJgOz9hVAjm-8m9SnpJQBt88nMjxKq8e7dD5x25X67xNgyItyoSw1NG7QhGIz5w",
+    "content-length": "0",
+    "content-type": "application/json",
+    "host": "example.com",
+    "user-agent": "PostmanRuntime/7.26.8",
+    "x-amzn-trace-id": "Root=1-5f9b4d28-abcdef01234567890abcdef0",
+    "x-forwarded-for": "123.123.123.123",
+    "x-forwarded-port": "443",
+    "x-forwarded-proto": "https"
+  },
+  "requestContext": {
+    "accountId": "123456789012",
+    "apiId": "abcdefg123",
+    "domainName": "example.com",
+    "domainPrefix": "example",
+    "http": {
+      "method": "GET",
+      "path": "/place/d3eaf590-74d3-43d2-9865-380c9fce8eb6",
+      "protocol": "HTTP/1.1",
+      "sourceIp": "123.123.123.123",
+      "userAgent": "PostmanRuntime/7.26.8"
+    },
+    "requestId": "abcdefg-1234-5678-9101-abcdef012345",
+    "routeKey": "GET /place/{id}",
+    "stage": "$default",
+    "time": "12/Oct/2021:19:55:25 +0000",
+    "timeEpoch": 1602528525123
+  },
+  "pathParameters": {
+    "id": "d3eaf590-74d3-43d2-9865-380c9fce8eb6"
+  },
+  "isBase64Encoded": false
+}
