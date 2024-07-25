@@ -1,5 +1,6 @@
 const middlewares = require("../../layers/nodejs/middlewares/user");
 const connectWithDB = require("../../layers/nodejs/config/db");
+const User = require("../../layers/nodejs/models/User");
 
 connectWithDB();
 
@@ -35,10 +36,12 @@ exports.PutItemHandler = async (event) => {
 
     if (loggedInUser) {
       if (picture) {
+        const users = await User.query("userId").eq(loggedInUser.userId).exec();
+        const user = users[0];
+        user.picture = picture;
         loggedInUser.picture = picture;
+        await user.save();
       }
-
-      await loggedInUser.save();
 
       // if everything is fine we will send the token
       response = {

@@ -56,7 +56,7 @@ exports.GetItemHandler = async (event) => {
     // Fetch related place data for each booking
     const bookingsWithPlaces = await Promise.all(
       bookings.map(async (booking) => {
-        const place = await Place.get(booking.place); // Assume `place` is the place ID in the booking
+        const place = await Place.get(booking.placeId); // Assume `place` is the place ID in the booking
         return {
           ...booking,
           place,

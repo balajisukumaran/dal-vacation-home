@@ -9,6 +9,7 @@ import Spinner from '../components/ui/Spinner';
 import axiosInstance from '../utils/axios';
 import { setupInterceptors } from '@/utils/setupInterceptors';
 import CopyLink from '@/components/ui/CopyToClipboard';
+import { toast } from 'react-toastify';
 
 setupInterceptors();
 
@@ -16,6 +17,7 @@ const SingleBookedPlace = () => {
   const { id } = useParams();
   const [booking, setBooking] = useState({});
   const [loading, setLoading] = useState(false);
+  const [review, setReview] = useState('');
 
   const getBookings = async () => {
     try {
@@ -39,6 +41,25 @@ const SingleBookedPlace = () => {
   useEffect(() => {
     getBookings();
   }, [id]);
+
+  const handleReviewChange = (e) => {
+    setReview(e.target.value);
+  };
+
+  const handleSubmitReview = async () => {
+    try {
+      const userId = JSON.parse(localStorage.user).userId;
+      const { data } = await axiosInstance.post('/user/reviewAnalysis', {
+        userId: userId,
+        placeId: booking.placeId,
+        review: review,
+      });
+
+      toast.success('Feedback submitted successfully');
+    } catch (error) {
+      console.log('Error: ', error);
+    }
+  };
 
   if (loading) {
     return <Spinner />;
@@ -71,6 +92,23 @@ const SingleBookedPlace = () => {
             </div>
           </div>
           <PlaceGallery place={booking?.place} />
+
+          <div className="my-4">
+            <div className="my-4">
+              <textarea
+                value={review}
+                onChange={handleReviewChange}
+                placeholder="Please enter your feedback. Note that it will be used by our internal team to gain insights and improve the app experience."
+                className="w-full rounded border border-gray-300 p-2"
+              ></textarea>
+              <button
+                onClick={handleSubmitReview}
+                className="mt-2 rounded bg-primary px-4 py-2 text-white"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
         </div>
       ) : (
         <h1> No data</h1>

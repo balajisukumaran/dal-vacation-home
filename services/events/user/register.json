@@ -1,4 +1,4 @@
 {
   "httpMethod": "POST",
-  "body": "{\"name\": \"test test\",\"email\": \"testteesssdssdhd@gmail.com\", \"isAgent\": \"y\",\"questionId\": \"1\", \"answerHash\": \"Z20=\", \"cipherCode\": \"someCipherCode\"}"
+  "body": "{\"name\":\"gunjan gunjan\",\"email\":\"gunjan@gmail.com\",\"isAgent\":\"n\",\"questionId\":\"1\",\"answerHash\":\"bWlsbw==\",\"cipherCode\":1231}"
 }

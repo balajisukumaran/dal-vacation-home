@@ -15,12 +15,13 @@ const BookingWidget = ({ place }) => {
     noOfGuests: 1,
     name: '',
     phone: '',
+    email: '',
   });
   const [redirect, setRedirect] = useState('');
   const { user } = useAuth();
 
-  const { noOfGuests, name, phone } = bookingData;
-  const { id: id, price } = place;
+  const { noOfGuests, name, phone, email } = bookingData;
+  const { placeId: id, price } = place;
 
   useEffect(() => {
     if (user) {
@@ -61,21 +62,28 @@ const BookingWidget = ({ place }) => {
       return toast.error("Name can't be empty");
     } else if (phone.trim() === '') {
       return toast.error("Phone can't be empty");
+    } else if (email.trim() === '') {
+      return toast.error("Email can't be empty");
     }
 
     try {
       const checkInDate = new Date(dateRange.from);
       const checkOutDate = new Date(dateRange.to);
-
-      const response = await axiosInstance.post('/bookings', {
-        checkIn: checkInDate,
-        checkOut: checkOutDate,
-        noOfGuests,
-        name,
-        phone,
-        place: id,
-        price: numberOfNights * price,
-      });
+      const userId = JSON.parse(localStorage.user).userId;
+      const response = await axiosInstance.post(
+        'https://588cr4cfe7.execute-api.us-east-1.amazonaws.com/RoomBookings/RoomBookingSQS',
+        {
+          checkIn: checkInDate,
+          checkOut: checkOutDate,
+          name: name,
+          numberOfGuests: noOfGuests,
+          phone: phone,
+          placeId: id,
+          price: numberOfNights * price,
+          userId: userId,
+          email: email,
+        },
+      );
 
       const bookingId = response.data.booking.bookingId;
 
@@ -125,6 +133,13 @@ const BookingWidget = ({ place }) => {
             type="tel"
             name="phone"
             value={phone}
+            onChange={handleBookingData}
+          />
+          <label>email: </label>
+          <input
+            type="text"
+            name="email"
+            value={email}
             onChange={handleBookingData}
           />
         </div>
