@@ -17,6 +17,16 @@ const PlacePage = () => {
   const { id } = useParams();
   const [place, setPlace] = useState(null);
   const [loading, setLoading] = useState(false);
+  let user = '';
+  let isAgent = '';
+
+  if (localStorage && localStorage.user) {
+    user = JSON.parse(localStorage.user);
+    isAgent = user.isAgent === 'y' ? true : false;
+  } else {
+    isAgent = true;
+  }
+
   useEffect(() => {
     if (!id) {
       return '';
@@ -57,9 +67,7 @@ const PlacePage = () => {
           <RoomTypeWidget roomType={place?.roomType} />
           <PerksWidget perks={place?.perks} />
         </div>
-        <div>
-          <BookingWidget place={place} />
-        </div>
+        {isAgent == false ? <BookingWidget place={place} /> : <span></span>}
       </div>
       <div className="-mx-8 border-t bg-white px-8 py-8">
         <div>

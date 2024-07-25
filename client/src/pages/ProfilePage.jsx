@@ -8,13 +8,16 @@ import { Button } from '@/components/ui/button';
 
 import PlacesPage from './PlacesPage';
 import { useAuth } from '../../hooks';
-import { LogOut, Mail, PenSquare, Text } from 'lucide-react';
+import { LogOut, Mail, Text } from 'lucide-react';
 import EditProfileDialog from '@/components/ui/EditProfileDialog';
 
 const ProfilePage = () => {
   const auth = useAuth();
   const { user, logout } = auth;
   const [redirect, setRedirect] = useState(null);
+
+  const loggedInUser =
+    localStorage && localStorage.user ? JSON.parse(localStorage.user) : null;
 
   let { subpage } = useParams();
   if (!subpage) {
@@ -43,9 +46,9 @@ const ProfilePage = () => {
     <div>
       <AccountNav />
       {subpage === 'profile' && (
-        <div className="m-4 flex flex-col items-center gap-8 rounded-[10px]  p-4 sm:h-1/5 sm:flex-row sm:items-stretch lg:gap-28 lg:pl-32 lg:pr-20">
+        <div className="m-4 flex flex-col items-center gap-8 rounded-[10px] p-4 sm:h-1/5 sm:flex-row sm:items-stretch lg:gap-28 lg:pl-32 lg:pr-20">
           {/* avatar */}
-          <div className="flex h-40 w-40 justify-center rounded-full bg-gray-200 p-4  sm:h-72 sm:w-72 md:h-96 md:w-96">
+          <div className="flex h-40 w-40 justify-center rounded-full bg-gray-200 p-4 sm:h-72 sm:w-72 md:h-96 md:w-96">
             <Avatar>
               {user.picture ? (
                 <AvatarImage src={user.picture} />
@@ -63,6 +66,20 @@ const ProfilePage = () => {
           <div className="flex grow flex-col items-center gap-10 sm:items-start sm:justify-around sm:gap-0">
             {/* user details */}
             <div className="flex flex-col items-center gap-2 sm:items-start">
+              {user.isAgent !== 'n' ? (
+                <div className="flex items-center gap-2">
+                  <div className="text-xl">
+                    <span>You are a property agent</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <div className="text-xl">
+                    <span>You are a customer</span>
+                  </div>
+                </div>
+              )}
+
               <div className="flex items-center gap-2">
                 <Text height="18" width="18" />
                 <div className="text-xl">
@@ -82,7 +99,6 @@ const ProfilePage = () => {
 
             {/* Action buttons */}
             <div className="flex w-full justify-around sm:justify-end sm:gap-5 md:gap-10">
-              {/* <Button varient="secondary">Edit profile</Button> */}
               <EditProfileDialog />
 
               <Button variant="secondary" onClick={handleLogout}>
@@ -94,6 +110,23 @@ const ProfilePage = () => {
         </div>
       )}
       {subpage === 'places' && <PlacesPage />}
+      {/* Embed Looker Studio Report */}
+
+      {loggedInUser.isAgent === 'y' ? (
+        <div className="my-8 flex justify-center">
+          <iframe
+            width="100%"
+            height="600"
+            src="https://lookerstudio.google.com/embed/reporting/5c2ce546-cc0f-4dd7-87be-d997a6742531/page/kjt6D"
+            frameborder="0"
+            style={{ border: '0' }}
+            allowFullScreen
+            sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+          ></iframe>
+        </div>
+      ) : (
+        <span></span>
+      )}
     </div>
   );
 };

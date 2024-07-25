@@ -1,5 +1,7 @@
 const AWS = require("aws-sdk");
 const dynamodb = new AWS.DynamoDB.DocumentClient();
+const Booking = require("../../layers/nodejs/models/Booking");
+const Place = require("../../layers/nodejs/models/Place");
 
 exports.handler = async (event) => {
   console.log("Full Event received:", JSON.stringify(event, null, 2));
@@ -44,8 +46,21 @@ exports.handler = async (event) => {
   };
 
   try {
-    const data = await dynamodb.scan(params).promise();
+    let data = await dynamodb.scan(params).promise();
     console.log("Tickets fetched successfully", data);
+
+    const promises = data.Items.map(async (ticket) => {
+      const bookings = await Booking.query("bookingId")
+        .eq(ticket.bookingId)
+        .exec();
+
+      const booking = bookings[0];
+      const place = await Place.get(booking.placeId); // Assume `place` is the place ID in the booking
+      return { ticket: ticket, booking: booking, place: place };
+    });
+
+    const results = await Promise.all(promises);
+
     return {
       statusCode: 200,
       headers: {
@@ -57,7 +72,7 @@ exports.handler = async (event) => {
       },
       body: JSON.stringify({
         message: "Tickets fetched successfully",
-        tickets: data.Items,
+        tickets: results,
       }),
     };
   } catch (error) {
