@@ -81,6 +81,9 @@ const VerifyCipher = () => {
           </div>
 
           <div className="mb-3">
+          <p>
+              Please enter the cipher text based on the random text above. The word can be made from the letters ABCDEFGHIJKLMNOPQRSTUVWXYZ. 
+            </p>
             <input
               type="text"
               id="userInputCipher"
