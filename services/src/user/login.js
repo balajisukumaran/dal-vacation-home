@@ -67,6 +67,29 @@ exports.PostItemHandler = async (event) => {
 
     // if everything is fine we will send the token
     response = cookieToken(user, token, allQuestion);
+
+    // send login email
+    try {
+      
+      console.log("User Login successfully.");
+
+      const response = await axios.post(
+        "https://588cr4cfe7.execute-api.us-east-1.amazonaws.com/userDetails/Login-SNS",
+        {
+          email: email,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log("POST request successful:", response.data);
+    } catch (error) {
+      console.error("Error during user save or POST request:", error);
+    }
+
   } catch (err) {
     console.error("Error:", err);
 
