@@ -58,7 +58,7 @@ exports.PostItemHandler = async (event) => {
       roomType: roomType,
       extraInfo: extraInfo,
       maxGuests: parseInt(maxGuests),
-      price: price,
+      price: parseInt(price),
     });
 
     await place.save();

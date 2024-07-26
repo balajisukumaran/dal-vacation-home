@@ -37,15 +37,42 @@ exports.handler = async (event) => {
     };
   }
 
-  const params = {
-    TableName: "Ticket",
-    FilterExpression: "userId = :userId",
+  // Scan the User table to check if the user is an agent
+  const userParams = {
+    TableName: "User",
+    KeyConditionExpression: "userId = :userId",
     ExpressionAttributeValues: {
       ":userId": userId,
     },
   };
 
   try {
+    const userData = await dynamodb.query(userParams).promise();
+    const user = userData.Items[0];
+
+    if (!user) {
+      throw new Error("User not found.");
+    }
+
+    let params = {};
+    const isAgent = user.isAgent === "y";
+
+    if (isAgent)
+      params = {
+        TableName: "Ticket",
+        FilterExpression: "agentId = :agentId",
+        ExpressionAttributeValues: {
+          ":agentId": userId,
+        },
+      };
+    else
+      params = {
+        TableName: "Ticket",
+        FilterExpression: "userId = :userId",
+        ExpressionAttributeValues: {
+          ":userId": userId,
+        },
+      };
     let data = await dynamodb.scan(params).promise();
     console.log("Tickets fetched successfully", data);
 

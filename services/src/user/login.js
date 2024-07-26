@@ -2,6 +2,7 @@ const User = require("../../layers/nodejs/models/User");
 const Question = require("../../layers/nodejs/models/Question");
 const cookieToken = require("../../layers/nodejs/utils/cookieToken");
 const connectWithDB = require("../../layers/nodejs/config/db");
+const axios = require("axios");
 
 connectWithDB();
 
@@ -65,31 +66,21 @@ exports.PostItemHandler = async (event) => {
 
     const user = userExists[0];
 
+    const res = await axios.post(
+      "https://588cr4cfe7.execute-api.us-east-1.amazonaws.com/userDetails/Login-SNS",
+      {
+        email: user.email,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log("POST request successful:", res.data);
+
     // if everything is fine we will send the token
     response = cookieToken(user, token, allQuestion);
-
-    // send login email
-    try {
-      
-      console.log("User Login successfully.");
-
-      const response = await axios.post(
-        "https://588cr4cfe7.execute-api.us-east-1.amazonaws.com/userDetails/Login-SNS",
-        {
-          email: email,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      console.log("POST request successful:", response.data);
-    } catch (error) {
-      console.error("Error during user save or POST request:", error);
-    }
-
   } catch (err) {
     console.error("Error:", err);
 

@@ -57,8 +57,8 @@ exports.PutItemHandler = async (event) => {
       place.perks = perks;
       place.roomType = roomType;
       place.extraInfo = extraInfo;
-      place.maxGuests = maxGuests;
-      place.price = price;
+      place.maxGuests = parseInt(maxGuests);
+      place.price = parseIn(price);
 
       await place.save();
 

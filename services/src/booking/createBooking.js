@@ -46,7 +46,7 @@ exports.PostItemHandler = async (event) => {
       numOfGuests: parseInt(noOfGuests),
       name: name,
       phone: phone,
-      price: price,
+      price: parseInt(price),
       status: "pending",
       email: userData.email,
     });

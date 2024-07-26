@@ -87,7 +87,7 @@ exports.PostItemHandler = async (event) => {
       console.log("User saved successfully.");
 
       const response = await axios.post(
-        "https://aymnjk1za7.execute-api.us-east-1.amazonaws.com/Prod/registration-SNS",
+        "https://588cr4cfe7.execute-api.us-east-1.amazonaws.com/userDetails/registration-SNS",
         {
           email: user.email,
         },

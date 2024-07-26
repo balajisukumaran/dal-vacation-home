@@ -240,11 +240,6 @@ async function RaiseConcern(event) {
               contentType: "PlainText",
               content: "An agent has been assigned.",
             },
-            {
-              contentType: "PlainText",
-              content:
-                "Click here to view the status. https://dal-vacation-home-service-konfsid46q-ue.a.run.app/account",
-            },
           ],
         };
       } catch (error) {

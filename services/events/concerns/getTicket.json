@@ -1,5 +1,5 @@
 {
-  "body": "{\n\"userId\":\"10ec67a5-365a-4ba6-aabc-16cf0bf867ad\"}",
+  "body": "{\n\"userId\":\"5cfa9103-d4aa-425b-92f4-b80ccf0d0d96\"}",
   "resource": "/{proxy+}",
   "path": "/path/to/resource",
   "httpMethod": "POST",
